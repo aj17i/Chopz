@@ -51,7 +51,7 @@ if (
     
     if ($stmt->execute()) {
         echo"signup successful";
-        header("Location: ../html/login.html");
+        header("Location: ../html/loginpage.php");
         exit;
     } else {
         die("Error in registration: " . $mysqli->error);
