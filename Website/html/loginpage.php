@@ -73,12 +73,12 @@
         <form action="../php/login.php" method="post">
 
           <div class="input-box">
-            <input type="text" class="input-field" placeholder="Email" name="email" />
+            <input type="text" class="input-field" placeholder="Email" name="email" required />
             <i class="bx bx-user"></i>
           </div>
 
           <div class="input-box">
-            <input type="password" class="input-field" placeholder="Password" name="password" />
+            <input type="password" class="input-field" placeholder="Password" name="password" required />
             <i class="bx bx-lock-alt"></i>
           </div>
 
@@ -122,7 +122,7 @@
           }
           ?>
         </div>
-        <form action="../php/register.php" method="post">
+        <form action="../php/register.php" method="post" onsubmit="return validateForm()">
           <div class="top">
             <span>Have an account? <a href="#" onclick="login()">Login</a></span>
             <header>Sign Up</header>
@@ -197,19 +197,50 @@
       x.style.opacity = 0;
       y.style.opacity = 1;
     }
-  </script>
-  <script>
-    // Function to remove the error message from the URL when page is refreshed
-    function removeErrorMessage() {
-      if (window.location.search.includes('error=invalid_credentials'
-        || 'error=existing_user' || 'error=Unsuccessful')) {
-        // Remove the error message from the URL without reloading the page
-        history.replaceState({}, document.title, window.location.pathname);
-      }
-    }
+    function validateForm() {
+      var username = document.getElementById("username").value;
+      var email = document.getElementById("emailInput").value;
+      var password = document.getElementById("password").value;
+      var confirmPassword = document.getElementById("password_confirmation").value;
 
-    // Call the function when the page is loaded
-    window.onload = removeErrorMessage;
+      // Perform validation
+      if (username.trim() == "" || email.trim() == "" || password.trim() == "" || confirmPassword.trim() == "") {
+        alert("All fields are required");
+        return false;
+      }
+
+      if (!/\S+@\S+\.\S+/.test(email)) {
+        alert("Invalid email format");
+        return false;
+      }
+
+      if (password.length < 8) {
+        alert("Password must be at least 8 characters long");
+        return false;
+      }
+
+      if (!/[a-zA-Z]/.test(password) || !/[0-9]/.test(password)) {
+        alert("Password must contain at least one letter and one number");
+        return false;
+      }
+
+      if (password !== confirmPassword) {
+        alert("Passwords do not match");
+        return false;
+      }
+
+      return true; // Form is valid
+    }
+    function removeErrorMessage() {
+    if (window.location.search.includes('error=')) {
+      // Clear the URL parameters without reloading the page
+      var url = window.location.href.split('?')[0];
+      window.history.replaceState({}, document.title, url);
+    }
+  }
+
+  // Call the function when the page is loaded
+  window.onload = removeErrorMessage;
   </script>
 </body>
 
