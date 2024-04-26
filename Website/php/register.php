@@ -32,6 +32,7 @@ if (
     $stmt->bind_param("sss", $username, $email, $hashedPassword);
 
     if ($stmt->execute()) {
+        
         header("Location: ../html/loginpage.php");
         exit;
     } else {

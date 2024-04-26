@@ -93,7 +93,7 @@
               <label for="login-check"> Remember Me</label>
             </div>
             <div class="two">
-              <label><a href="#">Forgot password?</a></label>
+              <label><a href="forgot_password.html">Forgot password?</a></label>
             </div>
 
           </div>
