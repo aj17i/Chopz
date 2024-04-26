@@ -1,9 +1,9 @@
-<?php
+<?php 
 $email = $_POST['email'];
 $token = bin2hex(random_bytes(16));
 $token_hash = hash("sha256", $token);
 $expiry = date("Y-m-d H:i:s", time() + 60 * 30);
-//require_once 'database.php';
+
 $mysqli = require __DIR__ . "/database.php";
 
 $sql = "UPDATE user 
@@ -20,11 +20,10 @@ if ($mysqli->affected_rows) {
     $mail->setFrom("noreply@Chopz.com");
     $mail->addAddress($email);
     $mail->Subject = "Password Reset";
-    $mail->Body = <<<END
-    Click <a href = "localhost:3000/Website/php/reset_forgotten_password.php?token=$token"> here </a>
-    to reset your password
-
-    END;
+    $mail->isHTML(true); // Ensure HTML format
+    $resetLink = "http://localhost:3000/Website/php/reset_forgotten_password.php?token=$token";
+    $mail->Body = "Click <a href=\"$resetLink\">here</a> to reset your password"; // Using variable for link
+    $mail->AltBody = "Click the following link to reset your password: $resetLink"; // Plain text alternative
 
     try {
         $mail->send();
@@ -33,4 +32,4 @@ if ($mysqli->affected_rows) {
     }
 }
 
-echo "Message sent please check your inbox.";
+echo "Message sent. Please check your inbox.";
