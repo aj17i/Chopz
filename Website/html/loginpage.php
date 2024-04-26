@@ -56,12 +56,14 @@
 
 
       <div class="login-container" id="login">
-        <?php
-        // Check if error message exists in the URL
-        if (isset($_GET['error']) && $_GET['error'] === 'invalid_credentials') {
-          echo "<p style='color: white;'>Invalid login. Please retry with correct email and password.</p>";
-        }
-        ?>
+        <div class="notify">
+          <?php
+          // Check if error message exists in the URL
+          if (isset($_GET['error']) && $_GET['error'] === 'invalid_credentials') {
+            echo "<p>Invalid login. Please retry with correct email and password.</p>";
+          }
+          ?>
+        </div>
         <div class="top">
           <span>Don't have an account?
             <a href="#" onclick="register()">Sign Up</a></span>
@@ -139,7 +141,7 @@
             </div>
 
             <div class="input-box">
-              <input type="submit" class="submit" value="Register" onclick="return validateEmail()" />
+              <input type="submit" class="submit" value="Register" />
             </div>
 
           </div>
