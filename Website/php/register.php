@@ -11,25 +11,6 @@ if (
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    // Validate email format
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        die("Invalid email format");
-    }
-
-    // Validate password length
-    if (strlen($password) < 8) {
-        die("Password must be at least 8 characters long");
-    }
-
-    // Validate password complexity (at least one letter and one number)
-    if (!preg_match("/[a-zA-Z]/", $password) || !preg_match("/[0-9]/", $password)) {
-        die("Password must contain at least one letter and one number");
-    }
-
-    if ($_POST["password"] !== $_POST["password_confirmation"]) {
-        die("Passwords must match");
-    }
-
     // Hash the password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
@@ -41,22 +22,21 @@ if (
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        die("User already exists. Please try another email or login.");
+        header("Location: ../html/loginpage.php?error=existing_user");
+        exit();
     }
 
     // Insert new user into the database
     $insertQuery = "INSERT INTO user (username, email, password) VALUES (?, ?, ?)";
     $stmt = $mysqli->prepare($insertQuery);
     $stmt->bind_param("sss", $username, $email, $hashedPassword);
-    
+
     if ($stmt->execute()) {
-        echo"signup successful";
         header("Location: ../html/loginpage.php");
         exit;
     } else {
-        die("Error in registration: " . $mysqli->error);
+        header("Location: ../html/loginpage.php?error=Unsuccessfull");
+        exit();
     }
-} else {
-    die("All fields are required");
-}
+} 
 ?>

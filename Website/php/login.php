@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["UserID"] = $user["UserID"];
             $_SESSION["username"] = $user["username"];
 
-            // Redirect to the user dashboard or any other page
+            // Redirect to the homepage
             header("Location: ../html/Homepage.html");
             exit(); // Stop further execution
         } else {

@@ -112,6 +112,16 @@
 
 
       <div class="register-container" id="register">
+        <div class="notify">
+          <?php
+          // Check if error message exists in the URL
+          if (isset($_GET['error']) && $_GET['error'] === 'existing_user') {
+            echo "<p>User already exists, try different email / username.</p>";
+          } else if (isset($_GET['error']) && $_GET['error'] === 'Unsuccessfull') {
+            echo "<p>Unsuccessful, please try again.</p>";
+          }
+          ?>
+        </div>
         <form action="../php/register.php" method="post">
           <div class="top">
             <span>Have an account? <a href="#" onclick="login()">Login</a></span>
@@ -120,35 +130,36 @@
           <div>
 
             <div class="input-box">
-              <input type="text" class="input-field" placeholder="Username" id="username" name="username" />
+              <input type="text" class="input-field" placeholder="Username" id="username" name="username" required />
               <i class="bx bx-user"></i>
             </div>
 
             <div class="input-box">
-              <input type="email" id="emailInput" class="input-field" placeholder="Email" name="email" />
+              <input type="email" id="emailInput" class="input-field" placeholder="Email" name="email" required />
               <i class="bx bx-envelope"></i>
             </div>
 
             <div class="input-box">
-              <input type="password" class="input-field" placeholder="Password" id="password" name="password" />
+              <input type="password" class="input-field" placeholder="Password" id="password" name="password"
+                required />
               <i class="bx bx-lock-alt"></i>
             </div>
 
             <div class="input-box">
               <input type="password" class="input-field" placeholder="Confirm Password" id="password_confirmation"
-                name="password_confirmation" />
+                name="password_confirmation" required />
               <i class="bx bx-lock-alt"></i>
             </div>
 
             <div class="input-box">
-              <input type="submit" class="submit" value="Register" />
+              <input type="submit" class="submit" value="Register" onclick=validateForm() />
             </div>
 
           </div>
-
         </form>
       </div>
     </div>
+
   </div>
 
 
@@ -190,7 +201,8 @@
   <script>
     // Function to remove the error message from the URL when page is refreshed
     function removeErrorMessage() {
-      if (window.location.search.includes('error=invalid_credentials')) {
+      if (window.location.search.includes('error=invalid_credentials'
+        || 'error=existing_user' || 'error=Unsuccessful')) {
         // Remove the error message from the URL without reloading the page
         history.replaceState({}, document.title, window.location.pathname);
       }

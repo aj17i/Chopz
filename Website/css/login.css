@@ -14,11 +14,21 @@ body {
   background-attachment: fixed;
   overflow: hidden;
 }
+
 .notify p{
   font-weight: 600;
-  font-size: 25;
+  font-size: 15;
   color: rgb(255, 22, 22);
 }
+.notify {
+  position: absolute;
+  top: 0;
+  right: 10px; /* Adjust as needed */
+  width: 150px; /* Set desired width */
+  margin-top: 30px;
+  font-size: 15px;
+}
+
 .wrapper {
   display: flex;
   justify-content: center;
@@ -109,7 +119,7 @@ body {
   transition: 0.5s ease-in-out;
 }
 .register-container {
-  position: absolute;
+  position: relative;
   right: -520px;
   width: 500px;
   display: flex;
@@ -117,6 +127,7 @@ body {
   transition: 0.5s ease-in-out;
   overflow-y: auto;
 }
+
 .top span {
   color: #fff;
   font-size: small;
@@ -273,9 +284,15 @@ header {
     overflow-y: auto;
     margin-top: -100px;
   }
+  .register-container .notify{
+    font-size:12px;
+    margin-top:30px;
+    margin-right: 210px;
+  }
   .login-container .notify{
-    font-size:14px;
-    margin-top:50px;
+    font-size:12px;
+    margin-top:30px;
+    margin-right: 220px;
   }
   .register-container .two-forms {
     flex-direction: column;
