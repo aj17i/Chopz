@@ -18,7 +18,7 @@
       </div>
       <div class="nav-menu" id="navMenu">
         <ul>
-          <li><a href="landing.html" class="link active">Back</a></li>
+          <li><a href="index.html" class="link active">Back</a></li>
         </ul>
       </div>
       <div class="nav-button">
