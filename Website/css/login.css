@@ -18,13 +18,13 @@ body {
 .notify p{
   font-weight: 600;
   font-size: 15;
-  color: rgb(255, 22, 22);
+  color: rgb(255, 255, 255);
 }
 .notify {
   position: absolute;
   top: 0;
   right: 10px; /* Adjust as needed */
-  width: 150px; /* Set desired width */
+  width: 160px; /* Set desired width */
   margin-top: 30px;
   font-size: 15px;
 }
@@ -291,8 +291,8 @@ header {
   }
   .login-container .notify{
     font-size:12px;
-    margin-top:30px;
-    margin-right: 220px;
+    margin-top:40px;
+    margin-right: 230px;
   }
   .register-container .two-forms {
     flex-direction: column;
