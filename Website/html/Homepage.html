@@ -1,13 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chopz | Homepage</title>
-</head>
-<body>
+    <link rel="stylesheet" href="../css/homepage.css" />
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="Homepage.html" class="logo">
+        <img
+          src="../css/images/logo.png"
+          alt="Logo"
+          style="height: 70px; width: 150px"
+        />
+      </a>
+      <div class="dropdown">
+        <button class="dropbtn">Search by...</button>
+        <div class="dropdown-content">
+          <a href="#">By Recipe</a>
+          <a href="#">By Cuisine</a>
+          <a href="#">By Tag</a>
+          <a href="#">By Chef/Creator</a>
+        </div>
+        <div class="search-Image">
+          <img src="../css/images/magnifier.png" alt="" />
+        </div>
+      </div>
+      <a href="#" class="profilePic">
+        <img src="../css/images/user.png" alt="" />
+      </a>
+    </div>
     <form action="../php/logout.php">
-        <button>Logout</button>
+      <button>Logout</button>
     </form>
-</body>
+
+    <script>
+      const dropbtn = document.querySelector(".dropbtn");
+      const dropdownContent = document.querySelector(".dropdown-content");
+
+      dropbtn.addEventListener("click", function () {
+        dropdownContent.classList.toggle("show");
+      });
+    </script>
+  </body>
 </html>
