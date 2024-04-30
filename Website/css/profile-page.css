@@ -1,0 +1,65 @@
+.container {
+  display: flex;
+  height: 100%;
+}
+.side-panel {
+  width: 200px; /* Width of the side panel */
+  background-color: #eddbff; /* Gray background color */
+  padding: 20px;
+  height: 80.5vh;
+}
+.side-panel-info{
+    margin-top: 150px;
+}
+
+.panel-content {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.user-info {
+  display: flex;
+  margin-top: 10px; /* Adjust margin as needed */
+}
+
+.user-name,
+.user-role {
+  padding: 5px; /* Adjust padding as needed */
+}
+
+.user-name {
+  margin-right: 10px; /* Add space between user name and role */
+}
+
+.panel-content img {
+  width: 100px; /* Adjust image width as needed */
+  height: auto;
+  display: block;
+  margin: 0 auto; /* Center the image */
+}
+
+.panel-content p {
+  text-align: center;
+}
+
+.panel-content button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  margin-top: 20px;
+  border: none;
+  background-color: #d3a6ff;
+  color: rgb(0, 0, 0);
+  cursor: pointer;
+  height: 45px;
+  border-radius: 15px;
+  font-size: 20px;
+}
+.panel-content a{
+    text-decoration: none;
+}
+
+.panel-content button:hover {
+  background-color: #c28df8;
+}

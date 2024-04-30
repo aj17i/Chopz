@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chopz | Profile</title>
     <link rel="stylesheet" href="../css/homepage.css" />
+    <link rel="stylesheet" href="../css/profile-page.css" />
   </head>
   <body>
     <header>
@@ -18,8 +19,27 @@
         </a>
       </div>
     </header>
-    <form action="../php/logout.php">
-      <button>Logout</button>
-    </form>
+
+    <!---------------------------------side panel-------------------------------------------->
+
+    <div class="container">
+      <div class="side-panel">
+        <div class="panel-content">
+          <img src="your-image.jpg" alt="Profile Picture" />
+          <div class="side-panel-info">
+            <div class="user-info">
+              <div class="user-name">User Name</div>
+              <div class="user-role">User Role</div>
+            </div>
+            <a href=""><button>Posts</button></a>
+            <a href=""><button>Saved Recipes</button></a>
+            <a href=""><button>Edit Profile</button></a>
+            <form action="../php/logout.php">
+              <button>Logout</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
