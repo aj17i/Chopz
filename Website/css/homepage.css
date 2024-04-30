@@ -39,15 +39,20 @@ body {
   width: 500px;
   margin-top: 15px;
   text-align: center;
-  border-radius: 10px;
+  border-radius: 25px;
+  height: 50px;
 }
 .dropdown img {
-    height: 30px;
-    width: 30px;
+  height: 30px;
+  width: 30px;
+  position: absolute;
+  top: 6%;
+  right: 480px;
+  transform: translateY(-50%);
 }
-.search-Image{
-    float: right;
-    margin: 10px;
+.search-Image {
+  float: right;
+  margin: 10px;
 }
 
 .dropdown .dropbtn {
@@ -58,7 +63,7 @@ body {
   padding: 14px 16px;
   background-color: inherit;
   font-family: inherit;
-  margin-top: 5px;
+  margin-top: 2px;
 }
 
 .navbar a:hover,
@@ -96,35 +101,65 @@ body {
 .show {
   display: block;
 }
+.searchBar {
+  display: none;
+  margin-top: 5px;
+  margin-right: 100px;
+}
+.searchBar input[type="text"] {
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  padding: 10px;
+  width: 150px; 
+}
+
+.searchBar button {
+  background-color: #c28df8;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.searchBar button:hover {
+  background-color: #9838f8;
+}
+
+.searchActive {
+  float: left;
+}
 
 @media screen and (max-width: 600px) {
-    .navbar a {
-        padding: 5px;
-      }
-    
-      .navbar .logo img {
-        max-width: 90px; /* Adjust logo size for small screens */
-        max-height: 45px;
-        margin-top: 15px;
-        margin-right: 10px;
-      }
-    
-      .profilePic { /* Display profile pic on small screens */
-        float: right;
-        margin-top: -55px;
-      }
-    
-      .dropdown {
-        display: block; /* Display dropdown on small screens */
-        float: none;
-        margin-top: 15px;
-        width: 200px;
-        margin-left: 50px;
-      }
-    
-      .dropdown-content {
-        left: 50%;
-        transform: translateX(-50%);
-        width: 40%;
-      }
+  .navbar a {
+    padding: 5px;
+  }
+
+  .navbar .logo img {
+    max-width: 90px; /* Adjust logo size for small screens */
+    max-height: 45px;
+    margin-top: 15px;
+    margin-right: 10px;
+  }
+
+  .profilePic {
+    /* Display profile pic on small screens */
+    float: right;
+    margin-top: -55px;
+  }
+
+  .dropdown {
+    display: block; /* Display dropdown on small screens */
+    float: none;
+    margin-top: 15px;
+    width: 200px;
+    margin-left: 50px;
+  }
+
+  .dropdown-content {
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40%;
+  }
 }
