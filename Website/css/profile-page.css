@@ -8,8 +8,8 @@
   padding: 20px;
   height: 80.5vh;
 }
-.side-panel-info{
-    margin-top: 120px;
+.side-panel-info {
+  margin-top: 90px;
 }
 
 .panel-content {
@@ -21,8 +21,19 @@
 .user-info {
   display: flex;
   margin-top: 10px; /* Adjust margin as needed */
+  font-weight: bolder;
 }
-
+.user-info-number {
+  display: flex;
+  margin-top: 5px; /* Adjust margin as needed */
+  font-weight: bolder;
+}
+.user-num {
+  margin-left: 35px;
+}
+.user-rum {
+  margin-left: 80px; /* Adjust padding as needed */
+}
 .user-name,
 .user-role {
   padding: 5px; /* Adjust padding as needed */
@@ -56,10 +67,55 @@
   border-radius: 15px;
   font-size: 20px;
 }
-.panel-content a{
-    text-decoration: none;
+.panel-content a {
+  text-decoration: none;
 }
 
 .panel-content button:hover {
   background-color: #c28df8;
+}
+
+@media screen and (max-width: 600px) {
+  .side-panel {
+    width: 80px;
+    height:85.2vh;
+  }
+  .panel-content button {
+    display: block;
+    width: 80%;
+    padding: 6px;
+    margin-top: 10px;
+    border: none;
+    background-color: #d3a6ff;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    height: 35px;
+    border-radius: 15px;
+    font-size: 13px;
+    width: 100px;
+    margin-left: 15px;
+  }
+  .user-info {
+    display: flex;
+    margin-top: 10px; /* Adjust margin as needed */
+    font-weight: bolder;
+    font-size: 12px;
+  }
+  .user-info-number {
+    display: flex;
+    margin-top: 5px; /* Adjust margin as needed */
+    font-weight: bolder;
+  }
+  .user-num {
+    margin-left: 35px;
+  }
+  .user-rum {
+    margin-left: 50px; /* Adjust padding as needed */
+  }
+  .user-name {
+    margin-left: 3px; /* Add space between user name and role */
+  }
+  .user-role {
+    margin-left: -15px;
+  }
 }

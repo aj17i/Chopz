@@ -110,7 +110,7 @@ body {
   border: 2px solid #ccc;
   border-radius: 20px;
   padding: 10px;
-  width: 150px; 
+  width: 150px;
 }
 
 .searchBar button {
@@ -142,6 +142,41 @@ body {
     margin-top: 15px;
     margin-right: 10px;
   }
+  .dropdown .dropbtn {
+    font-size: 12px;
+    padding: 5px 5px;
+    margin-top: 12px;
+    margin-right:0px;
+  }
+  .searchBar {
+    display: none;
+    margin-top: 5px;
+    margin-left:100px;
+  }
+  .searchBar input[type="text"] {
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    padding: 10px;
+    width: 50px;
+    margin-left:-50px;
+    margin-right:0px;
+    font-size:12px;
+  }
+
+  .searchBar button {
+    background-color: #c28df8;
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width:50px;
+    margin-top:-50px;
+    margin-right:-100px;
+    margin-left: 12px;
+    font-size:10px;
+  }
 
   .profilePic {
     /* Display profile pic on small screens */
@@ -153,7 +188,7 @@ body {
     display: block; /* Display dropdown on small screens */
     float: none;
     margin-top: 15px;
-    width: 200px;
+    width: 220px;
     margin-left: 50px;
   }
 
@@ -161,5 +196,8 @@ body {
     left: 50%;
     transform: translateX(-50%);
     width: 40%;
+  }
+  .search-Image {
+    display: none;
   }
 }

@@ -3,13 +3,26 @@ session_start();
 if (!isset($_SESSION["UserID"])) {
   header("Location: loginpage.php");
   exit();
-}
-$mysqli = require_once '../php/database.php';//require __DIR__ . "..\php\database.php";
-$sql = "SELECT * FROM user 
+} else {
+  $mysqli = require_once '../php/database.php';//require __DIR__ . "..\php\database.php";
+  $sql = "SELECT * FROM user 
           WHERE UserID = {$_SESSION["UserID"]}";
 
-$result = $mysqli->query($sql);
-$user = $result->fetch_assoc();
+  $result = $mysqli->query($sql);
+  $user = $result->fetch_assoc();
+
+  // Query to count followers
+  $sql_followers = "SELECT COUNT(*) AS num_followers FROM `follower list` WHERE FollowedAccountID = {$_SESSION["UserID"]}";
+  $result_followers = $mysqli->query($sql_followers);
+  $row_followers = $result_followers->fetch_assoc();
+  $num_followers = $row_followers['num_followers'];
+
+  // Query to count following
+  $sql_following = "SELECT COUNT(*) AS num_following FROM `follower list` WHERE FollowingAccountID = {$_SESSION["UserID"]}";
+  $result_following = $mysqli->query($sql_following);
+  $row_following = $result_following->fetch_assoc();
+  $num_following = $row_following['num_following'];
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,21 +52,28 @@ $user = $result->fetch_assoc();
         <img src="your-image.jpg" alt="Profile Picture" />
         <div class="side-panel-info">
           <?php if (isset($user)): ?>
-            <p> <?= htmlspecialchars($user["username"]) ?> </p>
+            <p style="font-weight: bolder;"> <?= htmlspecialchars($user["username"]) ?> </p>
           <?php endif; ?>
           <div class="user-info">
-            <div class="user-name">User Name</div>
-            <div class="user-role">User Role</div>
+            <div class="user-name">Followers</div>
+            <div class="user-role">Following</div>
+          </div>
+          <div class="user-info-number">
+            <div class="user-num"><?= $num_followers ?></div>
+            <div class="user-rum"><?= $num_following ?></div>
           </div>
           <a href=""><button>Posts</button></a>
           <a href=""><button>Saved Recipes</button></a>
-          <a href=""><button>Edit Profile</button></a>
+          <a href="edit-profile.php"><button>Edit Profile</button></a>
           <form action="../php/logout.php">
             <button>Logout</button>
           </form>
         </div>
       </div>
     </div>
+  </div>
+  <div>
+
   </div>
 </body>
 

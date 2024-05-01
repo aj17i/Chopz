@@ -1,3 +1,5 @@
+var dropbtn = document.querySelector(".dropbtn");
+
 function showSearchBar(searchType) {
   // Hide all search bars
   var searchBars = document.querySelectorAll(".searchBar");
@@ -10,7 +12,7 @@ function showSearchBar(searchType) {
   document.getElementById(searchBarId).style.display = "block";
 
   // Move the "search by..." button to the right
-  var dropbtn = document.querySelector(".dropbtn");
+  
   dropbtn.classList.add("searchActive");
 
   // Hide the dropdown menu
@@ -21,7 +23,20 @@ function showSearchBar(searchType) {
   dropdownContent.style.left = "500px";
 }
 
-const dropbtn = document.querySelector(".dropbtn");
+dropbtn.addEventListener("click", function () {
+  var dropdownContent = document.querySelector(".dropdown-content");
+  var dropbtnRect = dropbtn.getBoundingClientRect();
+  var dropdownContentRect = dropdownContent.getBoundingClientRect();
+
+  // Calculate the new left position based on the position of the search by button
+  var newLeft =
+    dropbtnRect.left - dropdownContentRect.width + dropbtnRect.width;
+
+  // Set the new position of the dropdown menu
+  dropdownContent.style.left = newLeft + "px";
+});
+
+
 const dropdownContent = document.querySelector(".dropdown-content");
 
 dropbtn.addEventListener("click", function () {
