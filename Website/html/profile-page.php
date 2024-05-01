@@ -1,13 +1,15 @@
 <?php
 session_start();
-if (isset($_SESSION["UserID"])) {
-  $mysqli = require_once '../php/database.php';//require __DIR__ . "..\php\database.php";
-  $sql = "SELECT * FROM user 
+if (!isset($_SESSION["UserID"])) {
+  header("Location: loginpage.php");
+  exit();
+}
+$mysqli = require_once '../php/database.php';//require __DIR__ . "..\php\database.php";
+$sql = "SELECT * FROM user 
           WHERE UserID = {$_SESSION["UserID"]}";
 
-  $result = $mysqli->query($sql);
-  $user = $result->fetch_assoc();
-}
+$result = $mysqli->query($sql);
+$user = $result->fetch_assoc();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +25,7 @@ if (isset($_SESSION["UserID"])) {
 <body>
   <header>
     <div class="navbar">
-      <a href="Homepage.html" class="logo">
+      <a href="Homepage.php" class="logo">
         <img src="../css/images/logo.png" alt="Logo" style="height: 70px; width: 150px" />
       </a>
     </div>
