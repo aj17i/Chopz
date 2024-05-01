@@ -1,9 +1,10 @@
 <?php
 session_start();
-if (!$_SESSION['logged'] || $_SESSION['logged']!== true ) {
+$mysqli = require_once '../php/database.php';
+if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
     header("Location: loginpage.php");
     exit();
-  }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,12 +12,29 @@ if (!$_SESSION['logged'] || $_SESSION['logged']!== true ) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <link rel="stylesheet" href="../css/edit-profile.css">
     <title>Chopz | edit profile</title>
 </head>
 
 <body>
-    <h1>edit profile</h1>
-    <a href="profile-page.php">back</a>
+    <h1>Edit profile</h1>
+
+    <form action="..\php\process-edit-profile.php" method="post" enctype="multipart/form-data" class="edit-profile">
+        <label for="profilePic">Profile Image</label>
+        <input type="file" id="profilePic" name="profilePic">
+
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+
+        <label for="bio">Bio</label>
+        <input type="text" id="bio" name="bio">
+        <br>
+
+        <input type="submit" id="submit" value="upload">
+
+        <button><a href="profile-page.php">Back</a></button>
+    </form>
 </body>
 
 </html>
