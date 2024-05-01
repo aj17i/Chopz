@@ -21,7 +21,7 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
 
         if ($error === 0) {
             if ($img_size > 125000) {
-                $em = "file is too large!";
+                $em = "sorry, your file is too large!";
                 header("Location: ../html/edit-profile.php?error=$em");
                 exit();
             } else {

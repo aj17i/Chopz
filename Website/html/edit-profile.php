@@ -20,6 +20,11 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
 <body>
     <h1>Edit profile</h1>
 
+    <?php if (isset($_GET['error'])): ?>
+        <p style="color : white;"><?php echo $_GET['error'] ?></p>
+    <?php endif ?>
+
+
     <form action="..\php\process-edit-profile.php" method="post" enctype="multipart/form-data" class="edit-profile">
         <label for="profilePic">Profile Image</label>
         <input type="file" id="profilePic" name="profilePic">

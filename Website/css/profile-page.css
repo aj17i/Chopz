@@ -44,10 +44,17 @@
 }
 
 .panel-content img {
-  width: 100px; /* Adjust image width as needed */
-  height: auto;
+  width: 150px; /* Adjust image width as needed */
+  height: 130px;
   display: block;
-  margin: 0 auto; /* Center the image */
+ 
+}
+.profile-pic{
+  border-radius: 150px;
+  height: 130px;
+  width: 140px;
+  overflow: hidden;
+  margin-bottom: -100px;
 }
 
 .panel-content p {
@@ -95,6 +102,20 @@
     width: 100px;
     margin-left: 15px;
   }
+  .panel-content img {
+    width: 100px; /* Adjust image width as needed */
+    height: 100px;
+    display: block;
+   
+  }
+  .profile-pic{
+    border-radius: 150px;
+    height: 100px;
+    width: 100px;
+    overflow: hidden;
+    margin-bottom: -100px;
+  }
+  
   .user-info {
     display: flex;
     margin-top: 10px; /* Adjust margin as needed */

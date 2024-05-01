@@ -1,27 +1,30 @@
 <?php
 session_start();
-if (!$_SESSION['logged'] || $_SESSION['logged']!== true ) {
+if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
   header("Location: loginpage.php");
   exit();
-} 
-  $mysqli = require_once '../php/database.php';//require __DIR__ . "..\php\database.php";
-  $sql = "SELECT * FROM user 
+}
+$mysqli = require_once '../php/database.php';//require __DIR__ . "..\php\database.php";
+$sql = "SELECT * FROM user 
           WHERE UserID = {$_SESSION["UserID"]}";
 
-  $result = $mysqli->query($sql);
-  $user = $result->fetch_assoc();
+$result = $mysqli->query($sql);
+$user = $result->fetch_assoc();
 
-  // Query to count followers
-  $sql_followers = "SELECT COUNT(*) AS num_followers FROM `follower list` WHERE FollowedAccountID = {$_SESSION["UserID"]}";
-  $result_followers = $mysqli->query($sql_followers);
-  $row_followers = $result_followers->fetch_assoc();
-  $num_followers = $row_followers['num_followers'];
+// Query to count followers
+$sql_followers = "SELECT COUNT(*) AS num_followers FROM `follower list` WHERE FollowedAccountID = {$_SESSION["UserID"]}";
+$result_followers = $mysqli->query($sql_followers);
+$row_followers = $result_followers->fetch_assoc();
+$num_followers = $row_followers['num_followers'];
 
-  // Query to count following
-  $sql_following = "SELECT COUNT(*) AS num_following FROM `follower list` WHERE FollowingAccountID = {$_SESSION["UserID"]}";
-  $result_following = $mysqli->query($sql_following);
-  $row_following = $result_following->fetch_assoc();
-  $num_following = $row_following['num_following'];
+// Query to count following
+$sql_following = "SELECT COUNT(*) AS num_following FROM `follower list` WHERE FollowingAccountID = {$_SESSION["UserID"]}";
+$result_following = $mysqli->query($sql_following);
+$row_following = $result_following->fetch_assoc();
+$num_following = $row_following['num_following'];
+
+$sql_image = "SELECT profilePic FROM user WHERE UserID = {$_SESSION["UserID"]}";
+$res = mysqli_query($conn, $sql_image);
 
 ?>
 <!DOCTYPE html>
@@ -49,7 +52,13 @@ if (!$_SESSION['logged'] || $_SESSION['logged']!== true ) {
   <div class="container">
     <div class="side-panel">
       <div class="panel-content">
-        <img src="your-image.jpg" alt="Profile Picture" />
+        <?php if (mysqli_num_rows($res) > 0) {
+          while ($images = mysqli_fetch_assoc($res)) { ?>
+            <div class="profile-pic">
+              <img src="../css/images/<?= $images['profilePic'] ?>" alt="Profile Picture" />
+            </div>
+          <?php }
+        } ?>
         <div class="side-panel-info">
           <?php if (isset($user)): ?>
             <p style="font-weight: bolder;"> <?= htmlspecialchars($user["username"]) ?> </p>
