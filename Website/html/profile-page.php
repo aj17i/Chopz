@@ -1,9 +1,9 @@
 <?php
 session_start();
-if (!isset($_SESSION["UserID"])) {
+if (!$_SESSION['logged'] || $_SESSION['logged']!== true ) {
   header("Location: loginpage.php");
   exit();
-} else {
+} 
   $mysqli = require_once '../php/database.php';//require __DIR__ . "..\php\database.php";
   $sql = "SELECT * FROM user 
           WHERE UserID = {$_SESSION["UserID"]}";
@@ -22,7 +22,7 @@ if (!isset($_SESSION["UserID"])) {
   $result_following = $mysqli->query($sql_following);
   $row_following = $result_following->fetch_assoc();
   $num_following = $row_following['num_following'];
-}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

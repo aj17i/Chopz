@@ -1,10 +1,9 @@
 <?php
 session_start();
-if (!isset($_SESSION["UserID"])) {
+if (!$_SESSION['logged'] || $_SESSION['logged']!== true ) {
     header("Location: loginpage.php");
     exit();
-} else {
-}
+  }
 ?>
 <!DOCTYPE html>
 <html lang="en">

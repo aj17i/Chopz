@@ -14,6 +14,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Set session variables
             $_SESSION["UserID"] = $user["UserID"];
             $_SESSION["username"] = $user["username"];
+            $_SESSION['logged'] = true;
 
             // Redirect to the homepage
             header("Location: ../html/Homepage.php");

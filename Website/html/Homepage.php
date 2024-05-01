@@ -1,7 +1,7 @@
 <?php
 session_start();
 $mysqli = require_once '../php/database.php';
-if (!isset($_SESSION["UserID"])) {
+if (!$_SESSION['logged'] || $_SESSION['logged']!== true ) {
   header("Location: loginpage.php");
   exit();
 }
