@@ -4,7 +4,11 @@ body {
 }
 
 .navbar {
-  background-color: #dabbfa;
+  
+  background-image: url(images/2.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   overflow: hidden;
   height: 85px;
 }
@@ -21,6 +25,7 @@ body {
 .navbar .logo {
   float: left;
   padding: 5px;
+  background-color: rgba(255, 255, 255, 0.5 ); 
 }
 
 .navbar .profilePic {
@@ -74,7 +79,7 @@ body {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #c28df8;
+  background-color: #909090;
   min-width: 160px;
   z-index: 1;
   left: 46%; /* Center the dropdown content block */

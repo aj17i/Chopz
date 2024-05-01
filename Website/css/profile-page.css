@@ -67,7 +67,7 @@
   padding: 10px;
   margin-top: 20px;
   border: none;
-  background-color: #d3a6ff;
+  background-color: #b4b4b4;
   color: rgb(0, 0, 0);
   cursor: pointer;
   height: 45px;
@@ -79,7 +79,7 @@
 }
 
 .panel-content button:hover {
-  background-color: #c28df8;
+  background-color: #717171;
 }
 
 @media screen and (max-width: 600px) {
