@@ -5,15 +5,19 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
     exit();
 } else {
     if (isset($_POST['submit']) || isset($_POST['bio']) || isset($_POST['username']) || isset($_FILES['profilePic'])) {
+        
         require_once 'database.php';
         include "database.php";
+        
         echo "<pre>";
         print_r($_FILES['profilePic']);
         echo "</pre>";
+
         $UserID = $_SESSION['UserID'];
         $profilePic = isset($_POST['profilePic']) ? $_POST['profilePic'] : '';
         $username = isset($_POST['username']) ? $_POST['username'] : '';
         $bio = isset($_POST['bio']) ? $_POST['bio'] : '';
+
         $img_name = $_FILES['profilePic']['name'];
         $img_size = $_FILES['profilePic']['size'];
         $tmp_name = $_FILES['profilePic']['tmp_name'];
