@@ -76,7 +76,9 @@ while ($row = $result->fetch_assoc()) {
       <button type="button" onclick="addTag()">Add Tag</button><br /><br />
 
       <input type="submit" name="submit" value="Post Recipe" />
+      <br>
     </form>
+    <a href="profile-page.php"><button>Go Back &rarr;</button></a>
   </div>
 
   <script>
