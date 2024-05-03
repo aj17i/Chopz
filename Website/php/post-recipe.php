@@ -2,7 +2,7 @@
 // Include your database connection file
 session_start();
 if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
-    header("Location: loginpage.php");
+    header("Location: ../html/loginpage.php");
     exit();
 } else {
     require_once 'database.php';
