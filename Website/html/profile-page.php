@@ -4,7 +4,7 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
   header("Location: loginpage.php");
   exit();
 }
-$mysqli = require_once '../php/database.php';//require __DIR__ . "..\php\database.php";
+$mysqli = require_once '../php/database.php';
 $sql = "SELECT * FROM user 
           WHERE UserID = {$_SESSION["UserID"]}";
 
@@ -102,40 +102,19 @@ $res = mysqli_query($conn, $sql_image);
       </div>
     </div>
   </div>
-  <!--
-  <div class="first-row">
-      <div class="statistics">
-        <div>
-          number of posted recipes
-        </div>
-        <div>
-          average rating
-        </div>
-      </div>
-      <div class="create-a-post">
-        <a href="create-post.html"><button>create a recipe</button><img src="" alt=""></a>
-      </div>
-
-    </div>
-    <div class="second-row-favourites">
-      <h3>carousel of favourite recipe plus a link</h3>
-    </div>
-    <div class="third-row-recent">
-      <h3>carousel of recently posted recipe plus a link</h3>
-    </div>
-          -->
+  
   <script>
     function toggleSidePanel() {
       var sidePanel = document.getElementById('sidePanel');
-      sidePanel.classList.toggle('show'); // Toggle the 'show' class instead of 'collapsed'
+      sidePanel.classList.toggle('show'); 
     }
     document.addEventListener('click', function (event) {
       var sidePanel = document.getElementById('sidePanel');
       var sidePanelBtn = document.querySelector('.side-panel-btn');
 
-      // Check if the click event occurred outside the side panel and side panel button
+      
       if (!sidePanel.contains(event.target) && !sidePanelBtn.contains(event.target)) {
-        sidePanel.classList.remove('show'); // Collapse the side panel
+        sidePanel.classList.remove('show'); 
       }
     });
   </script>

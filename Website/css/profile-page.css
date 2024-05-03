@@ -4,22 +4,22 @@ body {
 }
 /* Webkit (Chrome, Safari, Opera) */
 ::-webkit-scrollbar {
-  width: 10px; /* Width of the scrollbar */
+  width: 10px; 
 }
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: #f1f1f1; /* Color of the track */
+  background: #f1f1f1; 
 }
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-  background: #888; /* Color of the handle */
+  background: #888; 
 }
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #555; /* Color of the handle on hover */
+  background: #555; 
 }
 
 .navbar {
@@ -194,11 +194,11 @@ body {
 
   .side-panel-btn {
     display: block;
-    background-color: transparent; /* Transparent background */
-    border: none; /* Remove border */
-    color: #ffffff; /* Button text color */
-    font-size: 16px; /* Adjust font size */
-    cursor: pointer; /* Change cursor to pointer */
+    background-color: transparent; 
+    border: none;
+    color: #ffffff; 
+    font-size: 16px; 
+    cursor: pointer; 
   }
 
   .panel-content button {

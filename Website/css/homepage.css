@@ -81,8 +81,8 @@ body {
   background-color: #a9a9a9;
   min-width: 160px;
   z-index: 1;
-  left: 46%; /* Center the dropdown content block */
-  transform: translateX(-50%); /* Adjust position to center */
+  left: 46%; 
+  transform: translateX(-50%); 
   border-radius: 10px;
 }
 
@@ -141,7 +141,7 @@ body {
   }
 
   .navbar .logo img {
-    max-width: 90px; /* Adjust logo size for small screens */
+    max-width: 90px; 
     max-height: 45px;
     margin-top: 15px;
     margin-right: 10px;
@@ -183,13 +183,12 @@ body {
   }
 
   .profilePic {
-    /* Display profile pic on small screens */
     float: right;
     margin-top: -55px;
   }
 
   .dropdown {
-    display: block; /* Display dropdown on small screens */
+    display: block; 
     float: none;
     margin-top: 15px;
     width: 220px;
