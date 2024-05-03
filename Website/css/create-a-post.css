@@ -1,0 +1,18 @@
+body{
+    background-image: url(../css/images/post2.jpg);
+    background-size: cover;
+    background-size: 100vw; 
+    background-repeat: no-repeat;
+    background-position: center;
+    
+}
+.container {
+  background-color: rgba(148, 148, 148, 0.7);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+.container label{
+    color: black;
+}

@@ -31,7 +31,7 @@ $result_number = $mysqli->query($sql_number);
 $row_number = $result_number->fetch_assoc();
 $num_recipes = $row_number['num_recipes'];
 
-$sql_avg = "SELECT AVG(averageRating) AS average_rating FROM recipe WHERE UserID = {$_SESSION["UserID"]}";
+$sql_avg = "SELECT AVG(average_Rating) AS average_rating FROM recipe WHERE UserID = {$_SESSION["UserID"]}";
 $result_average = $mysqli->query($sql_avg);
 $row_average = $result_average->fetch_assoc();
 $recipes_rating = $row_average['average_rating'];
@@ -102,7 +102,7 @@ $recipes_rating = $row_average['average_rating'];
           </div>
         </div>
         <div class="create-a-post">
-          <a href="create-post.html"><button><img src="../css/images/video.png" alt="add recipe"> Add
+          <a href="create-post.php"><button><img src="../css/images/video.png" alt="add recipe"> Add
               Recipe</button></a>
         </div>
       </div>
