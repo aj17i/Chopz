@@ -71,8 +71,8 @@ $res = mysqli_query($conn, $sql_image);
             <div class="user-num"><?= $num_followers ?></div>
             <div class="user-rum"><?= $num_following ?></div>
           </div>
-          <a href=""><button>Posts</button></a>
-          <a href=""><button>Saved Recipes</button></a>
+          <a href=""><button>View Followers</button></a>
+          <a href=""><button>Settings</button></a>
           <a href="edit-profile.php"><button>Edit Profile</button></a>
           <form action="../php/logout.php">
             <button>Logout</button>
@@ -80,14 +80,64 @@ $res = mysqli_query($conn, $sql_image);
         </div>
       </div>
     </div>
-
+    <div class="content">
+      <div class="first-row">
+        <div class="statistics">
+          <div>
+            number of posted recipes
+          </div>
+          <div>
+            average rating
+          </div>
+        </div>
+        <div class="create-a-post">
+          <a href="create-post.html">Create a Recipe<img src="" alt=""></a>
+        </div>
+      </div>
+      <div class="second-row-favourites">
+        <h3>Carousel of favorite recipes plus a link</h3>
+      </div>
+      <div class="third-row-recent">
+        <h3>Carousel of recently posted recipes plus a link</h3>
+      </div>
+    </div>
   </div>
+  <!--
+  <div class="first-row">
+      <div class="statistics">
+        <div>
+          number of posted recipes
+        </div>
+        <div>
+          average rating
+        </div>
+      </div>
+      <div class="create-a-post">
+        <a href="create-post.html"><button>create a recipe</button><img src="" alt=""></a>
+      </div>
 
+    </div>
+    <div class="second-row-favourites">
+      <h3>carousel of favourite recipe plus a link</h3>
+    </div>
+    <div class="third-row-recent">
+      <h3>carousel of recently posted recipe plus a link</h3>
+    </div>
+          -->
   <script>
     function toggleSidePanel() {
       var sidePanel = document.getElementById('sidePanel');
       sidePanel.classList.toggle('show'); // Toggle the 'show' class instead of 'collapsed'
     }
+    document.addEventListener('click', function (event) {
+      var sidePanel = document.getElementById('sidePanel');
+      var sidePanelBtn = document.querySelector('.side-panel-btn');
+
+      // Check if the click event occurred outside the side panel and side panel button
+      if (!sidePanel.contains(event.target) && !sidePanelBtn.contains(event.target)) {
+        sidePanel.classList.remove('show'); // Collapse the side panel
+      }
+    });
   </script>
 </body>
 
