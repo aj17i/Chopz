@@ -26,6 +26,15 @@ $num_following = $row_following['num_following'];
 $sql_image = "SELECT profilePic FROM user WHERE UserID = {$_SESSION["UserID"]}";
 $res = mysqli_query($conn, $sql_image);
 
+$sql_number = "SELECT  COUNT(*) AS num_recipes FROM recipe WHERE UserID = {$_SESSION["UserID"]}";
+$result_number = $mysqli->query($sql_number);
+$row_number = $result_number->fetch_assoc();
+$num_recipes = $row_number['num_recipes'];
+
+$sql_avg = "SELECT AVG(averageRating) AS average_rating FROM recipe WHERE UserID = {$_SESSION["UserID"]}";
+$result_average = $mysqli->query($sql_avg);
+$row_average = $result_average->fetch_assoc();
+$recipes_rating = $row_average['average_rating'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -83,15 +92,18 @@ $res = mysqli_query($conn, $sql_image);
     <div class="content">
       <div class="first-row">
         <div class="statistics">
-          <div>
-            number of posted recipes
+          <div class="number-of-posted-recipes">
+            <img src="../css/images/chart.png" alt="">
+            <?= $num_recipes ?>
           </div>
-          <div>
-            average rating
+          <div class="average-rating-of-recipes">
+            <img src="../css/images/pie-chart.png" alt="">
+            <?= $recipes_rating ?>
           </div>
         </div>
         <div class="create-a-post">
-          <a href="create-post.html">Create a Recipe<img src="" alt=""></a>
+          <a href="create-post.html"><button><img src="../css/images/video.png" alt="add recipe"> Add
+              Recipe</button></a>
         </div>
       </div>
       <div class="second-row-favourites">
@@ -102,19 +114,19 @@ $res = mysqli_query($conn, $sql_image);
       </div>
     </div>
   </div>
-  
+
   <script>
     function toggleSidePanel() {
       var sidePanel = document.getElementById('sidePanel');
-      sidePanel.classList.toggle('show'); 
+      sidePanel.classList.toggle('show');
     }
     document.addEventListener('click', function (event) {
       var sidePanel = document.getElementById('sidePanel');
       var sidePanelBtn = document.querySelector('.side-panel-btn');
 
-      
+
       if (!sidePanel.contains(event.target) && !sidePanelBtn.contains(event.target)) {
-        sidePanel.classList.remove('show'); 
+        sidePanel.classList.remove('show');
       }
     });
   </script>
