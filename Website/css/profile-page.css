@@ -1,12 +1,50 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.navbar {
+  background-image: url(images/2.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  overflow: hidden;
+  height: 80px;
+}
+
+.navbar a {
+  float: left;
+  display: block;
+  color: rgb(255, 255, 255);
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+.navbar .logo {
+  float: left;
+  padding: 5px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
 .container {
   display: flex;
   height: 100%;
 }
+
 .side-panel {
-  width: 200px; /* Width of the side panel */
-  background-color: #eddbff; /* Gray background color */
+  width: 200px;
+  background-color: #eddbff;
   padding: 20px;
   height: 80.5vh;
+  transition: transform 0.3s ease;
+}
+
+.side-panel.show {
+  transform: translateX(0);
+}
+.side-panel-btn {
+  display: none;
 }
 .side-panel-info {
   margin-top: 90px;
@@ -20,36 +58,35 @@
 }
 .user-info {
   display: flex;
-  margin-top: 10px; /* Adjust margin as needed */
+  margin-top: 10px;
   font-weight: bolder;
 }
 .user-info-number {
   display: flex;
-  margin-top: 5px; /* Adjust margin as needed */
+  margin-top: 5px;
   font-weight: bolder;
 }
 .user-num {
   margin-left: 35px;
 }
 .user-rum {
-  margin-left: 80px; /* Adjust padding as needed */
+  margin-left: 80px;
 }
 .user-name,
 .user-role {
-  padding: 5px; /* Adjust padding as needed */
+  padding: 5px;
 }
 
 .user-name {
-  margin-right: 10px; /* Add space between user name and role */
+  margin-right: 10px;
 }
 
 .panel-content img {
-  width: 150px; /* Adjust image width as needed */
+  width: 150px;
   height: 130px;
   display: block;
- 
 }
-.profile-pic{
+.profile-pic {
   border-radius: 150px;
   height: 130px;
   width: 140px;
@@ -82,11 +119,73 @@
   background-color: #717171;
 }
 
+.statistics,
+.recent-recipes,
+.post-a-recipe {
+  flex: 1;
+  margin-left: 20px; /* Adjust margin as needed */
+}
+
+.statistics {
+  display: flex;
+  justify-content: space-between;
+}
+
+.statistics-box {
+  width: calc(33.33% - 10px); /* Adjust width as needed */
+  padding: 20px;
+  background-color: #f0f0f0; /* Adjust background color as needed */
+  border-radius: 10px;
+}
+
+/*.recent-recipes {  /* Add styles for carousel here */
+/*}*/
+
+.post-a-recipe {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.post-a-recipe button {
+  padding: 10px 20px;
+  background-color: #b4b4b4;
+  color: #000;
+  border: none;
+  border-radius: 15px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.post-a-recipe button:hover {
+  background-color: #717171;
+}
+
 @media screen and (max-width: 600px) {
   .side-panel {
+    transform: translateX(-200px);
+    position: fixed;
+    left: 0;
+    z-index: 1000;
     width: 80px;
-    height:85.2vh;
+    height: 85.2vh;
   }
+  .navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .side-panel-btn {
+    display: block;
+    background-color: transparent; /* Transparent background */
+    border: none; /* Remove border */
+    color: #ffffff; /* Button text color */
+    font-size: 16px; /* Adjust font size */
+    cursor: pointer; /* Change cursor to pointer */
+  }
+
   .panel-content button {
     display: block;
     width: 80%;
@@ -103,38 +202,37 @@
     margin-left: 15px;
   }
   .panel-content img {
-    width: 100px; /* Adjust image width as needed */
+    width: 100px;
     height: 100px;
     display: block;
-   
   }
-  .profile-pic{
+  .profile-pic {
     border-radius: 150px;
     height: 100px;
     width: 100px;
     overflow: hidden;
     margin-bottom: -100px;
   }
-  
+
   .user-info {
     display: flex;
-    margin-top: 10px; /* Adjust margin as needed */
+    margin-top: 10px;
     font-weight: bolder;
     font-size: 12px;
   }
   .user-info-number {
     display: flex;
-    margin-top: 5px; /* Adjust margin as needed */
+    margin-top: 5px;
     font-weight: bolder;
   }
   .user-num {
     margin-left: 35px;
   }
   .user-rum {
-    margin-left: 50px; /* Adjust padding as needed */
+    margin-left: 50px;
   }
   .user-name {
-    margin-left: 3px; /* Add space between user name and role */
+    margin-left: 3px;
   }
   .user-role {
     margin-left: -15px;

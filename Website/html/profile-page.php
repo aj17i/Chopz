@@ -34,7 +34,6 @@ $res = mysqli_query($conn, $sql_image);
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chopz | Profile</title>
-  <link rel="stylesheet" href="../css/homepage.css" />
   <link rel="stylesheet" href="../css/profile-page.css" />
 </head>
 
@@ -44,13 +43,14 @@ $res = mysqli_query($conn, $sql_image);
       <a href="Homepage.php" class="logo">
         <img src="../css/images/logo.png" alt="Logo" style="height: 70px; width: 150px" />
       </a>
+      <button class="side-panel-btn" onclick="toggleSidePanel()">Menu</button>
     </div>
   </header>
 
   <!---------------------------------side panel-------------------------------------------->
 
   <div class="container">
-    <div class="side-panel">
+    <div class="side-panel" id="sidePanel">
       <div class="panel-content">
         <?php if (mysqli_num_rows($res) > 0) {
           while ($images = mysqli_fetch_assoc($res)) { ?>
@@ -80,10 +80,15 @@ $res = mysqli_query($conn, $sql_image);
         </div>
       </div>
     </div>
-  </div>
-  <div>
 
   </div>
+
+  <script>
+    function toggleSidePanel() {
+      var sidePanel = document.getElementById('sidePanel');
+      sidePanel.classList.toggle('show'); // Toggle the 'show' class instead of 'collapsed'
+    }
+  </script>
 </body>
 
 </html>

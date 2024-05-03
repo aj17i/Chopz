@@ -9,7 +9,7 @@ body {
   background-repeat: no-repeat;
   background-attachment: fixed;
   overflow: hidden;
-  height: 85px;
+  height: 80px;
 }
 
 .navbar a {
@@ -78,7 +78,7 @@ body {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #646464;
+  background-color: #a9a9a9;
   min-width: 160px;
   z-index: 1;
   left: 46%; /* Center the dropdown content block */
