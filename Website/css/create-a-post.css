@@ -6,14 +6,17 @@ body {
   background-position: center;
 }
 .container {
-  background-color: rgba(148, 148, 148, 0.7);
+  background-color: rgba(148, 148, 148, 0.2);
+  backdrop-filter: blur(15px);
   border-radius: 15px;
   display: flex;
   flex-direction: column;
   padding: 20px;
+  border: 2px solid white;
+  box-shadow: 2px 2px 5px 2px rgba(200, 200, 200, 0.3);
 }
 .container label {
-  color: black;
+  color: rgb(0, 0, 0);
 }
 
 #ingredients-list li {
@@ -45,7 +48,7 @@ body {
 #instructions-list input[type="text"] {
   flex: 1;
   margin-right: 10px;
-} 
+}
 #tags-list li {
   display: flex;
   align-items: center;
@@ -54,4 +57,4 @@ body {
 #tags-list input[type="text"] {
   flex: 1;
   margin-right: 10px;
-} 
+}
