@@ -24,7 +24,7 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
                 $error = $files['error'][$key];
 
                 if ($error === 0) {
-                    if ($img_size > 125000) {
+                    if ($img_size > 4194304) {
                         $em = "Sorry, your file is too large!";
                         header("Location: ../html/create-post.php?error=$em");
                         exit();
@@ -57,6 +57,8 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
         $description = sanitize($_POST['description']);
         $cuisine_name = sanitize($_POST['cuisine_name']);
         $ingredients = array_map('sanitize', $_POST['ingredients']);
+        $quantities = array_map('sanitize', $_POST['quantities']);
+        $units = array_map('sanitize', $_POST['units']);
         $instructions = array_map('sanitize', $_POST['instructions']);
         $tags = array_map('sanitize', $_POST['tags']);
         $images = $_FILES['images'];
@@ -79,9 +81,14 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
         $recipe_id = $mysqli->insert_id;
 
         // Insert ingredients
-        foreach ($ingredients as $ingredient) {
-            $stmt = $mysqli->prepare("INSERT INTO ingredient (RecipeID, ingredientName) VALUES (?, ?)");
-            $stmt->bind_param("is", $recipe_id, $ingredient);
+        foreach ($ingredients as $key => $ingredient) {
+            // Get sanitized quantity and unit corresponding to the ingredient
+            $quantity = $quantities[$key];
+            $unit = $units[$key];
+        
+            // Prepare and execute the SQL statement
+            $stmt = $mysqli->prepare("INSERT INTO ingredient (RecipeID, ingredientName, Quantity, Unit) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("isss", $recipe_id, $ingredient, $quantity, $unit);
             $stmt->execute();
         }
 

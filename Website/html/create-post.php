@@ -41,6 +41,44 @@ while ($row = $result->fetch_assoc()) {
       <ul id="ingredients-list">
         <li>
           <input type="text" name="ingredients[]" placeholder="Ingredient 1" required />
+          <select name="quantities[]" placeholder="Quantity">
+            <option value="a">a</option>
+            <option value="1/8">1/8</option>
+            <option value="1/4">1/4</option>
+            <option value="1/3">1/3</option>
+            <option value="1/2">1/2</option>
+            <option value="2/3">2/3</option>
+            <option value="3/4">3/4</option>
+            <option value="1">1</option>
+            <option value="1 1/3">1 1/3</option>
+            <option value="1 1/2">1 1/2</option>
+            <option value="1 2/3">1 2/3</option>
+            <option value="1 3/4">1 3/4</option>
+            <option value="2">2</option>
+            <option value="2 1/2">2 1/2</option>
+            <option value="3">3</option>
+            <option value="3 1/2">3 1/2</option>
+            <option value="4">4</option>
+            <option value="4 1/2">4 1/2</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <!-- Add more quantities as needed -->
+          </select>
+          <select name="units[]" placeholder="Unit">
+            <option value="cup">cup</option>
+            <option value="liter">liter</option>
+            <option value="gram">gram</option>
+            <option value="ounce">ounce</option>
+            <option value="pound">pound</option>
+            <option value="teaspoon">teaspoon</option>
+            <option value="tablespoon">tablespoon</option>
+            <option value="pinch">pinch</option>
+            <option value="dash">dash</option>
+            <option value="clove">clove</option>
+            <option value="slice">slice</option>
+            <option value="-">-</option>
+            <!-- Add more units as needed -->
+          </select>
           <button type="button" onclick="removeItem(this)">Remove</button>
         </li>
       </ul>
@@ -56,7 +94,8 @@ while ($row = $result->fetch_assoc()) {
       <button type="button" onclick="addInstruction()">Add Instruction</button><br /><br />
 
       <label for="images">Images:</label><br />
-      <input type="file" id="images" name="images[]" accept="image/*" multiple required /><br />
+      <input type="file" id="images" name="images[]" accept="image/*" onchange="return checkImageSize(this)" multiple
+        required /><br />
       <ul id="images-list"></ul>
       <button type="button" onclick="addImage()">Add Image</button><br /><br />
 
@@ -102,7 +141,48 @@ while ($row = $result->fetch_assoc()) {
 
     // Function to add a new ingredient field
     function addIngredient() {
-      addItem("ingredients-list", "Ingredient");
+      var list = document.getElementById("ingredients-list");
+      var newItem = document.createElement("li");
+      newItem.innerHTML =
+        '<input type="text" name="ingredients[]" placeholder="Ingredient" required />' +
+        '<select name="quantities[]" placeholder="Quantity">' +
+        '<option value="a">a</option>' +
+        '<option value="1/8">1/8</option>' +
+        '<option value="1/4">1/4</option>' +
+        '<option value="1/3">1/3</option>' +
+        '<option value="1/2">1/2</option>' +
+        '<option value="2/3">2/3</option>' +
+        '<option value="3/4">3/4</option>' +
+        '<option value="1">1</option>' +
+        '<option value="1 1/3">1 1/3</option>' +
+        '<option value="1 1/2">1 1/2</option>' +
+        '<option value="1 2/3">1 2/3</option>' +
+        '<option value="1 3/4">1 3/4</option>' +
+        '<option value="2">2</option>' +
+        '<option value="2 1/2">2 1/2</option>' +
+        '<option value="3">3</option>' +
+        '<option value="3 1/2">3 1/2</option>' +
+        '<option value="4">4</option>' +
+        '<option value="4 1/2">4 1/2</option>' +
+        '<option value="5">5</option>' +
+        '<option value="6">6</option>' +
+        '</select>' +
+        '<select name="units[]" placeholder="Unit">' +
+        '<option value="-">-</option>' +
+        '<option value="cup">cup</option>' +
+        '<option value="liter">liter</option>' +
+        '<option value="gram">gram</option>' +
+        '<option value="ounce">ounce</option>' +
+        '<option value="pound">pound</option>' +
+        '<option value="teaspoon">teaspoon</option>' +
+        '<option value="tablespoon">tablespoon</option>' +
+        '<option value="pinch">pinch</option>' +
+        '<option value="dash">dash</option>' +
+        '<option value="clove">clove</option>' +
+        '<option value="slice">slice</option>' +
+        '</select>' +
+        '<button type="button" onclick="removeItem(this)">Remove</button>';
+      list.appendChild(newItem);
     }
 
     // Function to add a new instruction field
@@ -115,12 +195,27 @@ while ($row = $result->fetch_assoc()) {
       addItem("tags-list", "Tag");
     }
 
+    // Function to check if the selected image size is too large
+    function checkImageSize(input) {
+      var files = input.files;
+      var maxSize = 4194304; // Maximum allowed size in bytes (adjust as needed)
+
+      for (var i = 0; i < files.length; i++) {
+        if (files[i].size > maxSize) {
+          alert("Sorry, your file \"" + files[i].name + "\" is too large!");
+          input.value = ''; // Clear the file input
+          return false; // Prevent form submission
+        }
+      }
+      return true; // Image size is acceptable
+    }
+
     // Function to add a new image field
     function addImage() {
       var list = document.getElementById("images-list");
       var newItem = document.createElement("li");
       newItem.innerHTML =
-        '<input type="file" name="images[]" accept="image/*"> <button type="button" onclick="removeItem(this)">Remove</button>';
+        '<input type="file" name="images[]" accept="image/*" onchange="return checkImageSize(this)"> <button type="button" onclick="removeItem(this)">Remove</button>';
       list.appendChild(newItem);
     }
 
