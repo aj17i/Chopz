@@ -111,7 +111,7 @@ $recipes_rating = $row_average['average_rating'];
       <div class="second-row-favourites">
         <div class="top-part-a">
           <h2>Favorites </h2>
-          <img src="../css/images/bookmark.png" alt="">
+          <a href="saved-posts.php"><img src="../css/images/bookmark.png" alt=""></a>  
         </div>
         <div>
 
@@ -121,7 +121,7 @@ $recipes_rating = $row_average['average_rating'];
       <div class="third-row-recent">
         <div class="top-part-b">
           <h2>Recently Posted</h2>
-          <img src="../css/images/cookbook.png" alt="">
+          <a href="posted-recipes.php"><img src="../css/images/cookbook.png" alt=""></a>
         </div>
       </div>
     </div>
