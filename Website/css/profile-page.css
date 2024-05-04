@@ -100,8 +100,31 @@ body {
 
 .second-row-favourites,
 .third-row-recent {
-  height: 300px;
+  height: 350px;
+  background-color: #d7d7d7;
+  padding: 10px;
+  border-radius: 15px;
 }
+
+.top-part-a img {
+  height: 50px;
+  width: 50px;
+}
+.top-part-a {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.top-part-b {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.top-part-b img {
+  height: 50px;
+  width: 50px;
+}
+
 .first-row,
 .second-row-favourites,
 .third-row-recent {
@@ -197,7 +220,7 @@ body {
   background-color: #717171;
 }
 
-.number-of-posted-recipes{
+.number-of-posted-recipes {
   background-color: #31ea78;
   border-radius: 20px;
   height: 80px;
@@ -213,10 +236,10 @@ body {
 .number-of-posted-recipes img {
   height: 50px;
   width: 50px;
-  
+
   margin-right: 20px;
 }
-.average-rating-of-recipes{
+.average-rating-of-recipes {
   background-color: #31ea78;
   border-radius: 20px;
   height: 80px;
@@ -316,5 +339,11 @@ body {
   }
   .user-role {
     margin-left: -15px;
+  }
+  .first-row {
+    overflow-y: scroll;
+  }
+  .first-row::-webkit-scrollbar {
+    display: none;
   }
 }

@@ -109,10 +109,20 @@ $recipes_rating = $row_average['average_rating'];
         </div>
       </div>
       <div class="second-row-favourites">
-        <h3>Carousel of favorite recipes plus a link</h3>
+        <div class="top-part-a">
+          <h2>Favorites </h2>
+          <img src="../css/images/bookmark.png" alt="">
+        </div>
+        <div>
+
+        </div>
+
       </div>
       <div class="third-row-recent">
-        <h3>Carousel of recently posted recipes plus a link</h3>
+        <div class = "top-part-b">
+          <h2>Recently Posted</h2>
+          <img src="../css/images/cookbook.png" alt="">
+        </div>
       </div>
     </div>
   </div>
