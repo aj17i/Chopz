@@ -111,17 +111,137 @@ $recipes_rating = $row_average['average_rating'];
       <div class="second-row-favourites">
         <div class="top-part-a">
           <h2>Favorites </h2>
-          <a href="saved-posts.php"><img src="../css/images/bookmark.png" alt=""></a>  
+          <a href="saved-posts.php"><img src="../css/images/bookmark.png" alt=""></a>
         </div>
-        <div>
-
+        <div class="carousel-container">
+          <section class="product">
+            <button class="pre-btn"><img src="images/arrow.png" alt="" /></button>
+            <button class="nxt-btn"><img src="images/arrow.png" alt="" /></button>
+            <div class="product-container">
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card1.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">add to wishlist</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card2.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">View recipe</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card3.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">add to wishlist</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card4.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">add to wishlist</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card5.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">add to wishlist</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card6.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">add to wishlist</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
-
       </div>
       <div class="third-row-recent">
         <div class="top-part-b">
           <h2>Recently Posted</h2>
           <a href="posted-recipes.php"><img src="../css/images/cookbook.png" alt=""></a>
+        </div>
+        <div class="carousel-container">
+          <section class="product">
+            <button class="pre-btn"><img src="images/arrow.png" alt="" /></button>
+            <button class="nxt-btn"><img src="images/arrow.png" alt="" /></button>
+            <div class="product-container">
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card1.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">add to wishlist</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card2.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">View recipe</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card3.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">add to wishlist</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card4.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">add to wishlist</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card5.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">add to wishlist</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+              <div class="product-card">
+                <div class="product-image">
+                  <img src="images/card6.jpg" class="product-thumb" alt="" />
+                  <button class="card-btn">add to wishlist</button>
+                </div>
+                <div class="product-info">
+                  <h2 class="product-brand">brand</h2>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
       </div>
     </div>
@@ -141,6 +261,25 @@ $recipes_rating = $row_average['average_rating'];
         sidePanel.classList.remove('show');
       }
     });
+
+
+
+    const productContainers = [...document.querySelectorAll('.product-container')];
+    const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
+    const preBtn = [...document.querySelectorAll('.pre-btn')];
+
+    productContainers.forEach((item, i) => {
+      let containerDimensions = item.getBoundingClientRect();
+      let containerWidth = containerDimensions.width;
+
+      nxtBtn[i].addEventListener('click', () => {
+        item.scrollLeft += containerWidth;
+      })
+
+      preBtn[i].addEventListener('click', () => {
+        item.scrollLeft -= containerWidth;
+      })
+    })
   </script>
 </body>
 
