@@ -119,7 +119,7 @@ $recipes_rating = $row_average['average_rating'];
 
       </div>
       <div class="third-row-recent">
-        <div class = "top-part-b">
+        <div class="top-part-b">
           <h2>Recently Posted</h2>
           <img src="../css/images/cookbook.png" alt="">
         </div>

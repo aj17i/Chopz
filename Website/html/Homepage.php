@@ -1,7 +1,7 @@
 <?php
 session_start();
 $mysqli = require_once '../php/database.php';
-if (!$_SESSION['logged'] || $_SESSION['logged']!== true ) {
+if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
   header("Location: loginpage.php");
   exit();
 }
@@ -21,7 +21,7 @@ if (!$_SESSION['logged'] || $_SESSION['logged']!== true ) {
 <body>
   <header>
     <div class="navbar">
-    <div class="background"></div>
+      <div class="background"></div>
       <a href="Homepage.php" class="logo">
         <img src="../css/images/logo.png" alt="Logo" style="height: 70px; width: 150px" />
       </a>

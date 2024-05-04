@@ -61,7 +61,7 @@
           // Check if error message exists in the URL
           if (isset($_GET['error']) && $_GET['error'] === 'invalid_credentials') {
             echo "<p>Invalid login. Please retry with correct email and password.</p>";
-          }else if(isset($_GET['error']) && $_GET['error'] === 'Signup_Successful'){
+          } else if (isset($_GET['error']) && $_GET['error'] === 'Signup_Successful') {
             echo "<p>Signup Successful, please check email to activate account.</p>";
           }
           ?>
