@@ -2,7 +2,7 @@ body {
   background-image: url(../css/images/post2.jpg);
   background-size: cover;
   background-size: 100vw;
-  background-repeat:repeat-x;
+  background-repeat: repeat-x;
   background-position: center;
 }
 .container {
@@ -36,3 +36,22 @@ body {
   width: 100px;
   margin-right: 10px;
 }
+
+#instructions-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+#instructions-list input[type="text"] {
+  flex: 1;
+  margin-right: 10px;
+} 
+#tags-list li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+#tags-list input[type="text"] {
+  flex: 1;
+  margin-right: 10px;
+} 

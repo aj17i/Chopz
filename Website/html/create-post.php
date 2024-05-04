@@ -87,7 +87,7 @@ while ($row = $result->fetch_assoc()) {
       <label for="instructions">Instructions:</label><br />
       <ol id="instructions-list">
         <li>
-          <textarea name="instructions[]" rows="2" cols="50" placeholder="Step 1 instruction" required></textarea>
+          <input type="text" name="instructions[]" placeholder="Step 1 instruction" required>
           <button type="button" onclick="removeItem(this)">Remove</button>
         </li>
       </ol>

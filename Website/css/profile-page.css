@@ -213,7 +213,7 @@ body {
 .number-of-posted-recipes img {
   height: 50px;
   width: 50px;
-  margin-left: -50px;
+  
   margin-right: 20px;
 }
 .average-rating-of-recipes{
@@ -232,7 +232,6 @@ body {
 .average-rating-of-recipes img {
   height: 50px;
   width: 50px;
-  margin-left: -50px;
   margin-right: 20px;
 }
 @media screen and (max-width: 600px) {

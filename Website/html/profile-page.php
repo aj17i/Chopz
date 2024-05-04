@@ -94,10 +94,12 @@ $recipes_rating = $row_average['average_rating'];
         <div class="statistics">
           <div class="number-of-posted-recipes">
             <img src="../css/images/chart.png" alt="">
+            Posted Recipes:
             <?= $num_recipes ?>
           </div>
           <div class="average-rating-of-recipes">
             <img src="../css/images/pie-chart.png" alt="">
+            Recipe Ratings:
             <?= $recipes_rating ?>
           </div>
         </div>
