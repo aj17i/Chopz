@@ -52,6 +52,41 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
             }
             return $uploadedPaths;
         }
+        $thumbnail_path = '';
+        if ($_FILES['thumbnail']['error'] === 0) {
+            $thumbnail_name = sanitize($_FILES['thumbnail']['name']);
+            $thumbnail_size = $_FILES['thumbnail']['size'];
+            $thumbnail_tmp_name = $_FILES['thumbnail']['tmp_name'];
+            $thumbnail_error = $_FILES['thumbnail']['error'];
+
+            if ($thumbnail_error === 0) {
+                if ($thumbnail_size > 4194304) {
+                    $em = "Sorry, your thumbnail file is too large!";
+                    header("Location: ../html/create-post.php?error=$em");
+                    exit();
+                } else {
+                    $thumbnail_ex = pathinfo($thumbnail_name, PATHINFO_EXTENSION);
+                    $thumbnail_ex_lc = strtolower($thumbnail_ex);
+                    $allowed_exs = array("jpg", "png", "jpeg");
+
+                    if (in_array($thumbnail_ex_lc, $allowed_exs)) {
+                        $thumbnail_new_name = uniqid("THUMB-", true) . "." . $thumbnail_ex_lc;
+                        $thumbnail_upload_path = "../css/images/" . $thumbnail_new_name;
+                        move_uploaded_file($thumbnail_tmp_name, $thumbnail_upload_path);
+                        $thumbnail_path = $thumbnail_upload_path;
+                    } else {
+                        $em = "Only images are accepted for the thumbnail";
+                        header("Location: ../html/create-post.php?error=$em");
+                        exit();
+                    }
+                }
+            } else {
+                $em = "Unknown error occurred while uploading the thumbnail!";
+                header("Location: ../html/create-post.php?error=$em");
+                exit();
+            }
+        }
+
         // Sanitize inputs
         $title = sanitize($_POST['title']);
         $description = sanitize($_POST['description']);
@@ -85,7 +120,7 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
             // Get sanitized quantity and unit corresponding to the ingredient
             $quantity = $quantities[$key];
             $unit = $units[$key];
-        
+
             // Prepare and execute the SQL statement
             $stmt = $mysqli->prepare("INSERT INTO ingredient (RecipeID, ingredientName, Quantity, Unit) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("isss", $recipe_id, $ingredient, $quantity, $unit);
@@ -111,8 +146,11 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
         // Insert image paths into the database
         $imageNumber = 1; // Initialize image number
         foreach ($imagePaths as $image_path) {
-            $stmt = $mysqli->prepare("INSERT INTO recipe_images (RecipeID, Image, ImageNumber) VALUES (?, ?, ?)");
-            $stmt->bind_param("iss", $recipe_id, $image_path, $imageNumber);
+            
+                // Insert thumbnail path
+                $stmt = $mysqli->prepare("INSERT INTO recipe_images (RecipeID, thumbnail ,Image, ImageNumber) VALUES (?, ?, ?, ?)");
+                $stmt->bind_param("isss", $recipe_id, $thumbnail_path,  $image_path, $imageNumber);
+            
             $stmt->execute();
             $imageNumber++; // Increment image number for next image
         }

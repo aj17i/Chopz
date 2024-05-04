@@ -92,6 +92,9 @@ while ($row = $result->fetch_assoc()) {
         </li>
       </ol>
       <button type="button" onclick="addInstruction()">Add Instruction</button><br /><br />
+      
+      <label for="thumbnail">Thumbnail image:</label>
+      <input type="file"  id="thumbnail" name="thumbnail" accept="image/*" onchange="return checkImageSize(this)" required><br>
 
       <label for="images">Images:</label><br />
       <input type="file" id="images" name="images[]" accept="image/*" onchange="return checkImageSize(this)" multiple
