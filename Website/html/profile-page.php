@@ -102,6 +102,11 @@ $recipes_rating = $row_average['average_rating'];
             Recipe Ratings:
             <?= $recipes_rating ?>
           </div>
+          <div class="average-rating-of-recipes">
+            <img src="../css/images/recipe.png" alt="">
+            Personal Rating:
+            <?= $recipes_rating ?>
+          </div>
         </div>
         <div class="create-a-post">
           <a href="create-post.php"><button><img src="../css/images/video.png" alt="add recipe"> Add
