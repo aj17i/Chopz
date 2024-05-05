@@ -118,60 +118,7 @@ $recipes_rating = $row_average['average_rating'];
             <button class="pre-btn"><img src="images/arrow.png" alt="" /></button>
             <button class="nxt-btn"><img src="images/arrow.png" alt="" /></button>
             <div class="product-container">
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card1.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card2.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">View recipe</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card3.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card4.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card5.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card6.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
+
             </div>
           </section>
         </div>
@@ -186,60 +133,52 @@ $recipes_rating = $row_average['average_rating'];
             <button class="pre-btn"><img src="images/arrow.png" alt="" /></button>
             <button class="nxt-btn"><img src="images/arrow.png" alt="" /></button>
             <div class="product-container">
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card1.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card2.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">View recipe</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card3.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card4.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card5.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
-              <div class="product-card">
-                <div class="product-image">
-                  <img src="images/card6.jpg" class="product-thumb" alt="" />
-                  <button class="card-btn">add to wishlist</button>
-                </div>
-                <div class="product-info">
-                  <h2 class="product-brand">brand</h2>
-                </div>
-              </div>
+              <?php
+              // Assuming you have already connected to your database
+              $userId = $_SESSION["UserID"];
+
+              // First query to retrieve titles and recipe IDs
+              $titleQuery = "SELECT RecipeID, title FROM recipe WHERE UserID = $userId LIMIT 10";
+              $titleResult = mysqli_query($conn, $titleQuery);
+
+              // Loop through each title and recipe ID
+              while ($titleRow = mysqli_fetch_assoc($titleResult)) {
+                $recipeId = $titleRow['RecipeID'];
+
+                // Second query to retrieve thumbnails using the recipe ID
+                $thumbnailQuery = "SELECT thumbnail FROM recipe_images WHERE RecipeID = $recipeId";
+                $thumbnailResult = mysqli_query($conn, $thumbnailQuery);
+                $thumbnailRow = mysqli_fetch_assoc($thumbnailResult);
+
+                // Check if thumbnail exists
+                if ($thumbnailRow) {
+                  ?>
+                  <div class="product-card">
+                    <div class="product-image">
+                      <img src="<?php echo $thumbnailRow['thumbnail']; ?>" class="product-thumb" alt="" />
+                      <button class="card-btn">add to wishlist</button>
+                    </div>
+                    <div class="product-info">
+                      <h2 class="product-brand"><?php echo $titleRow['title']; ?></h2>
+                    </div>
+                  </div>
+                  <?php
+                } else {
+                  // Handle case where thumbnail is not found
+                  ?>
+                  <div class="product-card">
+                    <div class="product-info">
+                      <h2 class="product-brand"><?php echo $titleRow['title']; ?></h2>
+                      <p>No thumbnail available</p>
+                    </div>
+                  </div>
+                  <?php
+                }
+              }
+              ?>
+
+
+
             </div>
           </section>
         </div>

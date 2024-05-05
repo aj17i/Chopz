@@ -358,15 +358,6 @@ body {
   padding: 20px 0; /* Add padding as needed */
   overflow: hidden; /* Ensure the carousel is contained within its container */
 }
-
-
-
-
-
-
-
-
-
 /* PRODUCTS */
 .product {
   position: relative;
@@ -450,12 +441,6 @@ body {
 .product-brand {
   text-transform: uppercase;
 }
-
-
-
-
-
-
 
 .pre-btn,
 .nxt-btn {
