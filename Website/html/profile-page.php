@@ -156,7 +156,7 @@ $recipes_rating = $row_average['average_rating'];
                   <div class="product-card">
                     <div class="product-image">
                       <img src="<?php echo $thumbnailRow['thumbnail']; ?>" class="product-thumb" alt="" />
-                      <button class="card-btn">add to wishlist</button>
+                      <button class="card-btn">View Recipe</button>
                     </div>
                     <div class="product-info">
                       <h2 class="product-brand"><?php echo $titleRow['title']; ?></h2>
