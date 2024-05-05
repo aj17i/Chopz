@@ -138,12 +138,17 @@ $recipes_rating = $row_average['average_rating'];
               $userId = $_SESSION["UserID"];
 
               // First query to retrieve titles and recipe IDs
-              $titleQuery = "SELECT RecipeID, title FROM recipe WHERE UserID = $userId LIMIT 10";
+              $titleQuery = "SELECT RecipeID, title 
+              FROM recipe 
+              WHERE UserID = $userId 
+              ORDER BY creation_date DESC 
+              LIMIT 10";
               $titleResult = mysqli_query($conn, $titleQuery);
 
               // Loop through each title and recipe ID
               while ($titleRow = mysqli_fetch_assoc($titleResult)) {
                 $recipeId = $titleRow['RecipeID'];
+                $url = "recipe-view.php?RecipeID=$recipeId";
 
                 // Second query to retrieve thumbnails using the recipe ID
                 $thumbnailQuery = "SELECT thumbnail FROM recipe_images WHERE RecipeID = $recipeId";
@@ -156,7 +161,9 @@ $recipes_rating = $row_average['average_rating'];
                   <div class="product-card">
                     <div class="product-image">
                       <img src="<?php echo $thumbnailRow['thumbnail']; ?>" class="product-thumb" alt="" />
-                      <button class="card-btn">View Recipe</button>
+                      <a href="<?php echo $url; ?>">
+                        <button class="card-btn">View Recipe</button>
+                      </a>
                     </div>
                     <div class="product-info">
                       <h2 class="product-brand"><?php echo $titleRow['title']; ?></h2>
