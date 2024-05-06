@@ -6,7 +6,7 @@ body {
   padding: 0;
 }
 .navbar {
-  background-color: #eaaf31;
+  background-image: url(images/2.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -43,10 +43,11 @@ body {
 
 .recipe {
   width: 60%;
+  margin-left: 60px;
 }
 
 .creator-info {
-  width: 35%;
+  width: 25%;
   background-color: #f0f0f0;
   padding: 20px;
   border-radius: 5px;

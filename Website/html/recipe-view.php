@@ -1,3 +1,8 @@
+<?php
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,16 +11,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Page</title>
     <link rel="stylesheet" href="../css/recipe-view.css">
-    
+
 </head>
 
 <body>
     <header>
         <div class="navbar">
             <a href="Homepage.php" class="logo">
-                <img src="../css/images/chopz10.png" alt="Logo" style="height: 70px; width: 150px" />
+                <img src="../css/images/logo.png" alt="Logo" style="height: 70px; width: 150px" />
             </a>
-            
+
             <a href="profile-page.php" class="profilePic">
                 <img src="../css/images/user.png" alt="" />
             </a>
@@ -24,9 +29,10 @@
 
     <div class="container">
         <div class="recipe">
+            <img src="recipe-image.jpg" alt="Recipe Image">
             <!-- Recipe content goes here -->
             <h1>Recipe Name</h1>
-            <img src="recipe-image.jpg" alt="Recipe Image">
+
             <p>Ingredients:</p>
             <ul>
                 <li>Ingredient 1</li>
@@ -39,6 +45,7 @@
                 <li>Step 2</li>
                 <!-- Add more steps as needed -->
             </ol>
+            <p>description</p>
         </div>
 
         <div class="creator-info">

@@ -57,7 +57,7 @@ $user_rating_avg = $row_user_avg['user_average_rating'];
   <header>
     <div class="navbar">
       <a href="Homepage.php" class="logo">
-        <img src="../css/images/chopz10.png" alt="Logo" style="height: 70px; width: 150px" />
+        <img src="../css/images/logo.png" alt="Logo" style="height: 70px; width: 150px" />
       </a>
       <button class="side-panel-btn" onclick="toggleSidePanel()">Menu</button>
     </div>

@@ -23,7 +23,7 @@ body {
 }
 
 .navbar {
- background-color: #eaaf31;
+  background-image: url(images/2.jpg);
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -101,7 +101,7 @@ body {
 .second-row-favourites,
 .third-row-recent {
   height: 550px;
-  background-color: #ffd8a5;
+  background-color: #d7d7d7;
   padding: 10px;
   border-radius: 15px;
 }
@@ -133,7 +133,7 @@ body {
 
 .side-panel {
   width: 200px;
-  background-color: #fff3d4;
+  background-color: #e8e8e8;
   padding: 20px;
   position: sticky;
   height: 81vh;

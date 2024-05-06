@@ -23,7 +23,7 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
     <div class="navbar">
       <div class="background"></div>
       <a href="Homepage.php" class="logo">
-        <img src="../css/images/chopz10.png" alt="Logo" style="height: 70px; width: 150px" />
+        <img src="../css/images/logo.png" alt="Logo" style="height: 70px; width: 150px" />
       </a>
       <div class="dropdown">
         <button class="dropbtn">Search by...</button>
