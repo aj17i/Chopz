@@ -6,17 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recipe Page</title>
     <link rel="stylesheet" href="../css/recipe-view.css">
+    
 </head>
 
 <body>
-    <nav>
-        <ul>
-            <li><a href="#">Home</a></li>
-
-            <li><a href="#">profile</a></li>
-            <!-- Add more navigation links as needed -->
-        </ul>
-    </nav>
+    <header>
+        <div class="navbar">
+            <a href="Homepage.php" class="logo">
+                <img src="../css/images/chopz10.png" alt="Logo" style="height: 70px; width: 150px" />
+            </a>
+            
+            <a href="profile-page.php" class="profilePic">
+                <img src="../css/images/user.png" alt="" />
+            </a>
+        </div>
+    </header>
 
     <div class="container">
         <div class="recipe">
@@ -43,7 +47,7 @@
             <p>Creator Name</p>
             <button id="followBtn">Follow</button>
             <div class="rating">
-                <!-- Dynamic star rating -->    
+                <!-- Dynamic star rating -->
                 <p>Rating:</p>
                 <div class="stars">
                     <span class="star">&#9733;</span>
