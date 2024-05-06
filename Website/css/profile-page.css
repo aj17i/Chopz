@@ -23,7 +23,7 @@ body {
 }
 
 .navbar {
-  background-image: url(images/2.jpg);
+ background-color: #eaaf31;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -76,7 +76,7 @@ body {
   align-items: center;
 }
 .create-a-post button {
-  background-color: #31ea78;
+  background-color: #eaaf31;
   border-radius: 20px;
   height: 80px;
   width: 230px;
@@ -101,7 +101,7 @@ body {
 .second-row-favourites,
 .third-row-recent {
   height: 550px;
-  background-color: #d7d7d7;
+  background-color: #ffd8a5;
   padding: 10px;
   border-radius: 15px;
 }
@@ -133,7 +133,7 @@ body {
 
 .side-panel {
   width: 200px;
-  background-color: #eddbff;
+  background-color: #fff3d4;
   padding: 20px;
   position: sticky;
   height: 81vh;
@@ -205,7 +205,7 @@ body {
   padding: 10px;
   margin-top: 20px;
   border: none;
-  background-color: #b4b4b4;
+  background-color: #eaaf31;
   color: rgb(0, 0, 0);
   cursor: pointer;
   height: 45px;
@@ -217,11 +217,11 @@ body {
 }
 
 .panel-content button:hover {
-  background-color: #717171;
+  background-color: #eba308;
 }
 
 .number-of-posted-recipes {
-  background-color: #31ea78;
+  background-color: #eaaf31;
   border-radius: 20px;
   height: 80px;
   width: 230px;
@@ -240,7 +240,7 @@ body {
   margin-right: 20px;
 }
 .average-rating-of-recipes {
-  background-color: #31ea78;
+  background-color: #eaaf31;
   border-radius: 20px;
   height: 80px;
   width: 230px;

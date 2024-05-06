@@ -4,7 +4,7 @@ body {
 }
 
 .navbar {
-  background-image: url(images/2.jpg);
+  background-color: #eaaf31;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -24,7 +24,7 @@ body {
 .navbar .logo {
   float: left;
   padding: 5px;
-  background-color: rgba(255, 255, 255, 0.5 ); 
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .navbar .profilePic {
@@ -78,11 +78,11 @@ body {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #a9a9a9;
+  background-color: #ffd16d;
   min-width: 160px;
   z-index: 1;
-  left: 46%; 
-  transform: translateX(-50%); 
+  left: 46%;
+  transform: translateX(-50%);
   border-radius: 10px;
 }
 
@@ -97,7 +97,7 @@ body {
 }
 
 .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: #feecc4;
   color: black;
   border-radius: 10px;
 }
@@ -118,7 +118,7 @@ body {
 }
 
 .searchBar button {
-  background-color: #c28df8;
+  background-color: #e3bd6a;
   color: white;
   border: none;
   padding: 10px 20px;
@@ -128,7 +128,7 @@ body {
 }
 
 .searchBar button:hover {
-  background-color: #9838f8;
+  background-color: #eaaf31;
 }
 
 .searchActive {
@@ -141,7 +141,7 @@ body {
   }
 
   .navbar .logo img {
-    max-width: 90px; 
+    max-width: 90px;
     max-height: 45px;
     margin-top: 15px;
     margin-right: 10px;
@@ -150,21 +150,21 @@ body {
     font-size: 12px;
     padding: 5px 5px;
     margin-top: 12px;
-    margin-right:0px;
+    margin-right: 0px;
   }
   .searchBar {
     display: none;
     margin-top: 5px;
-    margin-left:100px;
+    margin-left: 100px;
   }
   .searchBar input[type="text"] {
     border: 2px solid #ccc;
     border-radius: 15px;
     padding: 10px;
     width: 50px;
-    margin-left:-50px;
-    margin-right:0px;
-    font-size:12px;
+    margin-left: -50px;
+    margin-right: 0px;
+    font-size: 12px;
   }
 
   .searchBar button {
@@ -175,11 +175,11 @@ body {
     border-radius: 15px;
     cursor: pointer;
     transition: background-color 0.3s;
-    width:50px;
-    margin-top:-50px;
-    margin-right:-100px;
+    width: 50px;
+    margin-top: -50px;
+    margin-right: -100px;
     margin-left: 12px;
-    font-size:10px;
+    font-size: 10px;
   }
 
   .profilePic {
@@ -188,7 +188,7 @@ body {
   }
 
   .dropdown {
-    display: block; 
+    display: block;
     float: none;
     margin-top: 15px;
     width: 220px;

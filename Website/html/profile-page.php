@@ -35,6 +35,13 @@ $sql_avg = "SELECT AVG(average_Rating) AS average_rating FROM recipe WHERE UserI
 $result_average = $mysqli->query($sql_avg);
 $row_average = $result_average->fetch_assoc();
 $recipes_rating = $row_average['average_rating'];
+
+$user_avg = "SELECT AVG(average_rating) AS user_average_rating FROM user WHERE UserID = {$_SESSION["UserID"]}";
+$result_user_avg = $mysqli->query($user_avg);
+$row_user_avg = $result_user_avg->fetch_assoc();
+$user_rating_avg = $row_user_avg['user_average_rating'];
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -46,11 +53,11 @@ $recipes_rating = $row_average['average_rating'];
   <link rel="stylesheet" href="../css/profile-page.css" />
 </head>
 
-<body>
+  <body>
   <header>
     <div class="navbar">
       <a href="Homepage.php" class="logo">
-        <img src="../css/images/logo.png" alt="Logo" style="height: 70px; width: 150px" />
+        <img src="../css/images/chopz10.png" alt="Logo" style="height: 70px; width: 150px" />
       </a>
       <button class="side-panel-btn" onclick="toggleSidePanel()">Menu</button>
     </div>
@@ -105,7 +112,7 @@ $recipes_rating = $row_average['average_rating'];
           <div class="average-rating-of-recipes">
             <img src="../css/images/recipe.png" alt="">
             Personal Rating:
-            <?= $recipes_rating ?>
+            <?= $user_rating_avg ?>
           </div>
         </div>
         <div class="create-a-post">
