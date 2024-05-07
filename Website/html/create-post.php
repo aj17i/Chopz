@@ -37,7 +37,7 @@ while ($row = $result->fetch_assoc()) {
       <label for="description">Description:</label><br />
       <textarea id="description" name="description" rows="4" cols="50" required></textarea><br /><br />
 
-      <label for="inspo">Inspiration:</label><br />
+      <label for="inspo">FAQ, Inspiration and others:</label><br />
       <textarea id="inspo" name="inspo" rows="8" cols="50" required></textarea><br />
 
       <label for="cuisine_name">Cuisine:</label><br />

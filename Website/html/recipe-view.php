@@ -20,11 +20,12 @@ mysqli_stmt_execute($images_stmt);
 $images_res = mysqli_stmt_get_result($images_stmt);
 
 // Prepare the recipe details SQL query
-$recipe_details_sql = "SELECT * FROM recipe WHERE RecipeID = ?";
+$recipe_details_sql = "SELECT title FROM recipe WHERE RecipeID = ?";
 $recipe_details_stmt = mysqli_prepare($conn, $recipe_details_sql);
 mysqli_stmt_bind_param($recipe_details_stmt, 'i', $recipeId);
 mysqli_stmt_execute($recipe_details_stmt);
 $recipe_details_res = mysqli_stmt_get_result($recipe_details_stmt);
+
 
 $ingredient_detailes_sql = "SELECT * FROM ingredient WHERE RecipeID = ?";
 $ingredient_details_stmt = mysqli_prepare($conn, $ingredient_detailes_sql);
@@ -32,7 +33,30 @@ mysqli_stmt_bind_param($ingredient_details_stmt, 'i', $recipeId);
 mysqli_stmt_execute($ingredient_details_stmt);
 $ingredient_details_res = mysqli_stmt_get_result($ingredient_details_stmt);
 
+$instruction_detailes_sql = "SELECT * FROM instruction WHERE RecipeID = ? ORDER BY StepNumber";
+$instruction_details_stmt = mysqli_prepare($conn, $instruction_detailes_sql);
+mysqli_stmt_bind_param($instruction_details_stmt, 'i', $recipeId);
+mysqli_stmt_execute($instruction_details_stmt);
+$instruction_details_res = mysqli_stmt_get_result($instruction_details_stmt);
 
+
+$recipe_times_sql = "SELECT prep_time, cooking_time, serving_size, skill_level FROM recipe WHERE RecipeID = ?";
+$recipe_times_stmt = mysqli_prepare($conn, $recipe_times_sql);
+mysqli_stmt_bind_param($recipe_times_stmt, 'i', $recipeId);
+mysqli_stmt_execute($recipe_times_stmt);
+$recipe_times_res = mysqli_stmt_get_result($recipe_times_stmt);
+
+$recipe_inspo_sql = "SELECT inspo FROM recipe WHERE RecipeID = ?";
+$recipe_inspo_stmt = mysqli_prepare($conn, $recipe_inspo_sql);
+mysqli_stmt_bind_param($recipe_inspo_stmt, 'i', $recipeId);
+mysqli_stmt_execute($recipe_inspo_stmt);
+$recipe_inspo_res = mysqli_stmt_get_result($recipe_inspo_stmt);
+
+$recipe_nutrition_sql = "SELECT calories, carbs, protein, fat FROM recipe WHERE RecipeID = ?";
+$recipe_nutrition_stmt = mysqli_prepare($conn, $recipe_nutrition_sql);
+mysqli_stmt_bind_param($recipe_nutrition_stmt, 'i', $recipeId);
+mysqli_stmt_execute($recipe_nutrition_stmt);
+$recipe_nutrition_res = mysqli_stmt_get_result($recipe_nutrition_stmt);
 
 ?>
 
@@ -99,9 +123,29 @@ $ingredient_details_res = mysqli_stmt_get_result($ingredient_details_stmt);
 
                     <div class="ingredients">
                         <hr>
+
                         <div class="times">
-                            cooking time
+                            <?php
+                            if (mysqli_num_rows($recipe_times_res) > 0) {
+                                // Fetch the first row
+                                $recipe_times_row = mysqli_fetch_assoc($recipe_times_res);
+
+                                // Display the recipe details
+                            
+                                echo "<span class='label'>Prep Time:</span> <span class='value'>" . $recipe_times_row['prep_time'] . "</span>";
+                                echo "<span class='label'> Cooking Time:</span> <span class='value'>" . $recipe_times_row['cooking_time'] . "</span>";
+                                echo "<span class='label'> Serving Size:</span> <span class='value'>" . $recipe_times_row['serving_size'] . "</span>";
+                                echo "<span class='label'> Skill Level:</span> <span class='value'>" . $recipe_times_row['skill_level'] . "</span>";
+
+                            } else {
+                                echo "Recipe not found.";
+                            }
+
+                            // Close the statement
+                            mysqli_stmt_close($recipe_details_stmt);
+                            ?>
                         </div>
+
                         <hr>
                         <h2>Ingredients:</h2>
                         <?php
@@ -121,17 +165,116 @@ $ingredient_details_res = mysqli_stmt_get_result($ingredient_details_stmt);
                         }
                         ?>
                         <br><br>
-                        <hr>
-                    </div>
-                    <img src="" alt="Recipe Image">
-                    <p>Instructions:</p>
-                    <ol>
-                        <li>Step 1</li>
-                        <li>Step 2</li>
-                        <!-- Add more steps as needed -->
-                    </ol>
 
-                    <p>description</p>
+                    </div>
+                    <hr>
+                    <div class="carousel-container">
+                        <section class="product">
+                            <button class="pre-btn"><img src="images/arrow.png" alt="" /></button>
+                            <button class="nxt-btn"><img src="images/arrow.png" alt="" /></button>
+                            <div class="product-container">
+                                <?php
+                                // Assuming you have already connected to your database
+                                
+
+                                // First query to retrieve titles and recipe IDs
+                                $images_sql = "SELECT image FROM recipe_images WHERE RecipeID = ? ORDER BY imageNumber";
+                                $images_stmt = mysqli_prepare($conn, $images_sql);
+                                mysqli_stmt_bind_param($images_stmt, 'i', $recipeId);
+                                mysqli_stmt_execute($images_stmt);
+                                $images_res = mysqli_stmt_get_result($images_stmt);
+
+                                // Loop through each title and recipe ID
+                                while ($imageRow = mysqli_fetch_assoc($images_res)) {
+
+
+                                    // Second query to retrieve thumbnails using the recipe ID
+                                
+
+                                    // Check if thumbnail exists
+                                    if ($imageRow) {
+                                        ?>
+                                        <div class="product-card">
+                                            <div class="product-image">
+                                                <img src="<?php echo $imageRow['image']; ?>" class="product-thumb" alt="" />
+
+                                            </div>
+                                        </div>
+                                        <?php
+                                    } else {
+                                        // Handle case where thumbnail is not found
+                                        ?>
+                                        <div class="product-card">
+                                            <div class="product-info">
+                                                <h2 class="product-brand"><?php echo $titleRow['title']; ?></h2>
+                                                <p>No thumbnail available</p>
+                                            </div>
+                                        </div>
+                                        <?php
+                                    }
+                                }
+                                ?>
+                            </div>
+
+                        </section>
+                    </div>  
+                    <hr>
+                    <h2>Instructions:</h2>
+                    <div class="instructions">
+                        <ol>
+                            <?php
+                            while ($instruction_row = mysqli_fetch_assoc($instruction_details_res)) {
+                                $intruction = $instruction_row['InstructionText'];
+                                echo "<li>";
+                                echo $intruction;
+                                echo "</li>";
+                            }
+                            ?>
+                        </ol>
+                    </div>
+                    <hr>
+                    <div class=times>
+                        <?php
+                        if (mysqli_num_rows($recipe_nutrition_res) > 0) {
+                            // Fetch the first row
+                            $recipe_nutrition_row = mysqli_fetch_assoc($recipe_nutrition_res);
+
+                            // Display the recipe details
+                        
+                            echo "<span class='label'>Calories:</span> <span class='value'>" . $recipe_nutrition_row['calories'] . "g</span>";
+                            echo "<span class='label'> Carbs:</span> <span class='value'>" . $recipe_nutrition_row['carbs'] . "g</span>";
+                            echo "<span class='label'> Protein:</span> <span class='value'>" . $recipe_nutrition_row['protein'] . "g</span>";
+                            echo "<span class='label'> Fat:</span> <span class='value'>" . $recipe_nutrition_row['fat'] . "g</span>";
+
+                        } else {
+                            echo "Recipe not found.";
+                        }
+
+                        // Close the statement
+                        mysqli_stmt_close($recipe_nutrition_stmt);
+                        ?>
+                    </div>
+
+                    <hr>
+                    <h2>FAQ, Inspo and more:</h2>
+                    <div class="inspo">
+                        <?php
+                        if (mysqli_num_rows($recipe_inspo_res) > 0) {
+                            // Fetch the first row
+                            $recipe_inspo_row = mysqli_fetch_assoc($recipe_inspo_res);
+
+                            echo "<p>" . $recipe_inspo_row['inspo'] . "</p>";
+
+
+                        } else {
+                            echo "Recipe not found.";
+                        }
+
+                        // Close the statement
+                        mysqli_stmt_close($recipe_inspo_stmt);
+                        ?>
+
+                    </div>
                 </div>
             </div>
         </div>
@@ -217,6 +360,22 @@ $ingredient_details_res = mysqli_stmt_get_result($ingredient_details_stmt);
             });
         });
 
+        const productContainers = [...document.querySelectorAll('.product-container')];
+        const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
+        const preBtn = [...document.querySelectorAll('.pre-btn')];
+
+        productContainers.forEach((item, i) => {
+            let containerDimensions = item.getBoundingClientRect();
+            let containerWidth = containerDimensions.width;
+
+            nxtBtn[i].addEventListener('click', () => {
+                item.scrollLeft += containerWidth;
+            })
+
+            preBtn[i].addEventListener('click', () => {
+                item.scrollLeft -= containerWidth;
+            })
+        })
     </script>
 </body>
 
