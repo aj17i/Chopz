@@ -91,6 +91,15 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
         $title = sanitize($_POST['title']);
         $description = sanitize($_POST['description']);
         $cuisine_name = sanitize($_POST['cuisine_name']);
+        $inspo = sanitize($_POST['inspo']);
+        $skill_level = sanitize($_POST['skill_level']);
+        $prep_time = sanitize($_POST['prep_time']);
+        $cooking_time = sanitize($_POST['cooking_time']);
+        $serving_size = sanitize($_POST['serving_size']);
+        $calories = sanitize($_POST['calories']);
+        $carbs = sanitize($_POST['carbs']);
+        $protein = sanitize($_POST['protein']);
+        $fat = sanitize($_POST['fat']);
         $ingredients = array_map('sanitize', $_POST['ingredients']);
         $quantities = array_map('sanitize', $_POST['quantities']);
         $units = array_map('sanitize', $_POST['units']);
@@ -110,8 +119,12 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
         $imagePaths = handleFileUploads($images);
 
         // Insert into database
-        $stmt = $mysqli->prepare("INSERT INTO recipe (UserID ,title, description, creation_date, Cuisine_name) VALUES ($UserID, ?, ?, CURRENT_TIMESTAMP, ?)");
-        $stmt->bind_param("sss", $title, $description, $cuisine_name);
+        $stmt = $mysqli->prepare("INSERT INTO recipe (UserID ,title, description, creation_date, Cuisine_name,
+        inspo, skill_level, prep_time, cooking_time, serving_size,  calories, carbs,
+         protein, fat) VALUES ($UserID, ?, ?, CURRENT_TIMESTAMP, ?,?,?,?,?,?,?,?,?,?)");
+        $stmt->bind_param("ssssssssssss", $title, $description, $cuisine_name,
+         $inspo, $skill_level, $prep_time, $cooking_time, $serving_size, $calories,
+          $carbs, $protein, $fat);
         $stmt->execute();
         $recipe_id = $mysqli->insert_id;
 
@@ -146,11 +159,11 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
         // Insert image paths into the database
         $imageNumber = 1; // Initialize image number
         foreach ($imagePaths as $image_path) {
-            
-                // Insert thumbnail path
-                $stmt = $mysqli->prepare("INSERT INTO recipe_images (RecipeID, thumbnail ,Image, ImageNumber) VALUES (?, ?, ?, ?)");
-                $stmt->bind_param("isss", $recipe_id, $thumbnail_path,  $image_path, $imageNumber);
-            
+
+            // Insert thumbnail path
+            $stmt = $mysqli->prepare("INSERT INTO recipe_images (RecipeID, thumbnail ,Image, ImageNumber) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("isss", $recipe_id, $thumbnail_path, $image_path, $imageNumber);
+
             $stmt->execute();
             $imageNumber++; // Increment image number for next image
         }

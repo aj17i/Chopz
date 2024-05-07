@@ -37,6 +37,26 @@ while ($row = $result->fetch_assoc()) {
       <label for="description">Description:</label><br />
       <textarea id="description" name="description" rows="4" cols="50" required></textarea><br /><br />
 
+      <label for="inspo">Inspiration:</label><br />
+      <textarea id="inspo" name="inspo" rows="8" cols="50" required></textarea><br />
+
+      <label for="cuisine_name">Cuisine:</label><br />
+      <select id="cuisine_name" name="cuisine_name" required>
+        <?php echo $cuisineOptions; ?>
+      </select><br /><br />
+
+      <label for="skill_level">Skill Level:</label><br />
+      <input type="text" id="skill_level" name="skill_level" required /><br />
+
+      <label for="prep_time">Prep Time:</label><br />
+      <input type="text" id="prep_time" name="prep_time" required /><br />
+
+      <label for="cooking_time">Cooking Time:</label><br />
+      <input type="text" id="cooking_time" name="cooking_time" required /><br />
+
+      <label for="serving_size">Servings:</label><br />
+      <input type="number" id="serving_size" name="serving_size" required /><br />
+
       <label for="ingredients">Ingredients:</label><br />
       <ul id="ingredients-list">
         <li>
@@ -70,8 +90,8 @@ while ($row = $result->fetch_assoc()) {
             <option value="gram">gram</option>
             <option value="ounce">ounce</option>
             <option value="pound">pound</option>
-            <option value="teaspoon">teaspoon</option>
-            <option value="tablespoon">tablespoon</option>
+            <option value="teaspoon">tsp</option>
+            <option value="tablespoon">tbsp</option>
             <option value="pinch">pinch</option>
             <option value="dash">dash</option>
             <option value="clove">clove</option>
@@ -84,6 +104,19 @@ while ($row = $result->fetch_assoc()) {
       </ul>
       <button type="button" onclick="addIngredient()">Add Ingredient</button><br /><br />
 
+      <label for="calories">Calories:</label><br />
+      <input type="number" id="calories" name="calories" required />
+
+      <label for="carbs">Carbs:</label><br />
+      <input type="number" id="carbs" name="carbs" required />
+
+      <label for="protein">Protein:</label><br />
+      <input type="number" id="protein" name="protein" required />
+
+      <label for="fat">Fat:</label><br />
+      <input type="number" id="fat" name="fat" required /><br />
+
+
       <label for="instructions">Instructions:</label><br />
       <ol id="instructions-list">
         <li>
@@ -92,9 +125,10 @@ while ($row = $result->fetch_assoc()) {
         </li>
       </ol>
       <button type="button" onclick="addInstruction()">Add Instruction</button><br /><br />
-      
+
       <label for="thumbnail">Thumbnail image:</label>
-      <input type="file"  id="thumbnail" name="thumbnail" accept="image/*" onchange="return checkImageSize(this)" required><br>
+      <input type="file" id="thumbnail" name="thumbnail" accept="image/*" onchange="return checkImageSize(this)"
+        required><br>
 
       <label for="images">Images:</label><br />
       <input type="file" id="images" name="images[]" accept="image/*" onchange="return checkImageSize(this)" multiple
@@ -102,10 +136,7 @@ while ($row = $result->fetch_assoc()) {
       <ul id="images-list"></ul>
       <button type="button" onclick="addImage()">Add Image</button><br /><br />
 
-      <label for="cuisine_name">Cuisine Name:</label><br />
-      <select id="cuisine_name" name="cuisine_name" required>
-        <?php echo $cuisineOptions; ?>
-      </select><br /><br />
+
 
 
       <label for="tags">Tags:</label><br />
@@ -177,8 +208,8 @@ while ($row = $result->fetch_assoc()) {
         '<option value="gram">gram</option>' +
         '<option value="ounce">ounce</option>' +
         '<option value="pound">pound</option>' +
-        '<option value="teaspoon">teaspoon</option>' +
-        '<option value="tablespoon">tablespoon</option>' +
+        '<option value="teaspoon">tsp</option>' +
+        '<option value="tablespoon">tbsp</option>' +
         '<option value="pinch">pinch</option>' +
         '<option value="dash">dash</option>' +
         '<option value="clove">clove</option>' +
