@@ -58,6 +58,13 @@ mysqli_stmt_bind_param($recipe_nutrition_stmt, 'i', $recipeId);
 mysqli_stmt_execute($recipe_nutrition_stmt);
 $recipe_nutrition_res = mysqli_stmt_get_result($recipe_nutrition_stmt);
 
+$recipeQuery_id = "SELECT UserID FROM recipe WHERE RecipeID = ?";
+$userid_stmt = mysqli_prepare($conn, $recipeQuery_id);
+mysqli_stmt_bind_param($userid_stmt, 'i', $recipeId);
+mysqli_stmt_execute($userid_stmt);
+$id_result = mysqli_stmt_get_result($userid_stmt);
+
+
 ?>
 
 <!DOCTYPE html>
@@ -217,7 +224,7 @@ $recipe_nutrition_res = mysqli_stmt_get_result($recipe_nutrition_stmt);
                             </div>
 
                         </section>
-                    </div>  
+                    </div>
                     <hr>
                     <h2>Instructions:</h2>
                     <div class="instructions">
@@ -279,104 +286,127 @@ $recipe_nutrition_res = mysqli_stmt_get_result($recipe_nutrition_stmt);
             </div>
         </div>
         <div class="creator-info">
-            <h2>Creator Information</h2>
-            <!-- Creator information and buttons -->
-            <p>Creator Name</p>
-            <button id="followBtn">Follow</button>
-            <div class="rating">
-                <!-- Dynamic star rating -->
-                <p>Rating:</p>
-                <div class="stars">
-                    <span class="star">&#9733;</span>
-                    <span class="star">&#9733;</span>
-                    <span class="star">&#9733;</span>
-                    <span class="star">&#9733;</span>
-                    <span class="star">&#9733;</span>
-                </div>
+            <h2>Welcome to our food blog!</h2>
+            <hr>
+            <div class="profile-image">
+                <?php
+                if ($id_row = mysqli_fetch_assoc($id_result)) {
+                    $userId = $id_row['UserID'];
 
-            </div>
-            <button id="saveBtn">Save</button>
-            <!-- Comment section -->
-            <div class="comments">
-                <h3>Comments</h3>
-                <div class="comment">
-                    <p>User123: This recipe is amazing!</p>
-                </div>
-                <!-- Add more comments dynamically -->
-            </div>
-            <!-- Add a form for adding new comments if needed -->
-        </div>
-    </div>
+                    $user_profile_Query = "SELECT * FROM user WHERE UserID = ?";
+                    $profile_stmt = mysqli_prepare($conn, $user_profile_Query);
+                    mysqli_stmt_bind_param($profile_stmt, 'i', $userId);
+                    mysqli_stmt_execute($profile_stmt);
+                    $user_profile_Result = mysqli_stmt_get_result($profile_stmt);
 
-    <script>
-        // script.js
 
-        document.getElementById('saveBtn').addEventListener('click', function () {
-            this.classList.toggle('saved');
-            if (this.classList.contains('saved')) {
-                this.textContent = 'Saved';
-            } else {
-                this.textContent = 'Save';
-            }
-        });
+                    if ($user_profile_Row = mysqli_fetch_assoc($user_profile_Result)) {
 
-        document.getElementById('followBtn').addEventListener('click', function () {
-            this.classList.toggle('followed');
-            if (this.classList.contains('followed')) {
-                this.textContent = 'Following';
-            } else {
-                this.textContent = 'Follow';
-            }
-        });
-        // script.js
-
-        // Function to handle star rating
-        function handleRatingClick(event) {
-            if (event.target.classList.contains('star')) {
-                const stars = document.querySelectorAll('.star');
-                const clickedStarIndex = Array.from(stars).indexOf(event.target) + 1;
-
-                // Highlight clicked star and unhighlight others
-                stars.forEach((star, index) => {
-                    if (index < clickedStarIndex) {
-                        star.classList.add('rated');
-                    } else {
-                        star.classList.remove('rated');
+                        echo "<img src='../css/images/" . $user_profile_Row['profilePic'] . "' alt=''>";
+                        echo "</div>";
+                        echo "<h3>" . $user_profile_Row['username'] . "</h3>";
+                        echo "<p>" . $user_profile_Row['bio'] . "</p>";
+                        echo "<hr>";
                     }
-                });
+                }
+                ?>
+
+
+                <button id="followBtn">Follow</button>
+                <div class="rating">
+                    <!-- Dynamic star rating -->
+                    <p>Rating:</p>
+                    <div class="stars">
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                        <span class="star">&#9733;</span>
+                    </div>
+
+                </div>
+                <button id="saveBtn">Save</button>
+                <!-- Comment section -->
+                <div class="comments">
+                    <h3>Comments</h3>
+                    <div class="comment">
+                        <p>User123: This recipe is amazing!</p>
+                    </div>
+                    <!-- Add more comments dynamically -->
+                </div>
+                <!-- Add a form for adding new comments if needed -->
+            </div>
+        </div>
+
+        <script>
+            // script.js
+
+            document.getElementById('saveBtn').addEventListener('click', function () {
+                this.classList.toggle('saved');
+                if (this.classList.contains('saved')) {
+                    this.textContent = 'Saved';
+                } else {
+                    this.textContent = 'Save';
+                }
+            });
+
+            document.getElementById('followBtn').addEventListener('click', function () {
+                this.classList.toggle('followed');
+                if (this.classList.contains('followed')) {
+                    this.textContent = 'Following';
+                } else {
+                    this.textContent = 'Follow';
+                }
+            });
+            // script.js
+
+            // Function to handle star rating
+            function handleRatingClick(event) {
+                if (event.target.classList.contains('star')) {
+                    const stars = document.querySelectorAll('.star');
+                    const clickedStarIndex = Array.from(stars).indexOf(event.target) + 1;
+
+                    // Highlight clicked star and unhighlight others
+                    stars.forEach((star, index) => {
+                        if (index < clickedStarIndex) {
+                            star.classList.add('rated');
+                        } else {
+                            star.classList.remove('rated');
+                        }
+                    });
+                }
             }
-        }
 
-        // Event listener for rating stars
-        document.querySelector('.stars').addEventListener('click', handleRatingClick);
+            // Event listener for rating stars
+            document.querySelector('.stars').addEventListener('click', handleRatingClick);
 
-        document.addEventListener('DOMContentLoaded', function () {
-            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-            checkboxes.forEach(function (checkbox) {
-                checkbox.addEventListener('change', function () {
-                    var label = this.parentElement;
-                    label.classList.toggle('completed');
+            document.addEventListener('DOMContentLoaded', function () {
+                var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                checkboxes.forEach(function (checkbox) {
+                    checkbox.addEventListener('change', function () {
+                        var label = this.parentElement;
+                        label.classList.toggle('completed');
+                    });
                 });
             });
-        });
 
-        const productContainers = [...document.querySelectorAll('.product-container')];
-        const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
-        const preBtn = [...document.querySelectorAll('.pre-btn')];
+            const productContainers = [...document.querySelectorAll('.product-container')];
+            const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
+            const preBtn = [...document.querySelectorAll('.pre-btn')];
 
-        productContainers.forEach((item, i) => {
-            let containerDimensions = item.getBoundingClientRect();
-            let containerWidth = containerDimensions.width;
+            productContainers.forEach((item, i) => {
+                let containerDimensions = item.getBoundingClientRect();
+                let containerWidth = containerDimensions.width;
 
-            nxtBtn[i].addEventListener('click', () => {
-                item.scrollLeft += containerWidth;
+                nxtBtn[i].addEventListener('click', () => {
+                    item.scrollLeft += containerWidth;
+                })
+
+                preBtn[i].addEventListener('click', () => {
+                    item.scrollLeft -= containerWidth;
+                })
             })
-
-            preBtn[i].addEventListener('click', () => {
-                item.scrollLeft -= containerWidth;
-            })
-        })
-    </script>
+        </script>
 </body>
 
 </html>
