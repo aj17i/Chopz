@@ -47,6 +47,11 @@ $ingredient_details_res = mysqli_stmt_get_result($ingredient_details_stmt);
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Merienda:wght@300&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Merienda:wght@300&family=Poetsen+One&family=Roboto+Slab&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -63,7 +68,7 @@ $ingredient_details_res = mysqli_stmt_get_result($ingredient_details_stmt);
     </header>
 
     <div class="container">
-        <div class="recipe">
+        <div class="recipe-display">
             <?php if (mysqli_num_rows($thumbnail_res) > 0) { ?>
                 <?php while ($row = mysqli_fetch_assoc($thumbnail_res)) { ?>
                     <div class="thumbnail">
@@ -71,51 +76,65 @@ $ingredient_details_res = mysqli_stmt_get_result($ingredient_details_stmt);
                     </div>
                 <?php }
             } ?>
-            <?php
-            if (mysqli_num_rows($recipe_details_res) > 0) {
-                // Fetch the first row (assuming there's only one row for the given recipe ID)
-                $recipe_details_row = mysqli_fetch_assoc($recipe_details_res);
+            <br>
+            <div class="recipe">
 
-                // Display the recipe title
-                echo "<div class = 'title'>";
-                echo "<h1>" . $recipe_details_row['title'] . "</h1>";
-                echo "</div>";
-
-                // Add the rest of your HTML markup here...
-            } else {
-                echo "Recipe not found.";
-            }
-            ?>
-            <div class="ingredients">
-                <h2>Ingredients:</h2>
                 <?php
-                // Loop through the ingredient details result set
-                while ($row = mysqli_fetch_assoc($ingredient_details_res)) {
-                    // Extract ingredient details
-                    $ingredientName = $row['IngredientName'];
-                    $quantity = $row['Quantity'];
-                    $unit = $row['Unit'];
+                if (mysqli_num_rows($recipe_details_res) > 0) {
+                    // Fetch the first row (assuming there's only one row for the given recipe ID)
+                    $recipe_details_row = mysqli_fetch_assoc($recipe_details_res);
 
-                    // Display ingredient with checkbox
-                    echo '<label>';
-                    echo '<input type="checkbox" name="ingredients[]" value="' . htmlspecialchars($ingredientName) . '">'; // Use htmlspecialchars to prevent XSS attacks
-                    echo $quantity . ' ' . $unit . ' ' . $ingredientName;
-                    echo '</label>';
-                    echo '<br>';
+                    // Display the recipe title
+                    echo "<div class = 'title'>";
+                    echo "<h1>" . $recipe_details_row['title'] . "</h1>";
+                    echo "</div>";
+
+                    // Add the rest of your HTML markup here...
+                } else {
+                    echo "Recipe not found.";
                 }
                 ?>
+                <div class="info-container">
+
+
+                    <div class="ingredients">
+                        <hr>
+                        <div class="times">
+                            cooking time
+                        </div>
+                        <hr>
+                        <h2>Ingredients:</h2>
+                        <?php
+                        // Loop through the ingredient details result set
+                        while ($row = mysqli_fetch_assoc($ingredient_details_res)) {
+                            // Extract ingredient details
+                            $ingredientName = $row['IngredientName'];
+                            $quantity = $row['Quantity'];
+                            $unit = $row['Unit'];
+
+                            // Display ingredient with checkbox
+                            echo '<label>';
+                            echo '<input type="checkbox" name="ingredients[]" value="' . htmlspecialchars($ingredientName) . '">'; // Use htmlspecialchars to prevent XSS attacks
+                            echo $quantity . ' ' . $unit . ' ' . $ingredientName;
+                            echo '</label>';
+                            echo '<br>';
+                        }
+                        ?>
+                        <br><br>
+                        <hr>
+                    </div>
+                    <img src="" alt="Recipe Image">
+                    <p>Instructions:</p>
+                    <ol>
+                        <li>Step 1</li>
+                        <li>Step 2</li>
+                        <!-- Add more steps as needed -->
+                    </ol>
+
+                    <p>description</p>
+                </div>
             </div>
-            <img src="" alt="Recipe Image">
-            <p>Instructions:</p>
-            <ol>
-                <li>Step 1</li>
-                <li>Step 2</li>
-                <!-- Add more steps as needed -->
-            </ol>
-
-            <p>description</p>
         </div>
-
         <div class="creator-info">
             <h2>Creator Information</h2>
             <!-- Creator information and buttons -->
@@ -187,6 +206,16 @@ $ingredient_details_res = mysqli_stmt_get_result($ingredient_details_stmt);
 
         // Event listener for rating stars
         document.querySelector('.stars').addEventListener('click', handleRatingClick);
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            checkboxes.forEach(function (checkbox) {
+                checkbox.addEventListener('change', function () {
+                    var label = this.parentElement;
+                    label.classList.toggle('completed');
+                });
+            });
+        });
 
     </script>
 </body>

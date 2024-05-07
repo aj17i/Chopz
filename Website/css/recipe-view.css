@@ -40,13 +40,15 @@ body {
   justify-content: space-between;
   margin: 20px;
 }
+.recipe-display {
+  width: 65%;
+  margin-left: 40px;
+}
 
 .recipe {
-  width: 60%;
-  margin-left: 40px;
   background-color: rgb(205, 180, 137);
   padding: 15px;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 .thumbnail {
   display: block; /* Ensure the image is a block element */
@@ -54,7 +56,7 @@ body {
   width: 100%;
   max-height: 400px; /* Set the maximum height */
   object-fit: cover;
-  border-radius: 15px;
+  border-radius: 10px;
   align-items: center;
   justify-content: center;
 }
@@ -62,22 +64,22 @@ body {
   width: 100%;
   max-height: 400px; /* Set the maximum height */
   object-fit: cover;
-  border-radius: 15px;
+  border-radius: 10px;
 }
-.title{
+.title {
   font-family: "Merienda", cursive;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
-  display:flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgb(255, 255, 255);
   padding: 5px;
-  margin-top: 5px;
+  margin-top: 10px;
   border-radius: 15px;
 }
-.title h1{
+.title h1 {
   margin: 0;
 }
 
@@ -87,18 +89,60 @@ body {
   padding: 20px;
   border-radius: 15px;
 }
-.ingredients{
+.info-container {
   background-color: rgba(255, 255, 255, 0.412);
   padding: 5px;
   border-radius: 15px;
   margin-top: 10px;
 }
-.ingredients h2{
+.ingredients {
+  padding: 5px;
+  border-radius: 15px;
+  margin-top: 10px;
+}
+.ingredients h2 {
   font-family: "Merienda", cursive;
   font-style: normal;
+  text-decoration: underline;
 }
-.ingredients label{
-  font-size: 20px;
+.ingredients hr {
+  border-color: #cc7722;
+  margin: 0 auto;
+  width: 90%;
+}
+.ingredients label {
+  font-size: 17px;
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+}
+/* Hide the default checkbox */
+.ingredients label input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid #cc7722; /* Yellow ochre border color */
+  width: 15px; /* Adjust width as needed */
+  height: 15px; /* Adjust height as needed */
+  vertical-align: middle;
+  border-radius: 5px;
+}
+
+/* Add custom checkmark */
+.ingredients label input[type="checkbox"]:checked::before {
+  content: "\2714"; /* Checkmark symbol */
+  display: inline-block;
+  width: 15px; /* Match checkbox width */
+  height: 15px; /* Match checkbox height */
+  text-align: center;
+  line-height: 15px; /* Center checkmark vertically */
+  font-size: 14px; /* Adjust checkmark size */
+  color: black; /* Checkmark color */
+}
+.ingredients label.completed {
+  text-decoration: line-through;
+  color: rgba(0, 0, 0, 0.391);
 }
 
 .rating {
