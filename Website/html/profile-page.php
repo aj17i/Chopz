@@ -12,13 +12,13 @@ $result = $mysqli->query($sql);
 $user = $result->fetch_assoc();
 
 // Query to count followers
-$sql_followers = "SELECT COUNT(*) AS num_followers FROM `follower list` WHERE FollowedAccountID = {$_SESSION["UserID"]}";
+$sql_followers = "SELECT COUNT(*) AS num_followers FROM follower_list WHERE FollowedAccountID = {$_SESSION["UserID"]}";
 $result_followers = $mysqli->query($sql_followers);
 $row_followers = $result_followers->fetch_assoc();
 $num_followers = $row_followers['num_followers'];
 
 // Query to count following
-$sql_following = "SELECT COUNT(*) AS num_following FROM `follower list` WHERE FollowingAccountID = {$_SESSION["UserID"]}";
+$sql_following = "SELECT COUNT(*) AS num_following FROM follower_list WHERE FollowingAccountID = {$_SESSION["UserID"]}";
 $result_following = $mysqli->query($sql_following);
 $row_following = $result_following->fetch_assoc();
 $num_following = $row_following['num_following'];

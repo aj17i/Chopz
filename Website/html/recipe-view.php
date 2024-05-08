@@ -64,7 +64,9 @@ mysqli_stmt_bind_param($userid_stmt, 'i', $recipeId);
 mysqli_stmt_execute($userid_stmt);
 $id_result = mysqli_stmt_get_result($userid_stmt);
 
-
+$id_row = mysqli_fetch_assoc($id_result);
+$followed_id = $id_row['UserID'];
+echo "<script>var followedId = $followed_id;</script>";
 ?>
 
 <!DOCTYPE html>
@@ -290,7 +292,7 @@ $id_result = mysqli_stmt_get_result($userid_stmt);
             <hr>
             <div class="profile-image">
                 <?php
-                if ($id_row = mysqli_fetch_assoc($id_result)) {
+                if ($id_row) {
                     $userId = $id_row['UserID'];
 
                     $user_profile_Query = "SELECT * FROM user WHERE UserID = ?";
@@ -311,8 +313,11 @@ $id_result = mysqli_stmt_get_result($userid_stmt);
                 }
                 ?>
 
-
-                <button id="followBtn">Follow</button>
+                <div class="follow">
+                    <img src="../css/images/add-user.png" alt="">
+                    <button id="followBtn">Follow</button>
+                </div>
+                <hr>
                 <div class="rating">
                     <!-- Dynamic star rating -->
                     <p>Rating:</p>
@@ -349,16 +354,64 @@ $id_result = mysqli_stmt_get_result($userid_stmt);
                     this.textContent = 'Save';
                 }
             });
-
             document.getElementById('followBtn').addEventListener('click', function () {
-                this.classList.toggle('followed');
-                if (this.classList.contains('followed')) {
-                    this.textContent = 'Following';
-                } else {
-                    this.textContent = 'Follow';
-                }
+                var btn = this;
+                var profileId = followedId; // Assuming you've set followedId correctly in your PHP code
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '../php/add_follower.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.status === 'success') {
+                            alert(response.message); // Display success message
+                            btn.textContent = 'Unfollow'; // Change button text
+                            btn.removeEventListener('click', arguments.callee); // Remove current click event listener
+                            btn.addEventListener('click', function () {
+                                // Code to handle unfollowing
+                                unfollowProfile(profileId, btn);
+                            });
+                        } else if (response.status === 'already_following') {
+                            alert(response.message); // Display already following message
+                            btn.textContent = 'Unfollow'; // Change button text
+                            btn.removeEventListener('click', arguments.callee); // Remove current click event listener
+                            btn.addEventListener('click', function () {
+                                // Code to handle unfollowing
+                                unfollowProfile(profileId, btn);
+                            });
+                        } else {
+                            alert(response.message); // Display error message
+                        }
+                    }
+                };
+                xhr.send('profile_id=' + profileId); // Make sure the parameter name matches in your PHP script
             });
-            // script.js
+
+            function unfollowProfile(profileId, btn) {
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', '../php/remove_follower.php', true);
+                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        if (response.status === 'success') {
+                            alert(response.message); // Display success message
+                            btn.textContent = 'Follow'; // Change button text back to "Follow"
+                            btn.removeEventListener('click', arguments.callee); // Remove click event listener for unfollow button
+                            btn.addEventListener('click', function () {
+                                // Code to handle following again
+                                followProfile(profileId, btn);
+                            });
+                        } else {
+                            alert(response.message); // Display error message
+                        }
+                    }
+                };
+                xhr.send('profile_id=' + profileId); // Send profile ID to the PHP script to remove the follow record
+            }
+
+
+
 
             // Function to handle star rating
             function handleRatingClick(event) {
