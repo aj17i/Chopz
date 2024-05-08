@@ -400,3 +400,34 @@ body {
   width: 25px;
   height: 25px;
 }
+
+#unfollowBtn {
+  background-color: rgb(255, 193, 79);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+
+}
+
+#unfollowBtn:hover {
+  background-color: rgb(255, 166, 0);
+}
+.unfollow {
+  display: inline-block; /* Ensures the div behaves like an inline element */
+  vertical-align: middle; /* Aligns the div vertically */
+  background-color: rgb(255, 193, 79);
+  padding: 5px;
+  border-radius: 10px;
+}
+.unfollow:hover{
+  background-color: rgb(255, 166, 0);
+}
+
+.unfollow img {
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+}

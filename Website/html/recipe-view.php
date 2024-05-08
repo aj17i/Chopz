@@ -151,7 +151,7 @@ echo "<script>var followedId = $followed_id;</script>";
                             }
 
                             // Close the statement
-                            mysqli_stmt_close($recipe_details_stmt);
+                            mysqli_stmt_close($recipe_times_stmt);
                             ?>
                         </div>
 
@@ -313,10 +313,19 @@ echo "<script>var followedId = $followed_id;</script>";
                 }
                 ?>
 
-                <div class="follow">
-                    <img src="../css/images/add-user.png" alt="">
-                    <button id="followBtn">Follow</button>
+
+                <div class="follow-container">
+                    <div class="follow" id="followBtnContainer" style="display: none;">
+                        <img src="../css/images/add-user.png" alt="">
+                        <button id="followBtn">Follow</button>
+                    </div>
+                    <div class="unfollow" id="unfollowBtnContainer" style="display: none;">
+                        <img src="../css/images/remove-user.png" alt="">
+                        <button id="unfollowBtn">Unfollow</button>
+                    </div>
+                    <div id="message"></div> <!-- Container for displaying messages -->
                 </div>
+
                 <hr>
                 <div class="rating">
                     <!-- Dynamic star rating -->
@@ -342,6 +351,7 @@ echo "<script>var followedId = $followed_id;</script>";
                 <!-- Add a form for adding new comments if needed -->
             </div>
         </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
         <script>
             // script.js
@@ -354,61 +364,90 @@ echo "<script>var followedId = $followed_id;</script>";
                     this.textContent = 'Save';
                 }
             });
-            document.getElementById('followBtn').addEventListener('click', function () {
-                var btn = this;
-                var profileId = followedId; // Assuming you've set followedId correctly in your PHP code
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '../php/add_follower.php', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        if (response.status === 'success') {
-                            alert(response.message); // Display success message
-                            btn.textContent = 'Unfollow'; // Change button text
-                            btn.removeEventListener('click', arguments.callee); // Remove current click event listener
-                            btn.addEventListener('click', function () {
-                                // Code to handle unfollowing
-                                unfollowProfile(profileId, btn);
-                            });
-                        } else if (response.status === 'already_following') {
-                            alert(response.message); // Display already following message
-                            btn.textContent = 'Unfollow'; // Change button text
-                            btn.removeEventListener('click', arguments.callee); // Remove current click event listener
-                            btn.addEventListener('click', function () {
-                                // Code to handle unfollowing
-                                unfollowProfile(profileId, btn);
-                            });
-                        } else {
-                            alert(response.message); // Display error message
-                        }
+
+
+            $(document).ready(function () {
+                // Function to update button visibility based on following status
+                function updateButtonVisibility(status) {
+                    if (status === 'following') {
+                        $('#followBtnContainer').hide();
+                        $('#unfollowBtnContainer').show();
+                    } else {
+                        $('#followBtnContainer').show();
+                        $('#unfollowBtnContainer').hide();
                     }
-                };
-                xhr.send('profile_id=' + profileId); // Make sure the parameter name matches in your PHP script
+                }
+
+                // Check if the user is followed or not when the page loads
+                $.ajax({
+                    type: 'POST',
+                    url: '../php/check-following.php',
+                    dataType: 'json',
+                    data: { profile_id: followedId },
+                    success: function (response) {
+                        if (response.status === 'following' || response.status === 'not_following') {
+                            updateButtonVisibility(response.status);
+                        } else {
+                            $('#message').text('Error: Invalid response from server.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        $('#message').text('Error: ' + error); // Display error message
+                    }
+                });
+
+
+                // Follow button click event
+                $('#followBtn').click(function () {
+                    var profileId = followedId; // Assuming you've set followedId correctly in your PHP code
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '../php/add_follower.php',
+                        data: { profile_id: profileId },
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status === 'success') {
+                                updateButtonVisibility('following');
+                                $('#message').text(response.message); // Display success message
+                            } else {
+                                $('#message').text(response.message); // Display error message
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            $('#message').text('Error: ' + error); // Display error message
+                        }
+                    });
+                });
+
+                // Unfollow button click event
+                $('#unfollowBtn').click(function () {
+                    var profileId = followedId; // Assuming you've set followedId correctly in your PHP code
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '../php/remove_follower.php',
+                        data: { profile_id: profileId },
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status === 'success') {
+                                updateButtonVisibility('not_following');
+                                $('#message').text(response.message); // Display success message
+                            } else {
+                                $('#message').text(response.message); // Display error message
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            $('#message').text('Error: ' + error); // Display error message
+                        }
+                    });
+                });
             });
 
-            function unfollowProfile(profileId, btn) {
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', '../php/remove_follower.php', true);
-                xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                xhr.onreadystatechange = function () {
-                    if (xhr.readyState === 4 && xhr.status === 200) {
-                        var response = JSON.parse(xhr.responseText);
-                        if (response.status === 'success') {
-                            alert(response.message); // Display success message
-                            btn.textContent = 'Follow'; // Change button text back to "Follow"
-                            btn.removeEventListener('click', arguments.callee); // Remove click event listener for unfollow button
-                            btn.addEventListener('click', function () {
-                                // Code to handle following again
-                                followProfile(profileId, btn);
-                            });
-                        } else {
-                            alert(response.message); // Display error message
-                        }
-                    }
-                };
-                xhr.send('profile_id=' + profileId); // Send profile ID to the PHP script to remove the follow record
-            }
+
 
 
 

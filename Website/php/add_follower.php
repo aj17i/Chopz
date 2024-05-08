@@ -24,39 +24,25 @@ $followedAccountId = $_POST['profile_id'];
 // Include database connection
 require_once 'database.php';
 
-// Check if the user is already following the profile person
-$stmt = $conn->prepare("SELECT * FROM follower_list WHERE FollowingAccountID = ? AND FollowedAccountID = ?");
-$stmt->bind_param("ii", $loggedInUserId, $followedAccountId);
-$stmt->execute();
-$result = $stmt->get_result();
 
-if ($result->num_rows > 0) {
-    // User is already following the profile person
+// User is not following the profile person, so add the follow record to the database
+$stmt = $conn->prepare("INSERT INTO follower_list (FollowingAccountID, FollowedAccountID) VALUES (?, ?)");
+$stmt->bind_param("ii", $loggedInUserId, $followedAccountId);
+
+if ($stmt->execute()) {
     $response = array(
-        "status" => "already_following",
-        "message" => "You are already following this person"
+        "status" => "success",
+        "message" => "Follower added successfully"
     );
     echo json_encode($response);
-    exit();
 } else {
-    // User is not following the profile person, so add the follow record to the database
-    $stmt = $conn->prepare("INSERT INTO follower_list (FollowingAccountID, FollowedAccountID) VALUES (?, ?)");
-    $stmt->bind_param("ii", $loggedInUserId, $followedAccountId);
-
-    if ($stmt->execute()) {
-        $response = array(
-            "status" => "success",
-            "message" => "Follower added successfully"
-        );
-        echo json_encode($response);
-    } else {
-        $response = array(
-            "status" => "error",
-            "message" => "Error: " . $conn->error
-        );
-        echo json_encode($response);
-    }
+    $response = array(
+        "status" => "error",
+        "message" => "Error: " . $conn->error
+    );
+    echo json_encode($response);
 }
+
 
 // Close the statement and database connection
 $stmt->close();
