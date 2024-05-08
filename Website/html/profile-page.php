@@ -40,8 +40,6 @@ $user_avg = "SELECT AVG(average_rating) AS user_average_rating FROM user WHERE U
 $result_user_avg = $mysqli->query($user_avg);
 $row_user_avg = $result_user_avg->fetch_assoc();
 $user_rating_avg = $row_user_avg['user_average_rating'];
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -53,7 +51,7 @@ $user_rating_avg = $row_user_avg['user_average_rating'];
   <link rel="stylesheet" href="../css/profile-page.css" />
 </head>
 
-  <body>
+<body>
   <header>
     <div class="navbar">
       <a href="Homepage.php" class="logo">
@@ -130,7 +128,94 @@ $user_rating_avg = $row_user_avg['user_average_rating'];
             <button class="pre-btn"><img src="images/arrow.png" alt="" /></button>
             <button class="nxt-btn"><img src="images/arrow.png" alt="" /></button>
             <div class="product-container">
+              <?php
+              // Assuming you have already connected to your database
+              $userId = $_SESSION["UserID"];
 
+              // Query to retrieve saved recipe IDs for the current user
+              $savedRecipesQuery = "SELECT RecipeID FROM saved_recipes WHERE UserID = ?";
+
+              // Prepare the statement
+              $stmt1 = mysqli_prepare($conn, $savedRecipesQuery);
+
+              // Bind parameters
+              mysqli_stmt_bind_param($stmt1, "i", $userId);
+
+              // Execute the statement
+              mysqli_stmt_execute($stmt1);
+
+              // Get result
+              $savedRecipesResult = mysqli_stmt_get_result($stmt1);
+
+              // Loop through each saved recipe
+              while ($savedRecipeRow = mysqli_fetch_assoc($savedRecipesResult)) {
+                $recipeId = $savedRecipeRow['RecipeID'];
+
+                // Query to retrieve title based on RecipeID
+                $titleQuery = "SELECT title FROM recipe WHERE RecipeID = ?";
+
+                // Prepare the statement
+                $stmt2 = mysqli_prepare($conn, $titleQuery);
+
+                // Bind parameters
+                mysqli_stmt_bind_param($stmt2, "i", $recipeId);
+
+                // Execute the statement
+                mysqli_stmt_execute($stmt2);
+
+                // Get result
+                $titleResult = mysqli_stmt_get_result($stmt2);
+
+                // Fetch title
+                $titleRow = mysqli_fetch_assoc($titleResult);
+
+                // Close the statement
+                mysqli_stmt_close($stmt2);
+
+                // Query to retrieve thumbnail based on RecipeID
+                $thumbnailQuery = "SELECT thumbnail FROM recipe_images WHERE RecipeID = ? LIMIT 1";
+
+                // Prepare the statement
+                $stmt3 = mysqli_prepare($conn, $thumbnailQuery);
+
+                // Bind parameters
+                mysqli_stmt_bind_param($stmt3, "i", $recipeId);
+
+                // Execute the statement
+                mysqli_stmt_execute($stmt3);
+
+                // Get result
+                $thumbnailResult = mysqli_stmt_get_result($stmt3);
+
+                // Fetch thumbnail
+                $thumbnailRow = mysqli_fetch_assoc($thumbnailResult);
+
+                // Close the statement
+                mysqli_stmt_close($stmt3);
+
+                if ($titleRow) {
+                  ?>
+                  <div class="product-card">
+                    <div class="product-image">
+                      <?php if ($thumbnailRow && $thumbnailRow['thumbnail']) { ?>
+                        <img src="<?php echo $thumbnailRow['thumbnail']; ?>" class="product-thumb" alt="Thumbnail" />
+                        <a href="recipe-view.php?RecipeID=<?php echo $recipeId; ?>">
+                          <button class="card-btn">View Recipe</button>
+                        </a>
+                      </div>
+                    <?php } ?>
+                    <div class="product-info">
+                      <h2 class="product-brand"><?php echo $titleRow['title']; ?></h2>
+                    </div>
+
+                  </div>
+                  <?php
+                }
+              }
+
+              // Close the statement
+              mysqli_stmt_close($stmt1);
+              ?>
             </div>
           </section>
         </div>
@@ -195,9 +280,6 @@ $user_rating_avg = $row_user_avg['user_average_rating'];
                 }
               }
               ?>
-
-
-
             </div>
           </section>
         </div>

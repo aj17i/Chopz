@@ -431,3 +431,65 @@ body {
   width: 25px;
   height: 25px;
 }
+#saveBtn {
+  background-color: rgb(255, 193, 79);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+
+}
+
+#saveBtn:hover {
+  background-color: rgb(255, 166, 0);
+}
+
+.save {
+  display: inline-block; /* Ensures the div behaves like an inline element */
+  vertical-align: middle; /* Aligns the div vertically */
+  background-color: rgb(255, 193, 79);
+  padding: 5px;
+  border-radius: 10px;
+}
+.save:hover{
+  background-color: rgb(255, 166, 0);
+}
+
+.save img {
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+}
+
+#unsaveBtn {
+  background-color: rgb(255, 193, 79);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+
+}
+
+#unsaveBtn:hover {
+  background-color: rgb(255, 166, 0);
+}
+.unsave {
+  display: inline-block; /* Ensures the div behaves like an inline element */
+  vertical-align: middle; /* Aligns the div vertically */
+  background-color: rgb(255, 193, 79);
+  padding: 5px;
+  border-radius: 10px;
+}
+.unsave:hover{
+  background-color: rgb(255, 166, 0);
+}
+
+.unsave img {
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+}

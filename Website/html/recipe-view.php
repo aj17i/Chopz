@@ -67,6 +67,9 @@ $id_result = mysqli_stmt_get_result($userid_stmt);
 $id_row = mysqli_fetch_assoc($id_result);
 $followed_id = $id_row['UserID'];
 echo "<script>var followedId = $followed_id;</script>";
+
+
+
 ?>
 
 <!DOCTYPE html>
@@ -327,6 +330,19 @@ echo "<script>var followedId = $followed_id;</script>";
                 </div>
 
                 <hr>
+                <div class="save-container">
+                    <div class="save" id="saveBtnContainer" style="display: none;">
+                        <img src="../css/images/save.png" alt="">
+                        <button id="saveBtn">Save</button>
+                    </div>
+                    <div class="unsave" id="unsaveBtnContainer" style="display: none;">
+                        <img src="../css/images/unsave.png" alt="">
+                        <button id="unsaveBtn">Unsave</button>
+                    </div>
+                    <div id="message2"></div> <!-- Container for displaying messages -->
+                </div>
+
+                <hr>
                 <div class="rating">
                     <!-- Dynamic star rating -->
                     <p>Rating:</p>
@@ -339,7 +355,6 @@ echo "<script>var followedId = $followed_id;</script>";
                     </div>
 
                 </div>
-                <button id="saveBtn">Save</button>
                 <!-- Comment section -->
                 <div class="comments">
                     <h3>Comments</h3>
@@ -355,15 +370,95 @@ echo "<script>var followedId = $followed_id;</script>";
 
         <script>
             // script.js
+            function getRecipeIdFromUrl() {
+                // Get the URL parameters
+                var urlParams = new URLSearchParams(window.location.search);
 
-            document.getElementById('saveBtn').addEventListener('click', function () {
-                this.classList.toggle('saved');
-                if (this.classList.contains('saved')) {
-                    this.textContent = 'Saved';
-                } else {
-                    this.textContent = 'Save';
+                // Get the value of the 'RecipeID' parameter from the URL
+                var recipeId = urlParams.get('RecipeID');
+
+                // Return the recipe ID
+                return recipeId;
+            }
+
+            $(document).ready(function () {
+                var recipeId = getRecipeIdFromUrl(); // Implement this function to get recipe ID from URL
+
+                // Function to update button visibility based on saving status
+                function updateButtonVisibility(status) {
+                    if (status === 'saved') {
+                        $('#saveBtnContainer').hide();
+                        $('#unsaveBtnContainer').show();
+                    } else {
+                        $('#saveBtnContainer').show();
+                        $('#unsaveBtnContainer').hide();
+                    }
                 }
+
+                // Check if the recipe is saved or not when the page loads
+                $.ajax({
+                    type: 'POST',
+                    url: '../php/check-saving.php',
+                    data: { recipe_id: recipeId },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status === 'saved' || response.status === 'not_saved') {
+                            updateButtonVisibility(response.status);
+                        } else {
+                            $('#message2').text('Error: Invalid response from server.');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        $('#message2').text('Error: ' + error); // Display error message
+                    }
+                });
+
+                // Save button click event
+                $('#saveBtn').click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '../php/save_recipe.php',
+                        data: { recipe_id: recipeId },
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status === 'success') {
+                                updateButtonVisibility('saved');
+                                $('#message2').text(response.message); // Display success message
+                            } else {
+                                $('#message2').text(response.message); // Display error message
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            $('#message2').text('Error: ' + error); // Display error message
+                        }
+                    });
+                });
+
+                // Unsave button click event
+                $('#unsaveBtn').click(function () {
+                    $.ajax({
+                        type: 'POST',
+                        url: '../php/unsave_recipe.php',
+                        data: { recipe_id: recipeId },
+                        dataType: 'json',
+                        success: function (response) {
+                            if (response.status === 'success') {
+                                updateButtonVisibility('not_saved');
+                                $('#message2').text(response.message); // Display success message
+                            } else {
+                                $('#message2').text(response.message); // Display error message
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error(xhr.responseText);
+                            $('#message2').text('Error: ' + error); // Display error message
+                        }
+                    });
+                });
             });
+
 
 
             $(document).ready(function () {
