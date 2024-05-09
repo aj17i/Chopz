@@ -88,6 +88,7 @@ echo "<script>var followedId = $followed_id;</script>";
     <link
         href="https://fonts.googleapis.com/css2?family=Merienda:wght@300&family=Poetsen+One&family=Roboto+Slab&display=swap"
         rel="stylesheet">
+    <script src="https://kit.fontawesome.com/18ace14423.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -293,6 +294,13 @@ echo "<script>var followedId = $followed_id;</script>";
         <div class="creator-info">
             <h2>Welcome to our food blog!</h2>
             <hr>
+            <div class="recipe-rating">
+                <?php $result = mysqli_query($conn, "SELECT ROUND(AVG(rating), 2) AS average_rating FROM ratings WHERE RecipeID = $recipeId");
+                $row = mysqli_fetch_assoc($result);
+                $average_rating = $row['average_rating']; ?>
+                <h2>Rating:</h2><img src="../css/images/star.png" alt=""><?= $row['average_rating']; ?>
+            </div>
+            <hr>
             <div class="profile-image">
                 <?php
                 if ($id_row) {
@@ -343,69 +351,83 @@ echo "<script>var followedId = $followed_id;</script>";
                 </div>
 
                 <hr>
-                <div class="rating">
-                    <!-- Dynamic star rating -->
-                    <p>Rating:</p>
-                    <div class="stars">
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                        <span class="star">&#9733;</span>
-                    </div>
 
+                <div>
+                    <div></div>
+                    <i class="fa fa-star fa-2x" data-index="0"></i>
+                    <i class="fa fa-star fa-2x" data-index="1"></i>
+                    <i class="fa fa-star fa-2x" data-index="2"></i>
+                    <i class="fa fa-star fa-2x" data-index="3"></i>
+                    <i class="fa fa-star fa-2x" data-index="4"></i>
                 </div>
-                <!-- Comment section -->
-                <div class="comments">
-                    <h3>Comments</h3>
-                    <div class="comment">
-                        <p>User123: This recipe is amazing!</p>
-                    </div>
-                    <!-- Add more comments dynamically -->
+                <div>
+                    <button id="confirmRating" style="display: none;">Confirm Rating</button>
                 </div>
-                <!-- Add a form for adding new comments if needed -->
             </div>
         </div>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </div>
 
-        <script>
-            // script.js
-            function getRecipeIdFromUrl() {
-                // Get the URL parameters
-                var urlParams = new URLSearchParams(window.location.search);
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+        integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        // script.js
+        function getRecipeIdFromUrl() {
+            // Get the URL parameters
+            var urlParams = new URLSearchParams(window.location.search);
 
-                // Get the value of the 'RecipeID' parameter from the URL
-                var recipeId = urlParams.get('RecipeID');
+            // Get the value of the 'RecipeID' parameter from the URL
+            var recipeId = urlParams.get('RecipeID');
 
-                // Return the recipe ID
-                return recipeId;
+            // Return the recipe ID
+            return recipeId;
+        }
+
+        $(document).ready(function () {
+            var recipeId = getRecipeIdFromUrl(); // Implement this function to get recipe ID from URL
+
+            // Function to update button visibility based on saving status
+            function updateButtonVisibility(status) {
+                if (status === 'saved') {
+                    $('#saveBtnContainer').hide();
+                    $('#unsaveBtnContainer').show();
+                } else {
+                    $('#saveBtnContainer').show();
+                    $('#unsaveBtnContainer').hide();
+                }
             }
 
-            $(document).ready(function () {
-                var recipeId = getRecipeIdFromUrl(); // Implement this function to get recipe ID from URL
-
-                // Function to update button visibility based on saving status
-                function updateButtonVisibility(status) {
-                    if (status === 'saved') {
-                        $('#saveBtnContainer').hide();
-                        $('#unsaveBtnContainer').show();
+            // Check if the recipe is saved or not when the page loads
+            $.ajax({
+                type: 'POST',
+                url: '../php/check-saving.php',
+                data: { recipe_id: recipeId },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.status === 'saved' || response.status === 'not_saved') {
+                        updateButtonVisibility(response.status);
                     } else {
-                        $('#saveBtnContainer').show();
-                        $('#unsaveBtnContainer').hide();
+                        $('#message2').text('Error: Invalid response from server.');
                     }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                    $('#message2').text('Error: ' + error); // Display error message
                 }
+            });
 
-                // Check if the recipe is saved or not when the page loads
+            // Save button click event
+            $('#saveBtn').click(function () {
                 $.ajax({
                     type: 'POST',
-                    url: '../php/check-saving.php',
+                    url: '../php/save_recipe.php',
                     data: { recipe_id: recipeId },
                     dataType: 'json',
                     success: function (response) {
-                        if (response.status === 'saved' || response.status === 'not_saved') {
-                            updateButtonVisibility(response.status);
+                        if (response.status === 'success') {
+                            updateButtonVisibility('saved');
+                            $('#message2').text(response.message); // Display success message
                         } else {
-                            $('#message2').text('Error: Invalid response from server.');
+                            $('#message2').text(response.message); // Display error message
                         }
                     },
                     error: function (xhr, status, error) {
@@ -413,77 +435,80 @@ echo "<script>var followedId = $followed_id;</script>";
                         $('#message2').text('Error: ' + error); // Display error message
                     }
                 });
+            });
 
-                // Save button click event
-                $('#saveBtn').click(function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: '../php/save_recipe.php',
-                        data: { recipe_id: recipeId },
-                        dataType: 'json',
-                        success: function (response) {
-                            if (response.status === 'success') {
-                                updateButtonVisibility('saved');
-                                $('#message2').text(response.message); // Display success message
-                            } else {
-                                $('#message2').text(response.message); // Display error message
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(xhr.responseText);
-                            $('#message2').text('Error: ' + error); // Display error message
+            // Unsave button click event
+            $('#unsaveBtn').click(function () {
+                $.ajax({
+                    type: 'POST',
+                    url: '../php/unsave_recipe.php',
+                    data: { recipe_id: recipeId },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            updateButtonVisibility('not_saved');
+                            $('#message2').text(response.message); // Display success message
+                        } else {
+                            $('#message2').text(response.message); // Display error message
                         }
-                    });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        $('#message2').text('Error: ' + error); // Display error message
+                    }
                 });
+            });
+        });
 
-                // Unsave button click event
-                $('#unsaveBtn').click(function () {
-                    $.ajax({
-                        type: 'POST',
-                        url: '../php/unsave_recipe.php',
-                        data: { recipe_id: recipeId },
-                        dataType: 'json',
-                        success: function (response) {
-                            if (response.status === 'success') {
-                                updateButtonVisibility('not_saved');
-                                $('#message2').text(response.message); // Display success message
-                            } else {
-                                $('#message2').text(response.message); // Display error message
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(xhr.responseText);
-                            $('#message2').text('Error: ' + error); // Display error message
-                        }
-                    });
-                });
+
+
+        $(document).ready(function () {
+            // Function to update button visibility based on following status
+            function updateButtonVisibility(status) {
+                if (status === 'following') {
+                    $('#followBtnContainer').hide();
+                    $('#unfollowBtnContainer').show();
+                } else {
+                    $('#followBtnContainer').show();
+                    $('#unfollowBtnContainer').hide();
+                }
+            }
+
+            // Check if the user is followed or not when the page loads
+            $.ajax({
+                type: 'POST',
+                url: '../php/check-following.php',
+                dataType: 'json',
+                data: { profile_id: followedId },
+                success: function (response) {
+                    if (response.status === 'following' || response.status === 'not_following') {
+                        updateButtonVisibility(response.status);
+                    } else {
+                        $('#message').text('Error: Invalid response from server.');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                    $('#message').text('Error: ' + error); // Display error message
+                }
             });
 
 
+            // Follow button click event
+            $('#followBtn').click(function () {
+                var profileId = followedId; // Assuming you've set followedId correctly in your PHP code
 
-            $(document).ready(function () {
-                // Function to update button visibility based on following status
-                function updateButtonVisibility(status) {
-                    if (status === 'following') {
-                        $('#followBtnContainer').hide();
-                        $('#unfollowBtnContainer').show();
-                    } else {
-                        $('#followBtnContainer').show();
-                        $('#unfollowBtnContainer').hide();
-                    }
-                }
-
-                // Check if the user is followed or not when the page loads
                 $.ajax({
                     type: 'POST',
-                    url: '../php/check-following.php',
+                    url: '../php/add_follower.php',
+                    data: { profile_id: profileId },
                     dataType: 'json',
-                    data: { profile_id: followedId },
                     success: function (response) {
-                        if (response.status === 'following' || response.status === 'not_following') {
-                            updateButtonVisibility(response.status);
+                        if (response.status === 'success') {
+                            updateButtonVisibility('following');
+                            $('#message').text(response.message); // Display success message
                         } else {
-                            $('#message').text('Error: Invalid response from server.');
+                            $('#message').text(response.message); // Display error message
                         }
                     },
                     error: function (xhr, status, error) {
@@ -491,109 +516,142 @@ echo "<script>var followedId = $followed_id;</script>";
                         $('#message').text('Error: ' + error); // Display error message
                     }
                 });
-
-
-                // Follow button click event
-                $('#followBtn').click(function () {
-                    var profileId = followedId; // Assuming you've set followedId correctly in your PHP code
-
-                    $.ajax({
-                        type: 'POST',
-                        url: '../php/add_follower.php',
-                        data: { profile_id: profileId },
-                        dataType: 'json',
-                        success: function (response) {
-                            if (response.status === 'success') {
-                                updateButtonVisibility('following');
-                                $('#message').text(response.message); // Display success message
-                            } else {
-                                $('#message').text(response.message); // Display error message
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(xhr.responseText);
-                            $('#message').text('Error: ' + error); // Display error message
-                        }
-                    });
-                });
-
-                // Unfollow button click event
-                $('#unfollowBtn').click(function () {
-                    var profileId = followedId; // Assuming you've set followedId correctly in your PHP code
-
-                    $.ajax({
-                        type: 'POST',
-                        url: '../php/remove_follower.php',
-                        data: { profile_id: profileId },
-                        dataType: 'json',
-                        success: function (response) {
-                            if (response.status === 'success') {
-                                updateButtonVisibility('not_following');
-                                $('#message').text(response.message); // Display success message
-                            } else {
-                                $('#message').text(response.message); // Display error message
-                            }
-                        },
-                        error: function (xhr, status, error) {
-                            console.error(xhr.responseText);
-                            $('#message').text('Error: ' + error); // Display error message
-                        }
-                    });
-                });
             });
 
+            // Unfollow button click event
+            $('#unfollowBtn').click(function () {
+                var profileId = followedId; // Assuming you've set followedId correctly in your PHP code
 
-
-
-
-
-            // Function to handle star rating
-            function handleRatingClick(event) {
-                if (event.target.classList.contains('star')) {
-                    const stars = document.querySelectorAll('.star');
-                    const clickedStarIndex = Array.from(stars).indexOf(event.target) + 1;
-
-                    // Highlight clicked star and unhighlight others
-                    stars.forEach((star, index) => {
-                        if (index < clickedStarIndex) {
-                            star.classList.add('rated');
+                $.ajax({
+                    type: 'POST',
+                    url: '../php/remove_follower.php',
+                    data: { profile_id: profileId },
+                    dataType: 'json',
+                    success: function (response) {
+                        if (response.status === 'success') {
+                            updateButtonVisibility('not_following');
+                            $('#message').text(response.message); // Display success message
                         } else {
-                            star.classList.remove('rated');
+                            $('#message').text(response.message); // Display error message
                         }
-                    });
-                }
-            }
-
-            // Event listener for rating stars
-            document.querySelector('.stars').addEventListener('click', handleRatingClick);
-
-            document.addEventListener('DOMContentLoaded', function () {
-                var checkboxes = document.querySelectorAll('input[type="checkbox"]');
-                checkboxes.forEach(function (checkbox) {
-                    checkbox.addEventListener('change', function () {
-                        var label = this.parentElement;
-                        label.classList.toggle('completed');
-                    });
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        $('#message').text('Error: ' + error); // Display error message
+                    }
                 });
             });
+        });
 
-            const productContainers = [...document.querySelectorAll('.product-container')];
-            const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
-            const preBtn = [...document.querySelectorAll('.pre-btn')];
 
-            productContainers.forEach((item, i) => {
-                let containerDimensions = item.getBoundingClientRect();
-                let containerWidth = containerDimensions.width;
+        const productContainers = [...document.querySelectorAll('.product-container')];
+        const nxtBtn = [...document.querySelectorAll('.nxt-btn')];
+        const preBtn = [...document.querySelectorAll('.pre-btn')];
 
-                nxtBtn[i].addEventListener('click', () => {
-                    item.scrollLeft += containerWidth;
-                })
+        productContainers.forEach((item, i) => {
+            let containerDimensions = item.getBoundingClientRect();
+            let containerWidth = containerDimensions.width;
 
-                preBtn[i].addEventListener('click', () => {
-                    item.scrollLeft -= containerWidth;
-                })
+            nxtBtn[i].addEventListener('click', () => {
+                item.scrollLeft += containerWidth;
             })
-        </script>
+
+            preBtn[i].addEventListener('click', () => {
+                item.scrollLeft -= containerWidth;
+            })
+        });
+
+
+        var ratedIndex = -1;
+        var recipeId = getRecipeIdFromUrl();
+        var confirmRatingBtn = $('#confirmRating');
+
+        $(document).ready(function () {
+            resetStarColors();
+
+            // Check if user has rated the recipe before
+            $.ajax({
+                url: "../php/check-rate.php",
+                method: "POST",
+                dataType: 'json',
+                data: {
+                    check: 1,
+                    recipe_id: recipeId
+                },
+                success: function (response) {
+                    if (response.ratedIndex != null) {
+                        // If user has rated before, set the stars and disable further rating
+                        ratedIndex = parseInt(response.ratedIndex);
+                        setStars(ratedIndex);
+                        disableRating(); // Disable rating functionality
+                    } else {
+                        // If user hasn't rated before, enable rating functionality
+                        $('.fa-star').on('click', function () {
+                            ratedIndex = parseInt($(this).data('index'));
+                            localStorage.setItem('ratedIndex', ratedIndex);
+                            showConfirmButton(); // Show confirmation button
+                        });
+
+                        // Confirm rating button click event
+                        confirmRatingBtn.on('click', function () {
+                            saveToTheDB(recipeId); // Save rating to the database
+                            disableRating(); // Disable rating functionality after rating
+                            confirmRatingBtn.hide(); // Hide the confirmation button
+                        });
+
+                        $('.fa-star').mouseover(function () {
+                            resetStarColors();
+                            var currentIndex = parseInt($(this).data('index'));
+                            setStars(currentIndex);
+                        });
+
+                        $('.fa-star').mouseleave(function () {
+                            resetStarColors();
+                            if (ratedIndex != -1)
+                                setStars(ratedIndex);
+                        });
+                    }
+                }
+            });
+        });
+
+        function saveToTheDB(recipeId) {
+            ratedIndex++;
+            $.ajax({
+                url: "../php/rate-recipe.php",
+                method: "POST",
+                dataType: 'json',
+                data: {
+                    save: 1,
+                    ratedIndex: ratedIndex,
+                    recipe_id: recipeId
+                },
+                success: function (response) {
+                    // Handle success response if needed
+                }
+            });
+        }
+
+        function setStars(max) {
+            for (var i = 0; i <= max; i++)
+                $('.fa-star:eq(' + i + ')').css('color', 'orange');
+        }
+
+        function resetStarColors() {
+            $('.fa-star').css('color', 'white');
+        }
+
+        function disableRating() {
+            $('.fa-star').off('click');
+            $('.fa-star').off('mouseover');
+            $('.fa-star').off('mouseleave');
+        }
+
+        function showConfirmButton() {
+            confirmRatingBtn.show();
+        }
+
+    </script>
 </body>
 
 </html>

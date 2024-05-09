@@ -108,11 +108,11 @@ body {
   border-radius: 15px;
   text-align: center;
 }
-.creator-info p{
+.creator-info p {
   font-family: "Roboto Slab", serif;
   font-size: 18px;
 }
-.creator-info hr{
+.creator-info hr {
   border-color: #ac8217;
   margin: 0 auto;
   width: 90%;
@@ -234,30 +234,6 @@ body {
   margin-bottom: 20px;
 }
 
-.stars {
-  color: orange;
-}
-
-.comment {
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 10px;
-}
-/* styles.css */
-
-.stars {
-  margin-bottom: 20px;
-}
-
-.star {
-  font-size: 24px;
-  cursor: pointer;
-}
-
-.star:hover,
-.star.rated {
-  color: orange;
-}
-
 .carousel-container {
   width: 100%; /* Adjust the width as needed */
   padding: 20px 0; /* Add padding as needed */
@@ -354,7 +330,7 @@ body {
   opacity: 1;
 }
 
-.profile-image{
+.profile-image {
   border-radius: 150px;
   height: 130px;
   width: 140px;
@@ -363,7 +339,7 @@ body {
   justify-content: center; /* Center horizontally */
   margin: 0 auto; /* Center horizontally within the parent container */
 }
-.profile-image img{
+.profile-image img {
   width: 150px;
   height: 130px;
   display: block;
@@ -377,7 +353,6 @@ body {
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-
 }
 
 #followBtn:hover {
@@ -391,7 +366,7 @@ body {
   padding: 5px;
   border-radius: 10px;
 }
-.follow:hover{
+.follow:hover {
   background-color: rgb(255, 166, 0);
 }
 
@@ -409,7 +384,6 @@ body {
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-
 }
 
 #unfollowBtn:hover {
@@ -422,7 +396,7 @@ body {
   padding: 5px;
   border-radius: 10px;
 }
-.unfollow:hover{
+.unfollow:hover {
   background-color: rgb(255, 166, 0);
 }
 
@@ -439,7 +413,6 @@ body {
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-
 }
 
 #saveBtn:hover {
@@ -453,7 +426,7 @@ body {
   padding: 5px;
   border-radius: 10px;
 }
-.save:hover{
+.save:hover {
   background-color: rgb(255, 166, 0);
 }
 
@@ -471,7 +444,6 @@ body {
   border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
-
 }
 
 #unsaveBtn:hover {
@@ -484,7 +456,7 @@ body {
   padding: 5px;
   border-radius: 10px;
 }
-.unsave:hover{
+.unsave:hover {
   background-color: rgb(255, 166, 0);
 }
 
@@ -492,4 +464,37 @@ body {
   vertical-align: middle;
   width: 25px;
   height: 25px;
+}
+
+#confirmRating {
+  background-color: rgb(255, 193, 79);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+#confirmRating:hover {
+  background-color: rgb(255, 166, 0);
+}
+
+.recipe-rating {
+  font-size: 22px;
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  display: inline-flex;
+  align-items: center;
+}
+.recipe-rating img{
+  margin-right: 10px;
+  height: 40px;
+  width: 40px;
+}
+.recipe-rating h2{
+  font-size: 22px;
+  margin-right: 10px;
 }

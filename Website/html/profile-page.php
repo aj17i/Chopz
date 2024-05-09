@@ -31,12 +31,12 @@ $result_number = $mysqli->query($sql_number);
 $row_number = $result_number->fetch_assoc();
 $num_recipes = $row_number['num_recipes'];
 
-$sql_avg = "SELECT AVG(average_Rating) AS average_rating FROM recipe WHERE UserID = {$_SESSION["UserID"]}";
+$sql_avg = "SELECT ROUND(AVG(average_Rating), 2) AS average_rating FROM recipe WHERE UserID = {$_SESSION["UserID"]}";
 $result_average = $mysqli->query($sql_avg);
 $row_average = $result_average->fetch_assoc();
 $recipes_rating = $row_average['average_rating'];
 
-$user_avg = "SELECT AVG(average_rating) AS user_average_rating FROM user WHERE UserID = {$_SESSION["UserID"]}";
+$user_avg = "SELECT ROUND(AVG(average_rating),2) AS user_average_rating FROM user WHERE UserID = {$_SESSION["UserID"]}";
 $result_user_avg = $mysqli->query($user_avg);
 $row_user_avg = $result_user_avg->fetch_assoc();
 $user_rating_avg = $row_user_avg['user_average_rating'];
