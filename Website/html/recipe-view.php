@@ -336,8 +336,7 @@ echo "<script>var followedId = $followed_id;</script>";
                     </div>
                     <div id="message"></div> <!-- Container for displaying messages -->
                 </div>
-
-                <hr>
+<br>
                 <div class="save-container">
                     <div class="save" id="saveBtnContainer" style="display: none;">
                         <img src="../css/images/save.png" alt="">
