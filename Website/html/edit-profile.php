@@ -32,9 +32,17 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
         <label for="username">Username:</label>
         <input type="text" id="username" name="username">
 
+        <label for="first_name">First name:</label>
+        <input type="text" id="first_name" name="first_name">
+
+        <label for="last_name">Last name</label>
+        <input type="text" id="last_name" name="last_name">
+
+        <label for="nationality">Nationality</label>
+        <input type="text" id="nationality" name="nationality">
+
         <label for="bio">Bio</label>
         <input type="text" id="bio" name="bio">
-        <br>
 
         <input type="submit" id="submit" value="upload">
 

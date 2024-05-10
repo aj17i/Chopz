@@ -81,7 +81,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Recipe Page</title>
+    <title>Chopz | Recipe Page</title>
     <link rel="stylesheet" href="../css/recipe-view.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

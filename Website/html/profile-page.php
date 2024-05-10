@@ -40,6 +40,17 @@ $user_avg = "SELECT ROUND(AVG(average_rating),2) AS user_average_rating FROM use
 $result_user_avg = $mysqli->query($user_avg);
 $row_user_avg = $result_user_avg->fetch_assoc();
 $user_rating_avg = $row_user_avg['user_average_rating'];
+
+$user_name = "SELECT first_name, last_name, nationality, bio FROM user WHERE UserID = {$_SESSION["UserID"]}";
+$result_user_name = $mysqli->query($user_name);
+$row_user_name = $result_user_name->fetch_assoc();
+$user_name_first = $row_user_name['first_name'];
+$user_name_last = $row_user_name['last_name'];
+$user_nationality = $row_user_name['nationality'];
+$user_bio = $row_user_name['bio'];
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -94,6 +105,11 @@ $user_rating_avg = $row_user_avg['user_average_rating'];
         </div>
       </div>
     </div>
+
+
+    <!--------------------------profile content------------------------------------->
+
+
     <div class="content">
       <div class="first-row">
         <div class="statistics">
@@ -118,6 +134,24 @@ $user_rating_avg = $row_user_avg['user_average_rating'];
               Recipe</button></a>
         </div>
       </div>
+      <div class="row-zero">
+        <div class="bio-left">
+          <div>
+            <img src="../css/images/press-pass.png" alt=""> <!-- image icon of name -->
+            <span><?= $user_name_first ?> <?= $user_name_last ?></span>
+          </div>
+          <br>
+          <div>
+            <img src="../css/images/united-nations.png" alt=""> <!-- image icon of nationality -->
+            <span><?= $user_nationality ?></span>
+          </div>
+        </div>
+        <div class="bio-right">
+          <img src="../css/images/information.png" alt=""> <!-- image icon -->
+          <br>
+          <span><?= $user_bio ?></span>
+        </div>
+      </div>
       <div class="second-row-favourites">
         <div class="top-part-a">
           <h2>Favorites </h2>
@@ -129,68 +163,31 @@ $user_rating_avg = $row_user_avg['user_average_rating'];
             <button class="nxt-btn"><img src="images/arrow.png" alt="" /></button>
             <div class="product-container">
               <?php
-              // Assuming you have already connected to your database
               $userId = $_SESSION["UserID"];
-
-              // Query to retrieve saved recipe IDs for the current user
               $savedRecipesQuery = "SELECT RecipeID FROM saved_recipes WHERE UserID = ?";
-
-              // Prepare the statement
               $stmt1 = mysqli_prepare($conn, $savedRecipesQuery);
-
-              // Bind parameters
               mysqli_stmt_bind_param($stmt1, "i", $userId);
-
-              // Execute the statement
               mysqli_stmt_execute($stmt1);
-
-              // Get result
               $savedRecipesResult = mysqli_stmt_get_result($stmt1);
 
-              // Loop through each saved recipe
               while ($savedRecipeRow = mysqli_fetch_assoc($savedRecipesResult)) {
+
                 $recipeId = $savedRecipeRow['RecipeID'];
 
-                // Query to retrieve title based on RecipeID
                 $titleQuery = "SELECT title FROM recipe WHERE RecipeID = ?";
-
-                // Prepare the statement
                 $stmt2 = mysqli_prepare($conn, $titleQuery);
-
-                // Bind parameters
                 mysqli_stmt_bind_param($stmt2, "i", $recipeId);
-
-                // Execute the statement
                 mysqli_stmt_execute($stmt2);
-
-                // Get result
                 $titleResult = mysqli_stmt_get_result($stmt2);
-
-                // Fetch title
                 $titleRow = mysqli_fetch_assoc($titleResult);
-
-                // Close the statement
                 mysqli_stmt_close($stmt2);
 
-                // Query to retrieve thumbnail based on RecipeID
                 $thumbnailQuery = "SELECT thumbnail FROM recipe_images WHERE RecipeID = ? LIMIT 1";
-
-                // Prepare the statement
                 $stmt3 = mysqli_prepare($conn, $thumbnailQuery);
-
-                // Bind parameters
                 mysqli_stmt_bind_param($stmt3, "i", $recipeId);
-
-                // Execute the statement
                 mysqli_stmt_execute($stmt3);
-
-                // Get result
                 $thumbnailResult = mysqli_stmt_get_result($stmt3);
-
-                // Fetch thumbnail
                 $thumbnailRow = mysqli_fetch_assoc($thumbnailResult);
-
-                // Close the statement
                 mysqli_stmt_close($stmt3);
 
                 if ($titleRow) {
@@ -212,8 +209,6 @@ $user_rating_avg = $row_user_avg['user_average_rating'];
                   <?php
                 }
               }
-
-              // Close the statement
               mysqli_stmt_close($stmt1);
               ?>
             </div>
@@ -231,10 +226,8 @@ $user_rating_avg = $row_user_avg['user_average_rating'];
             <button class="nxt-btn"><img src="images/arrow.png" alt="" /></button>
             <div class="product-container">
               <?php
-              // Assuming you have already connected to your database
               $userId = $_SESSION["UserID"];
 
-              // First query to retrieve titles and recipe IDs
               $titleQuery = "SELECT RecipeID, title 
               FROM recipe 
               WHERE UserID = $userId 
@@ -242,17 +235,14 @@ $user_rating_avg = $row_user_avg['user_average_rating'];
               LIMIT 10";
               $titleResult = mysqli_query($conn, $titleQuery);
 
-              // Loop through each title and recipe ID
               while ($titleRow = mysqli_fetch_assoc($titleResult)) {
                 $recipeId = $titleRow['RecipeID'];
                 $url = "recipe-view.php?RecipeID=$recipeId";
 
-                // Second query to retrieve thumbnails using the recipe ID
                 $thumbnailQuery = "SELECT thumbnail FROM recipe_images WHERE RecipeID = $recipeId";
                 $thumbnailResult = mysqli_query($conn, $thumbnailQuery);
                 $thumbnailRow = mysqli_fetch_assoc($thumbnailResult);
 
-                // Check if thumbnail exists
                 if ($thumbnailRow) {
                   ?>
                   <div class="product-card">
@@ -268,7 +258,6 @@ $user_rating_avg = $row_user_avg['user_average_rating'];
                   </div>
                   <?php
                 } else {
-                  // Handle case where thumbnail is not found
                   ?>
                   <div class="product-card">
                     <div class="product-info">
