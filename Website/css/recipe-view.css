@@ -185,50 +185,49 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-.ingredients label {
-  font-size: 17px;
-  font-family: "Roboto Slab", serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  margin-left: 30px;
-}
-.inspo {
-  font-size: 19px;
-  font-family: "Roboto Slab", serif;
-  font-optical-sizing: auto;
-  font-weight: 400;
-  font-style: normal;
-  margin-left: 30px;
-  width: 65%;
-}
-/* Hide the default checkbox */
-.ingredients label input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  border: 1px solid #cc7722; /* Yellow ochre border color */
-  width: 15px; /* Adjust width as needed */
-  height: 15px; /* Adjust height as needed */
-  vertical-align: middle;
-  border-radius: 5px;
-}
+  .ingredients label {
+    font-size: 17px;
+    font-family: "Roboto Slab", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    margin-left: 30px;
+  }
+  .inspo {
+    font-size: 19px;
+    font-family: "Roboto Slab", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    margin-left: 30px;
+    width: 65%;
+  }
+  /* Hide the default checkbox */
+  .ingredients label input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: 1px solid #cc7722; /* Yellow ochre border color */
+    width: 15px; /* Adjust width as needed */
+    height: 15px; /* Adjust height as needed */
+    vertical-align: middle;
+    border-radius: 5px;
+  }
 
-/* Add custom checkmark */
-.ingredients label input[type="checkbox"]:checked::before {
-  content: "\2714"; /* Checkmark symbol */
-  display: inline-block;
-  width: 15px; /* Match checkbox width */
-  height: 15px; /* Match checkbox height */
-  text-align: center;
-  line-height: 15px; /* Center checkmark vertically */
-  font-size: 14px; /* Adjust checkmark size */
-  color: black; /* Checkmark color */
-}
-.ingredients label.completed {
-  text-decoration: line-through;
-  color: rgba(0, 0, 0, 0.391);
-}
+  .ingredients label input[type="checkbox"]:checked::before {
+    content: "\2714"; 
+    display: inline-block;
+    width: 15px;
+    height: 15px; 
+    text-align: center;
+    line-height: 15px; 
+    font-size: 14px; 
+    color: black;
+  }
+  .ingredients label input[type="checkbox"]:checked + .ingredient-text {
+    text-decoration: line-through; /* Apply line-through style to the text when checkbox is checked */
+    color: rgba(0, 0, 0, 0.391);
+  }
 
 .rating {
   margin-bottom: 20px;
@@ -489,12 +488,86 @@ body {
   display: inline-flex;
   align-items: center;
 }
-.recipe-rating img{
+.recipe-rating img {
   margin-right: 10px;
   height: 40px;
   width: 40px;
 }
-.recipe-rating h2{
+.recipe-rating h2 {
   font-size: 22px;
   margin-right: 10px;
+}
+.comment-section {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #f1f1f1;
+  width: auto;
+}
+.comment-section form label {
+  display: block;
+  margin-bottom: 5px;
+}
+.comment-section form input[type="text"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+.comment-section form input[type="submit"] {
+  background-color: rgb(255, 193, 79);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+.comment-section form input[type="submit"]:hover {
+  background-color: rgb(255, 166, 0);
+}
+.comments-container {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  width: auto;
+  height: 350px;
+  overflow-y: scroll;
+  text-align: left;
+  font-family: "Roboto Slab", serif;
+}
+.comments-container::-webkit-scrollbar {
+  width: 0; /* Remove the scrollbar */
+}
+
+.comments-container:hover::-webkit-scrollbar,
+.comments-container::-webkit-scrollbar-thumb {
+  width: 5px; /* Set the width of the scrollbar */
+  background-color: rgba(0, 0, 0, 0.5); /* Set the color of the scrollbar */
+}
+
+.comment {
+  margin-bottom: 20px;
+}
+
+.comment hr {
+  margin: 10px 0;
+  border: none;
+  border-top: 1px solid #ccc;
+}
+
+.comment p {
+  margin: 0;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.comment p.username {
+  font-weight: bold;
+  font-size: 15px;
+}
+.usernamelink{
+  text-decoration: none;
+  color: rgb(8, 7, 19);
 }

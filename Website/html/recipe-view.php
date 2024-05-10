@@ -68,8 +68,11 @@ $id_row = mysqli_fetch_assoc($id_result);
 $followed_id = $id_row['UserID'];
 echo "<script>var followedId = $followed_id;</script>";
 
-
-
+$comment_display = "SELECT c.comment, u.username FROM comment c JOIN user u ON c.CommentingUserID = u.UserID WHERE c.RecipeID = ? ORDER BY c.date DESC";
+$comment_stmt = mysqli_prepare($conn, $comment_display);
+mysqli_stmt_bind_param($comment_stmt, 'i', $recipeId);
+mysqli_stmt_execute($comment_stmt);
+$comment_result = mysqli_stmt_get_result($comment_stmt);
 ?>
 
 <!DOCTYPE html>
@@ -171,8 +174,8 @@ echo "<script>var followedId = $followed_id;</script>";
 
                             // Display ingredient with checkbox
                             echo '<label>';
-                            echo '<input type="checkbox" name="ingredients[]" value="' . htmlspecialchars($ingredientName) . '">'; // Use htmlspecialchars to prevent XSS attacks
-                            echo $quantity . ' ' . $unit . ' ' . $ingredientName;
+                            echo '<input type="checkbox" name="ingredients[]" value=""' . htmlspecialchars($ingredientName) . '">';
+                            echo '<span class="ingredient-text">' . $quantity . ' ' . $unit . ' ' . $ingredientName . '</span>';
                             echo '</label>';
                             echo '<br>';
                         }
@@ -300,6 +303,17 @@ echo "<script>var followedId = $followed_id;</script>";
                 $average_rating = $row['average_rating']; ?>
                 <h2>Rating:</h2><img src="../css/images/star.png" alt=""><?= $row['average_rating']; ?>
             </div>
+            <div>
+                <div></div>
+                <i class="fa fa-star fa-2x" data-index="0"></i>
+                <i class="fa fa-star fa-2x" data-index="1"></i>
+                <i class="fa fa-star fa-2x" data-index="2"></i>
+                <i class="fa fa-star fa-2x" data-index="3"></i>
+                <i class="fa fa-star fa-2x" data-index="4"></i>
+            </div>
+            <div>
+                <button id="confirmRating" style="display: none;">Confirm Rating</button>
+            </div>
             <hr>
             <div class="profile-image">
                 <?php
@@ -317,13 +331,12 @@ echo "<script>var followedId = $followed_id;</script>";
 
                         echo "<img src='../css/images/" . $user_profile_Row['profilePic'] . "' alt=''>";
                         echo "</div>";
-                        echo "<h3>" . $user_profile_Row['username'] . "</h3>";
+                        echo "<a href='#' class = 'usernamelink'><h3>" . $user_profile_Row['username'] . "</h3></a>";
                         echo "<p>" . $user_profile_Row['bio'] . "</p>";
                         echo "<hr>";
                     }
                 }
                 ?>
-
 
                 <div class="follow-container">
                     <div class="follow" id="followBtnContainer" style="display: none;">
@@ -336,7 +349,7 @@ echo "<script>var followedId = $followed_id;</script>";
                     </div>
                     <div id="message"></div> <!-- Container for displaying messages -->
                 </div>
-<br>
+                <br>
                 <div class="save-container">
                     <div class="save" id="saveBtnContainer" style="display: none;">
                         <img src="../css/images/save.png" alt="">
@@ -350,17 +363,24 @@ echo "<script>var followedId = $followed_id;</script>";
                 </div>
 
                 <hr>
+                <div class="comment-section">
+                    <h2>Comment Section:</h2>
+                    <form id="comment-form" action="../php/manage-comments.php" method="post">
+                        <label for="comment">Comment</label>
+                        <input type="text" name="comment" id="comment" placeholder="Any Opinions?!"><br>
+                        <input type="submit" name="submit" value="submit">
+                    </form>
+                    <div id="comments-container" class="comments-container">
+                        <?php while ($comment_row = mysqli_fetch_assoc($comment_result)) {
 
-                <div>
-                    <div></div>
-                    <i class="fa fa-star fa-2x" data-index="0"></i>
-                    <i class="fa fa-star fa-2x" data-index="1"></i>
-                    <i class="fa fa-star fa-2x" data-index="2"></i>
-                    <i class="fa fa-star fa-2x" data-index="3"></i>
-                    <i class="fa fa-star fa-2x" data-index="4"></i>
-                </div>
-                <div>
-                    <button id="confirmRating" style="display: none;">Confirm Rating</button>
+                            echo '<div class="comment">';
+                            echo '<p class="username">' . $comment_row['username'] . '</p>';
+                            echo '<p>' . $comment_row['comment'] . '</p>';
+                            echo '<hr>';
+                            echo '</div>';
+
+                        } ?>
+                    </div>
                 </div>
             </div>
         </div>
@@ -649,6 +669,53 @@ echo "<script>var followedId = $followed_id;</script>";
         function showConfirmButton() {
             confirmRatingBtn.show();
         }
+
+        $(document).ready(function () {
+
+            // Submit form using AJAX
+            $('#comment-form').submit(function (event) {
+                event.preventDefault(); // Prevent default form submission
+                var recipeId = getRecipeIdFromUrl();
+                // Send AJAX request
+                $.ajax({
+                    type: 'POST',
+                    url: '../php/manage-comments.php',
+                    data: $(this).serialize() + '&recipe_id=' + recipeId,
+                    success: function (response) {
+                        // Clear input field
+                        $('#comment').val('');
+                        // Append new comment to comments container
+                        $('#comments-container').append(response);
+                    }
+                });
+            });
+        });
+        $(document).ready(function () {
+            $('#comment-form').submit(function () {
+                location.reload();
+            });
+        });
+
+        $(document).ready(function () {
+            $('.usernamelink').click(function (e) {
+                e.preventDefault();
+                var recipeId = getRecipeIdFromUrl();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '../php/check-user-recipe.php',
+                    data: { recipeId: recipeId },
+                    success: function (response) {
+                        // Check the response and navigate accordingly
+                        if (response === "match") {
+                            window.location.href = "profile-page.php";
+                        } else {
+                            window.location.href = "view-user-profile.php";
+                        }
+                    }
+                });
+            });
+        });
 
     </script>
 </body>
