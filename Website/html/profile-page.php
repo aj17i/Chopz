@@ -96,7 +96,7 @@ $user_bio = $row_user_name['bio'];
             <div class="user-num"><?= $num_followers ?></div>
             <div class="user-rum"><?= $num_following ?></div>
           </div>
-          <a href=""><button>View Followers</button></a>
+          <a href="view-follower-list.php"><button>View Followers</button></a>
           <a href=""><button>Settings</button></a>
           <a href="edit-profile.php"><button>Edit Profile</button></a>
           <form action="../php/logout.php">
