@@ -121,15 +121,12 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
 
                 <?php
                 if (mysqli_num_rows($recipe_details_res) > 0) {
-                    // Fetch the first row (assuming there's only one row for the given recipe ID)
                     $recipe_details_row = mysqli_fetch_assoc($recipe_details_res);
 
-                    // Display the recipe title
                     echo "<div class = 'title'>";
                     echo "<h1>" . $recipe_details_row['title'] . "</h1>";
                     echo "</div>";
 
-                    // Add the rest of your HTML markup here...
                 } else {
                     echo "Recipe not found.";
                 }
@@ -143,10 +140,8 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                         <div class="times">
                             <?php
                             if (mysqli_num_rows($recipe_times_res) > 0) {
-                                // Fetch the first row
-                                $recipe_times_row = mysqli_fetch_assoc($recipe_times_res);
 
-                                // Display the recipe details
+                                $recipe_times_row = mysqli_fetch_assoc($recipe_times_res);
                             
                                 echo "<span class='label'>Prep Time:</span> <span class='value'>" . $recipe_times_row['prep_time'] . "</span>";
                                 echo "<span class='label'> Cooking Time:</span> <span class='value'>" . $recipe_times_row['cooking_time'] . "</span>";
@@ -157,7 +152,6 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                                 echo "Recipe not found.";
                             }
 
-                            // Close the statement
                             mysqli_stmt_close($recipe_times_stmt);
                             ?>
                         </div>
@@ -165,14 +159,13 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                         <hr>
                         <h2>Ingredients:</h2>
                         <?php
-                        // Loop through the ingredient details result set
+                        
                         while ($row = mysqli_fetch_assoc($ingredient_details_res)) {
-                            // Extract ingredient details
+                            
                             $ingredientName = $row['IngredientName'];
                             $quantity = $row['Quantity'];
                             $unit = $row['Unit'];
 
-                            // Display ingredient with checkbox
                             echo '<label>';
                             echo '<input type="checkbox" name="ingredients[]" value=""' . htmlspecialchars($ingredientName) . '">';
                             echo '<span class="ingredient-text">' . $quantity . ' ' . $unit . ' ' . $ingredientName . '</span>';
@@ -190,24 +183,14 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                             <button class="nxt-btn"><img src="images/arrow.png" alt="" /></button>
                             <div class="product-container">
                                 <?php
-                                // Assuming you have already connected to your database
-                                
 
-                                // First query to retrieve titles and recipe IDs
                                 $images_sql = "SELECT image FROM recipe_images WHERE RecipeID = ? ORDER BY imageNumber";
                                 $images_stmt = mysqli_prepare($conn, $images_sql);
                                 mysqli_stmt_bind_param($images_stmt, 'i', $recipeId);
                                 mysqli_stmt_execute($images_stmt);
                                 $images_res = mysqli_stmt_get_result($images_stmt);
 
-                                // Loop through each title and recipe ID
                                 while ($imageRow = mysqli_fetch_assoc($images_res)) {
-
-
-                                    // Second query to retrieve thumbnails using the recipe ID
-                                
-
-                                    // Check if thumbnail exists
                                     if ($imageRow) {
                                         ?>
                                         <div class="product-card">
@@ -218,7 +201,6 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                                         </div>
                                         <?php
                                     } else {
-                                        // Handle case where thumbnail is not found
                                         ?>
                                         <div class="product-card">
                                             <div class="product-info">
@@ -252,11 +234,8 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     <div class=times>
                         <?php
                         if (mysqli_num_rows($recipe_nutrition_res) > 0) {
-                            // Fetch the first row
                             $recipe_nutrition_row = mysqli_fetch_assoc($recipe_nutrition_res);
 
-                            // Display the recipe details
-                        
                             echo "<span class='label'>Calories:</span> <span class='value'>" . $recipe_nutrition_row['calories'] . "g</span>";
                             echo "<span class='label'> Carbs:</span> <span class='value'>" . $recipe_nutrition_row['carbs'] . "g</span>";
                             echo "<span class='label'> Protein:</span> <span class='value'>" . $recipe_nutrition_row['protein'] . "g</span>";
@@ -265,8 +244,6 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                         } else {
                             echo "Recipe not found.";
                         }
-
-                        // Close the statement
                         mysqli_stmt_close($recipe_nutrition_stmt);
                         ?>
                     </div>
@@ -276,7 +253,6 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     <div class="inspo">
                         <?php
                         if (mysqli_num_rows($recipe_inspo_res) > 0) {
-                            // Fetch the first row
                             $recipe_inspo_row = mysqli_fetch_assoc($recipe_inspo_res);
 
                             echo "<p>" . $recipe_inspo_row['inspo'] . "</p>";
@@ -285,8 +261,6 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                         } else {
                             echo "Recipe not found.";
                         }
-
-                        // Close the statement
                         mysqli_stmt_close($recipe_inspo_stmt);
                         ?>
 
@@ -332,7 +306,16 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                         echo "<img src='../css/images/" . $user_profile_Row['profilePic'] . "' alt=''>";
                         echo "</div>";
                         echo "<a href='#' class = 'usernamelink'><h3>" . $user_profile_Row['username'] . "</h3></a>";
-                        echo "<p>" . $user_profile_Row['bio'] . "</p>";
+                        echo "<hr>";
+                    }
+                    $recipe_description_Query = "SELECT description FROM recipe WHERE RecipeID = ?";
+                    $description_stmt = mysqli_prepare($conn, $recipe_description_Query);
+                    mysqli_stmt_bind_param($description_stmt, 'i', $recipeId);
+                    mysqli_stmt_execute($description_stmt);
+                    $recipe_description_Result = mysqli_stmt_get_result($description_stmt);
+
+                    if ($recipe_description_Row = mysqli_fetch_assoc($recipe_description_Result)) {
+                        echo "<p>" . $recipe_description_Row['description'] . "</p>";
                         echo "<hr>";
                     }
                 }
@@ -389,22 +372,15 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
-        // script.js
         function getRecipeIdFromUrl() {
-            // Get the URL parameters
             var urlParams = new URLSearchParams(window.location.search);
-
-            // Get the value of the 'RecipeID' parameter from the URL
             var recipeId = urlParams.get('RecipeID');
-
-            // Return the recipe ID
             return recipeId;
         }
 
         $(document).ready(function () {
-            var recipeId = getRecipeIdFromUrl(); // Implement this function to get recipe ID from URL
+            var recipeId = getRecipeIdFromUrl(); 
 
-            // Function to update button visibility based on saving status
             function updateButtonVisibility(status) {
                 if (status === 'saved') {
                     $('#saveBtnContainer').hide();
@@ -414,8 +390,6 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     $('#unsaveBtnContainer').hide();
                 }
             }
-
-            // Check if the recipe is saved or not when the page loads
             $.ajax({
                 type: 'POST',
                 url: '../php/check-saving.php',
@@ -430,7 +404,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);
-                    $('#message2').text('Error: ' + error); // Display error message
+                    $('#message2').text('Error: ' + error); 
                 }
             });
 
@@ -444,14 +418,14 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     success: function (response) {
                         if (response.status === 'success') {
                             updateButtonVisibility('saved');
-                            $('#message2').text(response.message); // Display success message
+                            $('#message2').text(response.message); 
                         } else {
-                            $('#message2').text(response.message); // Display error message
+                            $('#message2').text(response.message);
                         }
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr.responseText);
-                        $('#message2').text('Error: ' + error); // Display error message
+                        $('#message2').text('Error: ' + error); 
                     }
                 });
             });
@@ -466,14 +440,14 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     success: function (response) {
                         if (response.status === 'success') {
                             updateButtonVisibility('not_saved');
-                            $('#message2').text(response.message); // Display success message
+                            $('#message2').text(response.message);
                         } else {
-                            $('#message2').text(response.message); // Display error message
+                            $('#message2').text(response.message);
                         }
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr.responseText);
-                        $('#message2').text('Error: ' + error); // Display error message
+                        $('#message2').text('Error: ' + error);
                     }
                 });
             });
@@ -482,7 +456,6 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
 
 
         $(document).ready(function () {
-            // Function to update button visibility based on following status
             function updateButtonVisibility(status) {
                 if (status === 'following') {
                     $('#followBtnContainer').hide();
@@ -492,8 +465,6 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     $('#unfollowBtnContainer').hide();
                 }
             }
-
-            // Check if the user is followed or not when the page loads
             $.ajax({
                 type: 'POST',
                 url: '../php/check-following.php',
@@ -508,14 +479,14 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);
-                    $('#message').text('Error: ' + error); // Display error message
+                    $('#message').text('Error: ' + error);
                 }
             });
 
 
             // Follow button click event
             $('#followBtn').click(function () {
-                var profileId = followedId; // Assuming you've set followedId correctly in your PHP code
+                var profileId = followedId; 
 
                 $.ajax({
                     type: 'POST',
@@ -525,21 +496,21 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     success: function (response) {
                         if (response.status === 'success') {
                             updateButtonVisibility('following');
-                            $('#message').text(response.message); // Display success message
+                            $('#message').text(response.message); 
                         } else {
-                            $('#message').text(response.message); // Display error message
+                            $('#message').text(response.message); 
                         }
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr.responseText);
-                        $('#message').text('Error: ' + error); // Display error message
+                        $('#message').text('Error: ' + error);
                     }
                 });
             });
 
             // Unfollow button click event
             $('#unfollowBtn').click(function () {
-                var profileId = followedId; // Assuming you've set followedId correctly in your PHP code
+                var profileId = followedId; 
 
                 $.ajax({
                     type: 'POST',
@@ -549,14 +520,14 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     success: function (response) {
                         if (response.status === 'success') {
                             updateButtonVisibility('not_following');
-                            $('#message').text(response.message); // Display success message
+                            $('#message').text(response.message); 
                         } else {
-                            $('#message').text(response.message); // Display error message
+                            $('#message').text(response.message); 
                         }
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr.responseText);
-                        $('#message').text('Error: ' + error); // Display error message
+                        $('#message').text('Error: ' + error); 
                     }
                 });
             });
@@ -587,8 +558,6 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
 
         $(document).ready(function () {
             resetStarColors();
-
-            // Check if user has rated the recipe before
             $.ajax({
                 url: "../php/check-rate.php",
                 method: "POST",
@@ -599,23 +568,20 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                 },
                 success: function (response) {
                     if (response.ratedIndex != null) {
-                        // If user has rated before, set the stars and disable further rating
                         ratedIndex = parseInt(response.ratedIndex);
                         setStars(ratedIndex);
-                        disableRating(); // Disable rating functionality
+                        disableRating();
                     } else {
-                        // If user hasn't rated before, enable rating functionality
                         $('.fa-star').on('click', function () {
                             ratedIndex = parseInt($(this).data('index'));
                             localStorage.setItem('ratedIndex', ratedIndex);
-                            showConfirmButton(); // Show confirmation button
+                            showConfirmButton();
                         });
 
-                        // Confirm rating button click event
                         confirmRatingBtn.on('click', function () {
-                            saveToTheDB(recipeId); // Save rating to the database
-                            disableRating(); // Disable rating functionality after rating
-                            confirmRatingBtn.hide(); // Hide the confirmation button
+                            saveToTheDB(recipeId);
+                            disableRating();
+                            confirmRatingBtn.hide();
                         });
 
                         $('.fa-star').mouseover(function () {
@@ -646,7 +612,6 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     recipe_id: recipeId
                 },
                 success: function (response) {
-                    // Handle success response if needed
                 }
             });
         }
@@ -672,11 +637,9 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
 
         $(document).ready(function () {
 
-            // Submit form using AJAX
             $('#comment-form').submit(function (event) {
-                event.preventDefault(); // Prevent default form submission
+                event.preventDefault(); 
                 var recipeId = getRecipeIdFromUrl();
-                // Send AJAX request
                 $.ajax({
                     type: 'POST',
                     url: '../php/manage-comments.php',
