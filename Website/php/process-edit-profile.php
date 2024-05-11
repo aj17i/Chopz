@@ -67,17 +67,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         $fields[] = "username = '$username'";
     }
+    if (!empty($_POST['email'])) {
+        $email = $_POST['email'];
+        $fields[] = "email = '$email'";
+    }
     if (!empty($_POST['bio'])) {
         $bio = $_POST['bio'];
         $fields[] = "bio = '$bio'";
     }
-    if (!empty($_POST['first_name'])) {
-        $first_name = $_POST['first_name'];
-        $fields[] = "first_name = '$first_name'";
-    }
-    if (!empty($_POST['last_name'])) {
-        $last_name = $_POST['last_name'];
-        $fields[] = "last_name = '$last_name'";
+    if (!empty($_POST['full_name'])) {
+        $full_name = $_POST['full_name'];
+        $fields[] = "full_name = '$full_name'";
     }
     if (!empty($_POST['nationality'])) {
         $nationality = $_POST['nationality'];

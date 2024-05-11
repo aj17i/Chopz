@@ -41,11 +41,10 @@ $result_user_avg = $mysqli->query($user_avg);
 $row_user_avg = $result_user_avg->fetch_assoc();
 $user_rating_avg = $row_user_avg['user_average_rating'];
 
-$user_name = "SELECT first_name, last_name, nationality, bio FROM user WHERE UserID = {$_SESSION["UserID"]}";
+$user_name = "SELECT full_name, nationality, bio FROM user WHERE UserID = {$_SESSION["UserID"]}";
 $result_user_name = $mysqli->query($user_name);
 $row_user_name = $result_user_name->fetch_assoc();
-$user_name_first = $row_user_name['first_name'];
-$user_name_last = $row_user_name['last_name'];
+$user_name_full = $row_user_name['full_name'];
 $user_nationality = $row_user_name['nationality'];
 $user_bio = $row_user_name['bio'];
 
@@ -98,7 +97,6 @@ $user_bio = $row_user_name['bio'];
           </div>
           <a href="view-follower-list.php"><button>View Followers</button></a>
           <a href="view-edit-settings.php"><button>Settings</button></a>
-          <a href="edit-profile.php"><button>Edit Profile</button></a>
           <form action="../php/logout.php">
             <button>Logout</button>
           </form>
@@ -138,7 +136,7 @@ $user_bio = $row_user_name['bio'];
         <div class="bio-left">
           <div>
             <img src="../css/images/press-pass.png" alt=""> <!-- image icon of name -->
-            <span><?= $user_name_first ?> <?= $user_name_last ?></span>
+            <span><?= $user_name_full ?></span>
           </div>
           <br>
           <div>

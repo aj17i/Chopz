@@ -19,9 +19,9 @@ if (
     $activation_token_hash = hash("sha256", $activation_token);
 
     // Check if the user already exists
-    $query = "SELECT * FROM user WHERE email = ?";
+    $query = "SELECT * FROM user WHERE email = ? OR username = ?";
     $stmt = $mysqli->prepare($query);
-    $stmt->bind_param("s", $email);
+    $stmt->bind_param("ss", $email, $username);
     $stmt->execute();
     $result = $stmt->get_result();
 
