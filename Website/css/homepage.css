@@ -54,10 +54,6 @@ body {
   right: 480px;
   transform: translateY(-50%);
 }
-.search-Image {
-  float: right;
-  margin: 10px;
-}
 
 .dropdown .dropbtn {
   font-size: 16px;

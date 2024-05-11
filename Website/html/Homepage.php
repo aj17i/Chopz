@@ -53,10 +53,6 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
             <button onclick="searchChef()">Search</button>
           </div>
         </div>
-
-        <div class="search-Image">
-          <img src="../css/images/magnifier.png" alt="" />
-        </div>
       </div>
       <a href="profile-page.php" class="profilePic">
         <img src="../css/images/user.png" alt="" />

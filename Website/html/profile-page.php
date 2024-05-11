@@ -75,7 +75,7 @@ $user_bio = $row_user_name['bio'];
   <!---------------------------------side panel-------------------------------------------->
 
   <div class="container">
-    <div class="side-panel" id="sidePanel">
+     <div class="side-panel" id="sidePanel">
       <div class="panel-content">
         <?php if (mysqli_num_rows($res) > 0) {
           while ($images = mysqli_fetch_assoc($res)) { ?>
@@ -97,7 +97,7 @@ $user_bio = $row_user_name['bio'];
             <div class="user-rum"><?= $num_following ?></div>
           </div>
           <a href="view-follower-list.php"><button>View Followers</button></a>
-          <a href=""><button>Settings</button></a>
+          <a href="view-edit-settings.php"><button>Settings</button></a>
           <a href="edit-profile.php"><button>Edit Profile</button></a>
           <form action="../php/logout.php">
             <button>Logout</button>
