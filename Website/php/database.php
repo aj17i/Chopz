@@ -11,4 +11,3 @@ if($mysqli -> connect_error){
     die("Connection Error: " . $mysqli -> connect_error);
 }
 return $mysqli;
-?>
