@@ -31,6 +31,10 @@
                                 href="#account-change-password">Change password</a>
                             <a class="list-group-item list-group-item-action" data-toggle="list"
                                 href="#account-info">Info</a>
+                            <?php if (isset($_GET['error'])): ?>
+                                <p class="list-group-item list-group-item-action active" style="color : black;">
+                                    <?php echo $_GET['error'] ?></p>
+                            <?php endif ?>
                         </div>
                     </div>
                     <div class="col-md-9">

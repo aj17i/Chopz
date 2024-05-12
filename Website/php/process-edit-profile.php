@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($error === 0) {
             if ($img_size > 125000) {
                 $em = "Sorry, your file is too large!";
-                header("Location: ../html/edit-profile.php?error=$em");
+                header("Location: ../html/view-edit-settings.php?error=$em");
                 exit();
             } else {
                 $img_ex = pathinfo($img_name, PATHINFO_EXTENSION);
@@ -39,18 +39,51 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     $fields[] = "profilePic = '$new_img_name'";
                 } else {
                     $em = "Only images are accepted";
-                    header("Location: ../html/edit-profile.php?error=$em");
+                    header("Location: ../html/view-edit-settings.php?error=$em");
                     exit();
                 }
             }
         } else {
             $em = "Unknown error occurred!";
-            header("Location: ../html/edit-profile.php?error=$em");
+            header("Location: ../html/view-edit-settings.php?error=$em");
             exit();
         }
     }
 
-    // Process other form fields
+    if (!empty($_POST['current-password'])) {
+
+        $sql = sprintf("SELECT * FROM user WHERE UserID = '%s'", $mysqli->real_escape_string($_SESSION["UserID"]));
+        $result = $mysqli->query($sql);
+        $user = $result->fetch_assoc();
+
+        if (password_verify($_POST["current-password"], $user["password"])) {
+
+            if (!empty($_POST['password']) && !empty($_POST['verify-password'])) {
+
+                if ($_POST["password"] !== $_POST["verify-password"]) {
+
+                    $em = "Passwords don't match.";
+                    header("Location: ../html/view-edit-settings.php?error=$em");
+                    exit();
+                } else {
+                    $password = $_POST['password'];
+                    $userID = $_SESSION['UserID'];
+
+                    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+                    $fields[] = "password = '$hashedPassword'";
+                }
+
+            } else {
+                $em = "Please enter your new password.";
+                header("Location: ../html/view-edit-settings.php?error=$em");
+                exit();
+            }
+        } else {
+            $em = "Incorrect password, please check and try again.";
+            header("Location: ../html/view-edit-settings.php?error=$em");
+            exit();
+        }
+    }
     if (!empty($_POST['username'])) {
         $username = $_POST['username'];
         $check_query = "SELECT * FROM user WHERE username = ? AND UserID != ?";
@@ -61,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         if ($result->num_rows > 0) {
             $em = "Username already taken. Please try another one.";
-            header("Location: ../html/edit-profile.php?error=$em");
+            header("Location: ../html/view-edit-settings.php?error=$em");
             exit();
         }
 
