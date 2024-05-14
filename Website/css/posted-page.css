@@ -48,12 +48,13 @@ body {
 .back-btn:hover {
   background-color: #e38d58; /* More colorful on hover */
 }
-
+.second-row-favourites,
 .third-row-recent {
   background-color: #d7d7d7;
   padding: 10px;
   border-radius: 15px;
 }
+.second-row-favourites,
 .third-row-recent {
   margin-bottom: 20px;
 }
