@@ -397,6 +397,48 @@ body {
   background: #ff7d7d;
   color: #fff;
 }
+.card-btn-left,
+.card-btn-right {
+  position: absolute;
+  bottom: 10px;
+  padding: 10px;
+  width: 43%; /* Adjusted width to fit both buttons */
+  text-transform: capitalize;
+  border: none;
+  outline: none;
+  background: #fff;
+  border-radius: 5px;
+  transition: 0.5s;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.card-btn-left {
+  left: 5%; /* Adjusted position for left button */
+  transform: none; /* Resetting transform for left button */
+}
+
+.card-btn-right {
+  right: 5%; /* Adjusted position for right button */
+  transform: none; /* Resetting transform for right button */
+}
+
+.product-card:hover .card-btn-left {
+  opacity: 1;
+}
+.product-card:hover .card-btn-right{
+  opacity: 1;
+}
+
+.card-btn-left:hover {
+  background: #ff7d7d;
+  color: #fff;
+}
+.card-btn-right:hover{
+  background: #ff7d7d;
+  color: #fff;
+}
+
 
 .product-info {
   width: 100%;
