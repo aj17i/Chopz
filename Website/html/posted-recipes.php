@@ -4,6 +4,7 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
     header("Location: loginpage.php");
     exit();
 }
+require_once '../php/database.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,10 +13,69 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chopz | Posted Recipes</title>
+    <link rel="stylesheet" href="../css/posted-page.css" />
 </head>
 
 <body>
+    <div class="header">
+        <h2>Posted Recipe</h2>
+        <a href="profile-page.php" class="back-btn">Back</a>
+    </div>
+    <div class="third-row-recent">
+        <div class="carousel-container">
+            <section class="product">
+                <div class="product-container">
+                    <?php
+                    $userId = $_SESSION["UserID"];
 
+                    $titleQuery = "SELECT RecipeID, title 
+              FROM recipe 
+              WHERE UserID = $userId 
+              ORDER BY creation_date DESC";
+                    $titleResult = mysqli_query($conn, $titleQuery);
+
+                    while ($titleRow = mysqli_fetch_assoc($titleResult)) {
+                        $recipeId = $titleRow['RecipeID'];
+                        $url = "recipe-view.php?RecipeID=$recipeId";
+
+                        $thumbnailQuery = "SELECT thumbnail FROM recipe_images WHERE RecipeID = $recipeId";
+                        $thumbnailResult = mysqli_query($conn, $thumbnailQuery);
+                        $thumbnailRow = mysqli_fetch_assoc($thumbnailResult);
+
+                        if ($thumbnailRow) {
+                            ?>
+                            <div class="product-card">
+                                <div class="product-image">
+                                    <img src="<?php echo $thumbnailRow['thumbnail']; ?>" class="product-thumb" alt="" />
+                                    <a href="<?php echo $url; ?>">
+                                        <button class="card-btn-left">View Recipe</button>
+                                    </a><br>
+                                    <a href="#" class="deleteRecipeBtn" data-recipeid="<?php echo $recipeId; ?>">
+                                        <button class="card-btn-right">Delete Recipe</button>
+                                    </a>
+
+                                </div>
+                                <div class="product-info">
+                                    <h2 class="product-brand"><?php echo $titleRow['title']; ?></h2>
+                                </div>
+                            </div>
+                            <?php
+                        } else {
+                            ?>
+                            <div class="product-card">
+                                <div class="product-info">
+                                    <h2 class="product-brand"><?php echo $titleRow['title']; ?></h2>
+                                    <p>No thumbnail available</p>
+                                </div>
+                            </div>
+                            <?php
+                        }
+                    }
+                    ?>
+                </div>
+            </section>
+        </div>
+    </div>
 </body>
 
 </html>
