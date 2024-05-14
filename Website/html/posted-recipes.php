@@ -18,7 +18,7 @@ require_once '../php/database.php';
 
 <body>
     <div class="header">
-        <h2>Posted Recipe</h2>
+        <h2>Posted Recipes</h2>
         <a href="profile-page.php" class="back-btn">Back</a>
     </div>
     <div class="third-row-recent">
