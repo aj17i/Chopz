@@ -23,9 +23,7 @@ body {
 }
 
 .navbar {
-  background-image: url(images/2.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-image: linear-gradient(135deg, #eaaf31, #D3D3D3);
   background-attachment: fixed;
   overflow: hidden;
   height: 80px;
@@ -43,7 +41,6 @@ body {
 .navbar .logo {
   float: left;
   padding: 5px;
-  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .container {
@@ -195,9 +192,11 @@ body {
   background-color: #e8e8e8;
   padding: 20px;
   position: sticky;
-  height: 83vh;
+  height: 79vh;
   transition: transform 0.3s ease;
   overflow-y: auto;
+  margin: 15px;
+  border-radius: 15px;
 }
 
 .side-panel.show {

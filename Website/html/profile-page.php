@@ -79,7 +79,7 @@ $user_bio = $row_user_name['bio'];
         <?php if (mysqli_num_rows($res) > 0) {
           while ($images = mysqli_fetch_assoc($res)) { ?>
             <div class="profile-pic">
-              <img src="../css/images/<?= $images['profilePic'] ?>" alt="Profile Picture" />
+              <img src="../css/images/<?= $images['profilePic'] ?>" alt="Profile Picture"/>
             </div>
           <?php }
         } ?>

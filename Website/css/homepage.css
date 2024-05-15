@@ -4,10 +4,7 @@ body {
 }
 
 .navbar {
-  background-image: url(images/2.jpg);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
+  background-image: linear-gradient(135deg, #eaaf31, #d3d3d3);
   overflow: hidden;
   height: 80px;
 }
@@ -24,7 +21,6 @@ body {
 .navbar .logo {
   float: left;
   padding: 5px;
-  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .navbar .profilePic {
@@ -136,13 +132,25 @@ body {
   grid-template-columns: 280px auto;
   height: 81vh;
 }
+.container hr {
+  border-color: #ffa500;
+  margin: 0 auto;
+  width: 90%;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.container h2 {
+  font-family: "Briem Hand", cursive;
+  font-weight: 500;
+  text-decoration: underline;
+}
 .content {
   padding: 20px;
   overflow-y: auto;
 }
 .side-panel {
   width: 250px;
-  background-color:rgb(205, 180, 137);
+  background-color: rgb(210, 201, 185);
   padding: 15px;
   position: sticky;
   height: 79vh;
@@ -150,6 +158,15 @@ body {
   overflow-y: auto;
   border-radius: 15px;
   margin: 15px;
+}
+.side-panel h2 {
+  font-family: "Briem Hand", cursive;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  text-decoration: underline;
+  align-items: center;
+  justify-content: center;
+  display: flex;
 }
 .panel-content {
   padding: 15px;
@@ -161,20 +178,95 @@ body {
   align-items: center;
   height: auto;
 }
+.panel-content img {
+  height: 30px;
+  width: 30px;
+}
+.panel-content select {
+  width: 80%;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ffa500;
+  background-color: transparent;
+  color: #040300;
+  margin-bottom: 20px;
+}
+
+.panel-content select option {
+  font-size: 16px;
+  background-color: #fffdfa;
+  color: #000000;
+}
+
+.panel-content select::-ms-expand {
+  display: none;
+}
+
+.panel-content select::after {
+  content: "\25BC";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
 .first-row {
   display: flex;
-  align-items: center;
   height: 120px;
-  background-color: #eaaf31;
+  background-color: #d7d7d7;
   margin-left: 15px;
   border-radius: 15px;
+  padding: 10px;
+  flex-direction: column;
+  align-items: center;
 }
-.main-recipe{
+.first-row h2 {
+  margin-top: 0;
+}
+.main-recipe {
   margin-top: 20px;
   padding: 20px;
   margin-left: 20px;
   height: auto;
-  background-color: #c28df8;
+  background-color: #eeeeee;
+}
+.popular-tags {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.popular-tags button {
+  margin: 2px;
+  padding: 6px 15px;
+  background-color: #ffa500;
+  color: #000000;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-family: "Roboto Slab", serif;
+}
+
+.popular-tags button:hover {
+  background-color: #ff8c00;
+}
+.cuisines-line button {
+  font-family: "Roboto Slab", serif;
+  margin: 5px;
+  padding: 13px 19px;
+  background-color: #eaaf31;
+  color: #000000;
+  border: none;
+  border-radius: 10px;
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.cuisines-line button:hover {
+  background-color: #FFA500;
 }
 @media screen and (max-width: 600px) {
   .navbar a {

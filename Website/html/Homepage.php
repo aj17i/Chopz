@@ -5,6 +5,23 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
   header("Location: loginpage.php");
   exit();
 }
+$tags_sql = "SELECT LOWER(Tag_name) AS tag_name, COUNT(*) AS tag_count
+             FROM tag
+             GROUP BY LOWER(Tag_name)
+             ORDER BY tag_count DESC
+             LIMIT 20";
+$tags_stmt = mysqli_prepare($conn, $tags_sql);
+mysqli_stmt_execute($tags_stmt);
+$tags_res = mysqli_stmt_get_result($tags_stmt);
+
+$cuisines_sql = "SELECT Cuisine_name, COUNT(*) AS cuisine_count
+                 FROM recipe
+                 GROUP BY Cuisine_name
+                 ORDER BY cuisine_count DESC
+                 LIMIT 10";
+$cuisines_stmt = mysqli_prepare($conn, $cuisines_sql);
+mysqli_stmt_execute($cuisines_stmt);
+$cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
 
 ?>
 
@@ -16,6 +33,14 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Chopz | Homepage</title>
   <link rel="stylesheet" href="../css/homepage.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Briem+Hand:wght@100..900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Merienda:wght@300&family=Poetsen+One&family=Roboto+Slab&display=swap"
+    rel="stylesheet">
 </head>
 
 <body>
@@ -64,18 +89,44 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
   <div class="container">
     <div class="side-panel">
       <div class="panel-content">
-        <h2>quick filter</h2>
-        <select name="Select" id="Select">Select</select>
+        <h2>quick filter...<img src="../css/images/filter.png" alt=""></h2>
+        <select name="Select" id="Select">
+          <option value="Dairy free">Dairy free</option>
+          <option value="Nut Free">Nut Free</option>
+          <option value="Gluten Free">Gluten Free</option>
+          <option value="Keto friendly">Keto friendly</option>
+          <option value="Vegetarian">Vegetarian</option>
+          <option value="Vegan">Vegan</option>
+          <option value="Allergy friendly">Allergy friendly</option>
+          <option value="sugar free">Sugar Free</option>
+          <option value="Paleo">Paleo</option>
+          <option value="Low-carb">Low-carb</option>
+        </select>
         <hr>
-        <h2>Popular tags</h2>
-        <div>
-
+        <h2>Popular tags:</h2>
+        <div class="popular-tags">
+          <?php
+          while ($tag_row = mysqli_fetch_assoc($tags_res)) {
+            $tag = $tag_row['tag_name'];
+            echo "<button>" . $tag . "</button>";
+          }
+          ?>
         </div>
       </div>
     </div>
     <div class="content">
       <div class="first-row">
-
+        <div>
+          <h2>Popular Cuisines:</h2>
+        </div>
+        <div class = "cuisines-line">
+          <?php
+          while ($cuisine_row = mysqli_fetch_assoc($cuisines_res)) {
+            $cuisine = $cuisine_row['Cuisine_name'];
+            echo "<button>" . $cuisine . "</button>";
+          }
+          ?>
+        </div>
       </div>
       <div class="main-recipe" id="searchResult">
         <h1>jhdfwai</h1>
