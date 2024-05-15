@@ -131,6 +131,51 @@ body {
   float: left;
 }
 
+.container {
+  display: grid;
+  grid-template-columns: 280px auto;
+  height: 81vh;
+}
+.content {
+  padding: 20px;
+  overflow-y: auto;
+}
+.side-panel {
+  width: 250px;
+  background-color:rgb(205, 180, 137);
+  padding: 15px;
+  position: sticky;
+  height: 79vh;
+  transition: transform 0.3s ease;
+  overflow-y: auto;
+  border-radius: 15px;
+  margin: 15px;
+}
+.panel-content {
+  padding: 15px;
+  border-radius: 10px;
+  background-color: beige;
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: auto;
+}
+.first-row {
+  display: flex;
+  align-items: center;
+  height: 120px;
+  background-color: #eaaf31;
+  margin-left: 15px;
+  border-radius: 15px;
+}
+.main-recipe{
+  margin-top: 20px;
+  padding: 20px;
+  margin-left: 20px;
+  height: auto;
+  background-color: #c28df8;
+}
 @media screen and (max-width: 600px) {
   .navbar a {
     padding: 5px;

@@ -185,49 +185,49 @@ body {
   margin-top: 10px;
   margin-bottom: 10px;
 }
-  .ingredients label {
-    font-size: 17px;
-    font-family: "Roboto Slab", serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    margin-left: 30px;
-  }
-  .inspo {
-    font-size: 19px;
-    font-family: "Roboto Slab", serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
-    margin-left: 30px;
-    width: 65%;
-  }
-  /* Hide the default checkbox */
-  .ingredients label input[type="checkbox"] {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    border: 1px solid #cc7722; /* Yellow ochre border color */
-    width: 15px; /* Adjust width as needed */
-    height: 15px; /* Adjust height as needed */
-    vertical-align: middle;
-    border-radius: 5px;
-  }
+.ingredients label {
+  font-size: 17px;
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  margin-left: 30px;
+}
+.inspo {
+  font-size: 19px;
+  font-family: "Roboto Slab", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  margin-left: 30px;
+  width: 65%;
+}
+/* Hide the default checkbox */
+.ingredients label input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border: 1px solid #cc7722; /* Yellow ochre border color */
+  width: 15px; /* Adjust width as needed */
+  height: 15px; /* Adjust height as needed */
+  vertical-align: middle;
+  border-radius: 5px;
+}
 
-  .ingredients label input[type="checkbox"]:checked::before {
-    content: "\2714"; 
-    display: inline-block;
-    width: 15px;
-    height: 15px; 
-    text-align: center;
-    line-height: 15px; 
-    font-size: 14px; 
-    color: black;
-  }
-  .ingredients label input[type="checkbox"]:checked + .ingredient-text {
-    text-decoration: line-through; /* Apply line-through style to the text when checkbox is checked */
-    color: rgba(0, 0, 0, 0.391);
-  }
+.ingredients label input[type="checkbox"]:checked::before {
+  content: "\2714";
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  line-height: 15px;
+  font-size: 14px;
+  color: black;
+}
+.ingredients label input[type="checkbox"]:checked + .ingredient-text {
+  text-decoration: line-through; /* Apply line-through style to the text when checkbox is checked */
+  color: rgba(0, 0, 0, 0.391);
+}
 
 .rating {
   margin-bottom: 20px;
@@ -567,7 +567,23 @@ body {
   font-weight: bold;
   font-size: 15px;
 }
-.usernamelink{
+.usernamelink {
   text-decoration: none;
   color: rgb(8, 7, 19);
+}
+
+.tags-content {
+  text-align: center;
+}
+
+.tags-content table {
+  margin: 0 auto;
+  border: 2px solid #C19A6B;
+}
+
+.tags-content table td {
+  padding: 8px;
+  background-color: rgb(255, 255, 255);
+  border: 2px solid #C19A6B;
+  text-align: center;
 }

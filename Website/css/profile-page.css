@@ -195,7 +195,7 @@ body {
   background-color: #e8e8e8;
   padding: 20px;
   position: sticky;
-  height: 81vh;
+  height: 83vh;
   transition: transform 0.3s ease;
   overflow-y: auto;
 }
@@ -318,9 +318,9 @@ body {
 }
 
 .carousel-container {
-  width: 100%; /* Adjust the width as needed */
-  padding: 20px 0; /* Add padding as needed */
-  overflow: hidden; /* Ensure the carousel is contained within its container */
+  width: 100%;
+  padding: 20px 0; 
+  overflow: hidden; 
 }
 /* PRODUCTS */
 .product {

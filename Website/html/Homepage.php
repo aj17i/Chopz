@@ -61,8 +61,29 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
   </header>
 
   <!-- -------------------------------------body--------------------------------------  -->
+  <div class="container">
+    <div class="side-panel">
+      <div class="panel-content">
+        <h2>quick filter</h2>
+        <select name="Select" id="Select">Select</select>
+        <hr>
+        <h2>Popular tags</h2>
+        <div>
 
-  <div id="searchResult"></div>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="first-row">
+
+      </div>
+      <div class="main-recipe" id="searchResult">
+        <h1>jhdfwai</h1>
+      </div>
+    </div>
+
+  </div>
+
 
   <!-- -------------------------------------Scripts--------------------------------------  -->
 
