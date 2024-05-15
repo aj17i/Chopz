@@ -365,6 +365,23 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                         } ?>
                     </div>
                 </div>
+                <hr>
+                <div class = "tags-content">
+                    <h2>Tags</h2>
+                    <table>
+                        <?php
+                        $tags_sql = "SELECT * FROM tag WHERE RecipeID = ?";
+                        $tags_stmt = mysqli_prepare($conn, $tags_sql);
+                        mysqli_stmt_bind_param($tags_stmt, 'i', $recipeId);
+                        mysqli_stmt_execute($tags_stmt);
+                        $tags_res = mysqli_stmt_get_result($tags_stmt);
+                        while($tag_row = mysqli_fetch_assoc($tags_res)){
+                            $tag = $tag_row['Tag_name'];
+                            echo "<tr> <td>" . $tag . "</td></tr>";
+                        }
+                        ?>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
