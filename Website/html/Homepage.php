@@ -9,7 +9,7 @@ $tags_sql = "SELECT LOWER(Tag_name) AS tag_name, COUNT(*) AS tag_count
              FROM tag
              GROUP BY LOWER(Tag_name)
              ORDER BY tag_count DESC
-             LIMIT 20";
+             LIMIT 15";
 $tags_stmt = mysqli_prepare($conn, $tags_sql);
 mysqli_stmt_execute($tags_stmt);
 $tags_res = mysqli_stmt_get_result($tags_stmt);
@@ -18,7 +18,7 @@ $cuisines_sql = "SELECT Cuisine_name, COUNT(*) AS cuisine_count
                  FROM recipe
                  GROUP BY Cuisine_name
                  ORDER BY cuisine_count DESC
-                 LIMIT 10";
+                 LIMIT 9";
 $cuisines_stmt = mysqli_prepare($conn, $cuisines_sql);
 mysqli_stmt_execute($cuisines_stmt);
 $cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
@@ -44,6 +44,7 @@ $cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
 </head>
 
 <body>
+  <div class="background-slideshow"></div>
   <header>
     <div class="navbar">
       <div class="background"></div>
@@ -90,6 +91,7 @@ $cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
     <div class="side-panel">
       <div class="panel-content">
         <h2>quick filter...<img src="../css/images/filter.png" alt=""></h2>
+
         <select name="Select" id="Select">
           <option value="Dairy free">Dairy free</option>
           <option value="Nut Free">Nut Free</option>
@@ -101,6 +103,14 @@ $cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
           <option value="sugar free">Sugar Free</option>
           <option value="Paleo">Paleo</option>
           <option value="Low-carb">Low-carb</option>
+        </select>
+        <hr>
+        <h2>Skill level:.. <img src="../css/images/chart.png" alt=""></h2>
+        <select name="Select" id="Select">
+          <option value="Dairy free">Begginer</option>
+          <option value="Nut Free">Home Cook</option>
+          <option value="Gluten Free">Chef</option>
+          <option value="Keto friendly">Expert</option>
         </select>
         <hr>
         <h2>Popular tags:</h2>
@@ -117,9 +127,10 @@ $cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
     <div class="content">
       <div class="first-row">
         <div>
-          <h2>Popular Cuisines:</h2>
+          <h2><img src="../css/images/cooking (1).png" alt=""> ..Popular Cuisines:.. <img src="../css/images/ramen.png"
+              alt=""></h2>
         </div>
-        <div class = "cuisines-line">
+        <div class="cuisines-line">
           <?php
           while ($cuisine_row = mysqli_fetch_assoc($cuisines_res)) {
             $cuisine = $cuisine_row['Cuisine_name'];
@@ -128,8 +139,58 @@ $cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
           ?>
         </div>
       </div>
-      <div class="main-recipe" id="searchResult">
-        <h1>jhdfwai</h1>
+      <div class="second-row-favourites">
+        <section class="product">
+          <div class="product-container">
+            <?php
+            $savedRecipesQuery = "SELECT RecipeID FROM recipe ORDER BY RAND() LIMIT 50";
+            $stmt1 = mysqli_prepare($conn, $savedRecipesQuery);
+            mysqli_stmt_execute($stmt1);
+            $savedRecipesResult = mysqli_stmt_get_result($stmt1);
+
+            while ($savedRecipeRow = mysqli_fetch_assoc($savedRecipesResult)) {
+
+              $recipeId = $savedRecipeRow['RecipeID'];
+
+              $titleQuery = "SELECT title FROM recipe WHERE RecipeID = ?";
+              $stmt2 = mysqli_prepare($conn, $titleQuery);
+              mysqli_stmt_bind_param($stmt2, "i", $recipeId);
+              mysqli_stmt_execute($stmt2);
+              $titleResult = mysqli_stmt_get_result($stmt2);
+              $titleRow = mysqli_fetch_assoc($titleResult);
+              mysqli_stmt_close($stmt2);
+
+              $thumbnailQuery = "SELECT thumbnail FROM recipe_images WHERE RecipeID = ? LIMIT 1";
+              $stmt3 = mysqli_prepare($conn, $thumbnailQuery);
+              mysqli_stmt_bind_param($stmt3, "i", $recipeId);
+              mysqli_stmt_execute($stmt3);
+              $thumbnailResult = mysqli_stmt_get_result($stmt3);
+              $thumbnailRow = mysqli_fetch_assoc($thumbnailResult);
+              mysqli_stmt_close($stmt3);
+
+              if ($titleRow) {
+                ?>
+                <div class="product-card">
+                  <div class="product-image">
+                    <?php if ($thumbnailRow && $thumbnailRow['thumbnail']) { ?>
+                      <img src="<?php echo $thumbnailRow['thumbnail']; ?>" class="product-thumb" alt="Thumbnail" />
+                      <a href="recipe-view.php?RecipeID=<?php echo $recipeId; ?>">
+                        <button class="card-btn">View Recipe</button>
+                      </a>
+                    </div>
+                  <?php } ?>
+                  <div class="product-info">
+                    <h2 class="product-brand"><?php echo $titleRow['title']; ?></h2>
+                  </div>
+
+                </div>
+                <?php
+              }
+            }
+            mysqli_stmt_close($stmt1);
+            ?>
+          </div>
+        </section>
       </div>
     </div>
 

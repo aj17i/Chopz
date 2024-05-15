@@ -136,14 +136,8 @@ body {
   border-color: #ffa500;
   margin: 0 auto;
   width: 90%;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
-.container h2 {
-  font-family: "Briem Hand", cursive;
-  font-weight: 500;
-  text-decoration: underline;
-}
+
 .content {
   padding: 20px;
   overflow-y: auto;
@@ -159,6 +153,19 @@ body {
   border-radius: 15px;
   margin: 15px;
 }
+.side-panel::-webkit-scrollbar {
+  width: 5px; /* Set the width of the scrollbar */
+}
+
+.side-panel::-webkit-scrollbar-track {
+  background: transparent; /* Make the track transparent */
+}
+
+.side-panel::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.3); /* Set the color of the scrollbar thumb */
+  border-radius: 10px; /* Optional: Set border radius for the thumb */
+}
+
 .side-panel h2 {
   font-family: "Briem Hand", cursive;
   font-optical-sizing: auto;
@@ -169,10 +176,10 @@ body {
   display: flex;
 }
 .panel-content {
-  padding: 15px;
+  padding: 10px;
   border-radius: 10px;
   background-color: beige;
-  margin-top: 20px;
+  margin-top: 5px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -212,9 +219,14 @@ body {
 }
 
 .first-row {
+  background-image: url(../css/images/cuisine-back.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
   display: flex;
-  height: 120px;
-  background-color: #d7d7d7;
+  height: 130px;
+  background-color: #ffffff;
   margin-left: 15px;
   border-radius: 15px;
   padding: 10px;
@@ -222,7 +234,18 @@ body {
   align-items: center;
 }
 .first-row h2 {
-  margin-top: 0;
+  margin-top: -5px;
+  display: flex;
+  align-items: center;
+  justify-content: baseline;
+  font-family: "Briem Hand", cursive;
+  font-weight: 500;
+  text-decoration: underline;
+  color: rgb(0, 0, 0);
+}
+.first-row img {
+  height: 50px;
+  width: 50px;
 }
 .main-recipe {
   margin-top: 20px;
@@ -266,8 +289,102 @@ body {
 }
 
 .cuisines-line button:hover {
-  background-color: #FFA500;
+  background-color: #ffa500;
 }
+
+.second-row-favourites {
+  padding: 10px;
+  border-radius: 15px;
+  margin-top: 20px;
+  margin-left: 20px;
+  height: auto;
+  background-color: #eeeeee;
+}
+.second-row-favourites {
+  margin-bottom: 20px;
+}
+
+.product {
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  width: auto;
+}
+
+.product-container {
+  padding: 15px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.product-container::-webkit-scrollbar {
+  display: none;
+}
+
+.product-card {
+  padding: 5px;
+  min-width: 230px;
+  max-width: 25%;
+  height: 400px;
+  margin-right: 10px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  flex: 0 0 calc(0% - 15px);
+}
+
+.product-image {
+  position: relative;
+  width: 100%;
+  height: 350px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.product-thumb {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.card-btn {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 10px;
+  width: 90%;
+  text-transform: capitalize;
+  border: none;
+  outline: none;
+  background: #fff;
+  border-radius: 5px;
+  transition: 0.5s;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.product-card:hover .card-btn {
+  opacity: 1;
+}
+
+.card-btn:hover {
+  background: #ff7d7d;
+  color: #fff;
+}
+
+.product-info {
+  width: 100%;
+  height: 100px;
+  padding-top: 10px;
+}
+
+.product-brand {
+  margin-top: -5px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-weight: lighter;
+}
+
 @media screen and (max-width: 600px) {
   .navbar a {
     padding: 5px;
