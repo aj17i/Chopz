@@ -28,11 +28,9 @@ dropbtn.addEventListener("click", function () {
   var dropbtnRect = dropbtn.getBoundingClientRect();
   var dropdownContentRect = dropdownContent.getBoundingClientRect();
 
-  // Calculate the new left position based on the position of the search by button
   var newLeft =
     dropbtnRect.left - dropdownContentRect.width + dropbtnRect.width;
 
-  // Set the new position of the dropdown menu
   dropdownContent.style.left = newLeft + "px";
 });
 
@@ -43,10 +41,9 @@ dropbtn.addEventListener("click", function () {
   dropdownContent.classList.toggle("show");
 });
 
-function searcRecipe() {
+function searchRecipe() {
   var recipeName = document.getElementById("recipeNameInput").value;
 
-  // Make a POST request to your PHP page
   fetch("../php/search-by-recipe.php", {
     method: "POST",
     headers: {
@@ -56,14 +53,18 @@ function searcRecipe() {
   })
     .then((response) => response.text())
     .then((data) => {
-      // Update the searchResult div with the response from the PHP page
-      document.getElementById("searchResult").innerHTML = data;
+      // Update the content of the parent container
+      var parentContainer = document.querySelector('.second-row-favourites');
+      parentContainer.innerHTML = data;
     })
     .catch((error) => {
-      // Handle errors here
       console.error("Error:", error);
     });
 }
+
+
+
+
 
 function searchTag() {
   var tagName = document

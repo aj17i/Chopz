@@ -1,10 +1,10 @@
 <?php
 session_start();
-$mysqli = require_once '../php/database.php';
 if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
   header("Location: loginpage.php");
   exit();
 }
+$mysqli = require_once '../php/database.php';
 $tags_sql = "SELECT LOWER(Tag_name) AS tag_name, COUNT(*) AS tag_count
              FROM tag
              GROUP BY LOWER(Tag_name)
@@ -63,7 +63,7 @@ $cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
           <div id="recipeSearch" class="searchBar">
             <form id="chefSearchForm">
               <input type="text" placeholder="Search by Recipe Name" id="recipeNameInput" name="recipeName" />
-              <button type="button" onclick="searcRecipe()">Search</button>
+              <button type="button" onclick="searchRecipe()">Search</button>
             </form>
           </div>
           <div id="tagSearch" class="searchBar">
