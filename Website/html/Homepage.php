@@ -23,6 +23,13 @@ $cuisines_stmt = mysqli_prepare($conn, $cuisines_sql);
 mysqli_stmt_execute($cuisines_stmt);
 $cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
 
+$query = "SELECT Cuisine_name FROM cuisines";
+$result = $mysqli->query($query);
+$cuisineOptions = '';
+while ($row = $result->fetch_assoc()) {
+  $cuisineOptions .= '<option value="' . $row['Cuisine_name'] . '">' . $row['Cuisine_name'] . '</option>';
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -91,8 +98,8 @@ $cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
     <div class="side-panel">
       <div class="panel-content">
         <h2>quick filter...<img src="../css/images/filter.png" alt=""></h2>
-
-        <select name="Select" id="Select">
+        <select name="quick-filter" id="quick-filter">
+          <option value="">-- Select Quick Filter --</option>
           <option value="Dairy free">Dairy free</option>
           <option value="Nut Free">Nut Free</option>
           <option value="Gluten Free">Gluten Free</option>
@@ -106,11 +113,18 @@ $cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
         </select>
         <hr>
         <h2>Skill level:.. <img src="../css/images/chart.png" alt=""></h2>
-        <select name="Select" id="Select">
-          <option value="Dairy free">Begginer</option>
-          <option value="Nut Free">Home Cook</option>
-          <option value="Gluten Free">Chef</option>
-          <option value="Keto friendly">Expert</option>
+        <select name="skill-level" id="skill-level">
+          <option value="">-- Select Skill Level --</option>
+          <option value="Begginer">Begginer</option>
+          <option value="Home Cook">Home Cook</option>
+          <option value="Chef">Chef</option>
+          <option value="Expert">Expert</option>
+        </select>
+        <hr>
+        <h2>Cuisine:... <img src="../css/images/cooking (1).png" alt=""></h2>
+        <select name="cuisine" id="cuisine">
+          <option value="">-- Select Cuisine --</option>
+          <?php echo $cuisineOptions; ?>
         </select>
         <hr>
         <h2>Popular tags:</h2>
@@ -200,6 +214,38 @@ $cuisines_res = mysqli_stmt_get_result($cuisines_stmt);
   <!-- -------------------------------------Scripts--------------------------------------  -->
 
   <script src="../javascript/nav-bar.js"></script>
+  <script>
+    // Function to handle filter application
+    function applyFilter() {
+      var quickFilter = document.getElementById('quick-filter').value;
+      var skillLevel = document.getElementById('skill-level').value;
+      var cuisine = document.getElementById('cuisine').value;
+
+      // Send AJAX request to server with selected filters
+      fetch("../php/filter-recipes.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "quickFilter=" + encodeURIComponent(quickFilter) + "&skillLevel=" + encodeURIComponent(skillLevel) + "&cuisine=" + encodeURIComponent(cuisine),
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          // Update the content of the parent container with filtered results
+          var parentContainer = document.querySelector('.second-row-favourites');
+          parentContainer.innerHTML = data;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
+
+    // Event listeners for filter dropdown change
+    document.getElementById('quick-filter').addEventListener('change', applyFilter);
+    document.getElementById('skill-level').addEventListener('change', applyFilter);
+    document.getElementById('cuisine').addEventListener('change', applyFilter);
+
+  </script>
 </body>
 
 </html>

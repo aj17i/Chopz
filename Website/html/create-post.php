@@ -46,7 +46,13 @@ while ($row = $result->fetch_assoc()) {
       </select><br /><br />
 
       <label for="skill_level">Skill Level:</label><br />
-      <input type="text" id="skill_level" name="skill_level" required /><br />
+      <select name="skill_level" id="skill_level">
+        <option value="">-- Select Skill Level --</option>
+        <option value="Begginer">Begginer</option>
+        <option value="Home Cook">Home Cook</option>
+        <option value="Chef">Chef</option>
+        <option value="Expert">Expert</option>
+      </select>
 
       <label for="prep_time">Prep Time:</label><br />
       <input type="text" id="prep_time" name="prep_time" required /><br />

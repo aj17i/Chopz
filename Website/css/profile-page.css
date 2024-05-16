@@ -448,7 +448,7 @@ body {
 .product-brand {
   margin-top: -5px;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: lighter;
+  font-weight: 400;
 }
 
 .pre-btn,

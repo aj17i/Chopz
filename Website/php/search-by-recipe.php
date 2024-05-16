@@ -31,6 +31,30 @@ mysqli_stmt_bind_param($stmt, "s", $searchTerm);
 mysqli_stmt_execute($stmt);
 $result = mysqli_stmt_get_result($stmt);
 
+$query2 = "SELECT 
+            r.RecipeID,
+            r.title,
+            ri.thumbnail
+          FROM 
+            recipe r
+          LEFT JOIN 
+            (SELECT RecipeID, MIN(thumbnail) AS thumbnail FROM recipe_images GROUP BY RecipeID) ri ON r.RecipeID = ri.RecipeID
+          WHERE 
+            r.title LIKE ?";
+
+
+$stmt2 = mysqli_prepare($conn, $query2);
+mysqli_stmt_bind_param($stmt2, "s", $searchTerm);
+mysqli_stmt_execute($stmt2);
+$result2 = mysqli_stmt_get_result($stmt2);
+
+
+$searchResults = array();
+while ($row = mysqli_fetch_assoc($result2)) {
+    $searchResults[] = $row['RecipeID'];
+}
+$_SESSION['searchResults'] = $searchResults;
+
 // Check if there are any recipes found
 if (mysqli_num_rows($result) > 0) {
     // Open the product container
