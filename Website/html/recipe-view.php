@@ -20,7 +20,7 @@ mysqli_stmt_execute($images_stmt);
 $images_res = mysqli_stmt_get_result($images_stmt);
 
 // Prepare the recipe details SQL query
-$recipe_details_sql = "SELECT title FROM recipe WHERE RecipeID = ?";
+$recipe_details_sql = "SELECT title, Cuisine_name FROM recipe WHERE RecipeID = ?";
 $recipe_details_stmt = mysqli_prepare($conn, $recipe_details_sql);
 mysqli_stmt_bind_param($recipe_details_stmt, 'i', $recipeId);
 mysqli_stmt_execute($recipe_details_stmt);
@@ -124,7 +124,8 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     $recipe_details_row = mysqli_fetch_assoc($recipe_details_res);
 
                     echo "<div class = 'title'>";
-                    echo "<h1>" . $recipe_details_row['title'] . "</h1>";
+                    echo "<h1>" . $recipe_details_row['title'] ."       </h1>";
+                    echo "<h3>-----Cuisine: ".$recipe_details_row['Cuisine_name'] . "</h3>";
                     echo "</div>";
 
                 } else {
