@@ -1,5 +1,6 @@
 <?php
 session_start();
+$_SESSION['searchResults'] = [];
 if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
   header("Location: loginpage.php");
   exit();
@@ -51,7 +52,6 @@ while ($row = $result->fetch_assoc()) {
 </head>
 
 <body>
-  <div class="background-slideshow"></div>
   <header>
     <div class="navbar">
       <div class="background"></div>
@@ -74,11 +74,13 @@ while ($row = $result->fetch_assoc()) {
             </form>
           </div>
           <div id="tagSearch" class="searchBar">
-            <input type="text" placeholder="Search by Tag" />
-            <button onclick="searchTag()">Search</button>
+            <form id="chefSearchForm">
+              <input type="text" placeholder="Search by Tag" />
+              <button onclick="searchTag()">Search</button>
+            </form>
           </div>
           <div id="cuisineSearch" class="searchBar">
-            <input type="text" placeholder="Search by Cuisine" />
+            <input type="text" placeholder="Search by Cuisine" id="CuisineNameInput" />
             <button onclick="searchCuisine()">Search</button>
           </div>
           <div id="chefSearch" class="searchBar">
@@ -144,7 +146,7 @@ while ($row = $result->fetch_assoc()) {
           <?php
           while ($cuisine_row = mysqli_fetch_assoc($cuisines_res)) {
             $cuisine = $cuisine_row['Cuisine_name'];
-            echo "<button>" . $cuisine . "</button>";
+            echo "<button onclick = 'popular_cuisines(\"$cuisine\")' id = 'popular_cuisine'>" . $cuisine . "</button>";
           }
           ?>
         </div>
@@ -236,10 +238,29 @@ while ($row = $result->fetch_assoc()) {
         });
     }
 
-    // Event listeners for filter dropdown change
     document.getElementById('quick-filter').addEventListener('change', applyFilter);
     document.getElementById('skill-level').addEventListener('change', applyFilter);
     document.getElementById('cuisine').addEventListener('change', applyFilter);
+
+    function popular_cuisines(cuisine) {
+      // Send AJAX request to server with selected cuisine
+      fetch("../php/get_popular_cuisines.php", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: "cuisine=" + encodeURIComponent(cuisine),
+      })
+        .then((response) => response.text())
+        .then((data) => {
+          // Update the content of the parent container with filtered results
+          var parentContainer = document.querySelector('.second-row-favourites');
+          parentContainer.innerHTML = data;
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    }
 
   </script>
 </body>

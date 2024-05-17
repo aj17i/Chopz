@@ -53,7 +53,25 @@ function searchRecipe() {
   })
     .then((response) => response.text())
     .then((data) => {
-      // Update the content of the parent container
+      var parentContainer = document.querySelector('.second-row-favourites');
+      parentContainer.innerHTML = data;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+function searchCuisine() {
+  var cuisineName = document.getElementById("CuisineNameInput").value;
+
+  fetch("../php/get_popular_cuisines.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: "cuisine=" + encodeURIComponent(cuisineName),
+  })
+    .then((response) => response.text())
+    .then((data) => {
       var parentContainer = document.querySelector('.second-row-favourites');
       parentContainer.innerHTML = data;
     })
@@ -71,13 +89,6 @@ function searchTag() {
     .getElementById("tagSearch")
     .querySelector("input").value;
   // Call PHP function for searching recipes by tag with tagName parameter
-}
-
-function searchCuisine() {
-  var cuisineName = document
-    .getElementById("cuisineSearch")
-    .querySelector("input").value;
-  // Call PHP function for searching recipes by cuisine with cuisineName parameter
 }
 
 function searchChef() {

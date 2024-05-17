@@ -73,23 +73,21 @@ if (mysqli_num_rows($result) > 0) {
 
 
         ?>
-        <section class="product">
-            <div class="product-container">
-                <div class="product-card">
-                    <div class="product-image">
-                        <?php if ($thumbnail) { ?>
-                            <img src="<?php echo $thumbnail; ?>" class="product-thumb" alt="Thumbnail" />
-                            <a href="recipe-view.php?RecipeID=<?php echo $recipeID; ?>">
-                                <button class="card-btn">View Recipe</button>
-                            </a>
-                        <?php } ?>
-                    </div>
-                    <div class="product-info">
-                        <h2 class="product-brand"><?php echo $title; ?></h2>
-                    </div>
-                </div>
+
+        <div class="product-card">
+            <div class="product-image">
+                <?php if ($thumbnail) { ?>
+                    <img src="<?php echo $thumbnail; ?>" class="product-thumb" alt="Thumbnail" />
+                    <a href="recipe-view.php?RecipeID=<?php echo $recipeID; ?>">
+                        <button class="card-btn">View Recipe</button>
+                    </a>
+                <?php } ?>
             </div>
-        </section>
+            <div class="product-info">
+                <h2 class="product-brand"><?php echo $title; ?></h2>
+            </div>
+        </div>
+
         <?php
     }
     echo '</div>';
