@@ -68,16 +68,12 @@ while ($row = $result->fetch_assoc()) {
         </div>
         <div id="searchBars">
           <div id="recipeSearch" class="searchBar">
-            <form id="chefSearchForm">
-              <input type="text" placeholder="Search by Recipe Name" id="recipeNameInput" name="recipeName" />
-              <button type="button" onclick="searchRecipe()">Search</button>
-            </form>
+            <input type="text" placeholder="Search by Recipe Name" id="recipeNameInput" name="recipeName" />
+            <button type="button" onclick="searchRecipe()">Search</button>
           </div>
           <div id="tagSearch" class="searchBar">
-            <form id="chefSearchForm">
-              <input type="text" placeholder="Search by Tag" />
-              <button onclick="searchTag()">Search</button>
-            </form>
+            <input type="text" placeholder="Search by Tag" id = "TagNameInput"/>
+            <button onclick="searchTag()">Search</button>
           </div>
           <div id="cuisineSearch" class="searchBar">
             <input type="text" placeholder="Search by Cuisine" id="CuisineNameInput" />

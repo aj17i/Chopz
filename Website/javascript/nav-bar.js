@@ -80,16 +80,30 @@ function searchCuisine() {
     });
 }
 
-
-
-
-
 function searchTag() {
-  var tagName = document
-    .getElementById("tagSearch")
-    .querySelector("input").value;
-  // Call PHP function for searching recipes by tag with tagName parameter
+  var tagName = document.getElementById("TagNameInput").value;
+
+  fetch("../php/search_by_tags.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: "tag=" + encodeURIComponent(tagName),
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      var parentContainer = document.querySelector('.second-row-favourites');
+      parentContainer.innerHTML = data;
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
+
+
+
+
+
 
 function searchChef() {
   var chefName = document
