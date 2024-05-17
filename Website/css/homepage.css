@@ -254,27 +254,6 @@ body {
   height: auto;
   background-color: #eeeeee;
 }
-.popular-tags {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.popular-tags button {
-  margin: 2px;
-  padding: 6px 15px;
-  background-color: #ffa500;
-  color: #000000;
-  border: none;
-  border-radius: 10px;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-  font-family: "Roboto Slab", serif;
-}
-
-.popular-tags button:hover {
-  background-color: #ff8c00;
-}
 .cuisines-line button {
   font-family: "Roboto Slab", serif;
   margin: 5px;

@@ -2,8 +2,8 @@
 // Start the session and ensure user is logged in
 session_start();
 if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
-    header("Location: loginpage.php");
-    exit();
+  header("Location: ../html/loginpage.php");
+  exit();
 }
 
 // Require the database connection
@@ -51,44 +51,46 @@ $result2 = mysqli_stmt_get_result($stmt2);
 
 $searchResults = array();
 while ($row = mysqli_fetch_assoc($result2)) {
-    $searchResults[] = $row['RecipeID'];
+  $searchResults[] = $row['RecipeID'];
 }
 $_SESSION['searchResults'] = $searchResults;
 
 // Check if there are any recipes found
 if (mysqli_num_rows($result) > 0) {
-    // Open the product container
-    echo '<div class="product-container">';
+  // Open the product container
+  echo '<section class = "product">';
+  echo '<div class="product-container">';
 
-    // Loop through the results and display each recipe
-    while ($row = mysqli_fetch_assoc($result)) {
-        $recipeID = $row['RecipeID'];
-        $title = $row['title'];
-        $thumbnail = $row['thumbnail'];
+  // Loop through the results and display each recipe
+  while ($row = mysqli_fetch_assoc($result)) {
+    $recipeID = $row['RecipeID'];
+    $title = $row['title'];
+    $thumbnail = $row['thumbnail'];
 
-        // Output HTML for the recipe card
-        ?>
-        <div class="product-card">
-            <div class="product-image">
-                <?php if ($thumbnail) { ?>
-                    <img src="<?php echo $thumbnail; ?>" class="product-thumb" alt="Thumbnail" />
-                    <a href="recipe-view.php?RecipeID=<?php echo $recipeID; ?>">
-                        <button class="card-btn">View Recipe</button>
-                    </a>
-                <?php } ?>
-            </div>
-            <div class="product-info">
-                <h2 class="product-brand"><?php echo $title; ?></h2>
-            </div>
-        </div>
-        <?php
-    }
+    // Output HTML for the recipe card
+    ?>
+    <div class="product-card">
+      <div class="product-image">
+        <?php if ($thumbnail) { ?>
+          <img src="<?php echo $thumbnail; ?>" class="product-thumb" alt="Thumbnail" />
+          <a href="recipe-view.php?RecipeID=<?php echo $recipeID; ?>">
+            <button class="card-btn">View Recipe</button>
+          </a>
+        <?php } ?>
+      </div>
+      <div class="product-info">
+        <h2 class="product-brand"><?php echo $title; ?></h2>
+      </div>
+    </div>
+    <?php
+  }
 
-    // Close the product container
-    echo '</div>';
+  // Close the product container
+  echo '</div>';
+  echo '</section>';
 } else {
-    // If no recipes found, display a message
-    echo "No recipes found.";
+  // If no recipes found, display a message
+  echo "No recipes found.";
 }
 
 // Close the statement and database connection

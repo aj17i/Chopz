@@ -111,7 +111,9 @@ while ($row = $result->fetch_assoc()) {
           <option value="Paleo">Paleo</option>
           <option value="Low-carb">Low-carb</option>
         </select>
+        <br>
         <hr>
+        <br>
         <h2>Skill level:.. <img src="../css/images/chart.png" alt=""></h2>
         <select name="skill-level" id="skill-level">
           <option value="">-- Select Skill Level --</option>
@@ -120,22 +122,16 @@ while ($row = $result->fetch_assoc()) {
           <option value="Chef">Chef</option>
           <option value="Expert">Expert</option>
         </select>
+        <br>
         <hr>
+        <br>
         <h2>Cuisine:... <img src="../css/images/cooking (1).png" alt=""></h2>
         <select name="cuisine" id="cuisine">
           <option value="">-- Select Cuisine --</option>
           <?php echo $cuisineOptions; ?>
         </select>
+        <br>
         <hr>
-        <h2>Popular tags:</h2>
-        <div class="popular-tags">
-          <?php
-          while ($tag_row = mysqli_fetch_assoc($tags_res)) {
-            $tag = $tag_row['tag_name'];
-            echo "<button>" . $tag . "</button>";
-          }
-          ?>
-        </div>
       </div>
     </div>
     <div class="content">
