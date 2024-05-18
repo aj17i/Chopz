@@ -19,7 +19,7 @@ $userID = $_SESSION['UserID'];
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
     <link rel="stylesheet" href="../css/view-follower-list.css">
     <title>Chopz | Follower List</title>
-    
+
 </head>
 
 <body>
@@ -66,7 +66,7 @@ $userID = $_SESSION['UserID'];
         echo "<tr><th>Following</th></tr>";
         if ($resultFollowed->num_rows > 0) {
             while ($row = $resultFollowed->fetch_assoc()) {
-                echo "<tr><td>" . $row["Username"] . "</td></tr>";
+                echo "<tr><td><a href='#' class='usernamelink' data-username='" . $row["Username"] . "'>" . $row["Username"] . "</a></td></tr>";
             }
         } else {
             echo "<tr><td>Not following anyone</td></tr>";
@@ -80,7 +80,29 @@ $userID = $_SESSION['UserID'];
         $conn->close();
         ?>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.usernamelink').click(function (e) {
+                e.preventDefault();
+                var username = $(this).data('username');
 
+                $.ajax({
+                    type: 'POST',
+                    url: '../php/check-user-profile.php',
+                    data: { username: username },
+                    success: function (response) {
+                        // Check the response and navigate accordingly
+                        if (response === "match") {
+                            window.location.href = "profile-page.php";
+                        } else {
+                            window.location.href = "view-user-profile.php";
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>
