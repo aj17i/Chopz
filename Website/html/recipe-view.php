@@ -124,8 +124,8 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     $recipe_details_row = mysqli_fetch_assoc($recipe_details_res);
 
                     echo "<div class = 'title'>";
-                    echo "<h1>" . $recipe_details_row['title'] ."       </h1>";
-                    echo "<h3>-----Cuisine: ".$recipe_details_row['Cuisine_name'] . "</h3>";
+                    echo "<h1>" . $recipe_details_row['title'] . "       </h1>";
+                    echo "<h3>-----Cuisine: " . $recipe_details_row['Cuisine_name'] . "</h3>";
                     echo "</div>";
 
                 } else {
@@ -143,7 +143,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                             if (mysqli_num_rows($recipe_times_res) > 0) {
 
                                 $recipe_times_row = mysqli_fetch_assoc($recipe_times_res);
-                            
+
                                 echo "<span class='label'>Prep Time:</span> <span class='value'>" . $recipe_times_row['prep_time'] . "</span>";
                                 echo "<span class='label'> Cooking Time:</span> <span class='value'>" . $recipe_times_row['cooking_time'] . "</span>";
                                 echo "<span class='label'> Serving Size:</span> <span class='value'>" . $recipe_times_row['serving_size'] . "</span>";
@@ -160,9 +160,9 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                         <hr>
                         <h2>Ingredients:</h2>
                         <?php
-                        
+
                         while ($row = mysqli_fetch_assoc($ingredient_details_res)) {
-                            
+
                             $ingredientName = $row['IngredientName'];
                             $quantity = $row['Quantity'];
                             $unit = $row['Unit'];
@@ -367,7 +367,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     </div>
                 </div>
                 <hr>
-                <div class = "tags-content">
+                <div class="tags-content">
                     <h2>Tags</h2>
                     <table>
                         <?php
@@ -376,7 +376,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                         mysqli_stmt_bind_param($tags_stmt, 'i', $recipeId);
                         mysqli_stmt_execute($tags_stmt);
                         $tags_res = mysqli_stmt_get_result($tags_stmt);
-                        while($tag_row = mysqli_fetch_assoc($tags_res)){
+                        while ($tag_row = mysqli_fetch_assoc($tags_res)) {
                             $tag = $tag_row['Tag_name'];
                             echo "<tr> <td>" . $tag . "</td></tr>";
                         }
@@ -397,7 +397,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
         }
 
         $(document).ready(function () {
-            var recipeId = getRecipeIdFromUrl(); 
+            var recipeId = getRecipeIdFromUrl();
 
             function updateButtonVisibility(status) {
                 if (status === 'saved') {
@@ -422,7 +422,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                 },
                 error: function (xhr, status, error) {
                     console.error(xhr.responseText);
-                    $('#message2').text('Error: ' + error); 
+                    $('#message2').text('Error: ' + error);
                 }
             });
 
@@ -436,14 +436,14 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     success: function (response) {
                         if (response.status === 'success') {
                             updateButtonVisibility('saved');
-                            $('#message2').text(response.message); 
+                            $('#message2').text(response.message);
                         } else {
                             $('#message2').text(response.message);
                         }
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr.responseText);
-                        $('#message2').text('Error: ' + error); 
+                        $('#message2').text('Error: ' + error);
                     }
                 });
             });
@@ -504,7 +504,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
 
             // Follow button click event
             $('#followBtn').click(function () {
-                var profileId = followedId; 
+                var profileId = followedId;
 
                 $.ajax({
                     type: 'POST',
@@ -514,9 +514,9 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     success: function (response) {
                         if (response.status === 'success') {
                             updateButtonVisibility('following');
-                            $('#message').text(response.message); 
+                            $('#message').text(response.message);
                         } else {
-                            $('#message').text(response.message); 
+                            $('#message').text(response.message);
                         }
                     },
                     error: function (xhr, status, error) {
@@ -528,7 +528,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
 
             // Unfollow button click event
             $('#unfollowBtn').click(function () {
-                var profileId = followedId; 
+                var profileId = followedId;
 
                 $.ajax({
                     type: 'POST',
@@ -538,14 +538,14 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     success: function (response) {
                         if (response.status === 'success') {
                             updateButtonVisibility('not_following');
-                            $('#message').text(response.message); 
+                            $('#message').text(response.message);
                         } else {
-                            $('#message').text(response.message); 
+                            $('#message').text(response.message);
                         }
                     },
                     error: function (xhr, status, error) {
                         console.error(xhr.responseText);
-                        $('#message').text('Error: ' + error); 
+                        $('#message').text('Error: ' + error);
                     }
                 });
             });
@@ -656,7 +656,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
         $(document).ready(function () {
 
             $('#comment-form').submit(function (event) {
-                event.preventDefault(); 
+                event.preventDefault();
                 var recipeId = getRecipeIdFromUrl();
                 $.ajax({
                     type: 'POST',
@@ -687,17 +687,23 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     url: '../php/check-user-recipe.php',
                     data: { recipeId: recipeId },
                     success: function (response) {
-                        // Check the response and navigate accordingly
-                        if (response === "match") {
-                            window.location.href = "profile-page.php";
-                        } else {
-                            window.location.href = "view-user-profile.php";
+                        if (typeof response === 'string') {
+                            response = JSON.parse(response);
                         }
+                        if (response.status === "match") {
+                            window.location.href = "profile-page.php";
+                        } else if (response.status === "no-match") {
+                            window.location.href = "view-user-profile.php?username=" + encodeURIComponent(response.username);
+                        } else {
+                            alert(response.message || 'An unknown error occurred.');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred while processing your request.');
                     }
                 });
             });
         });
-
     </script>
 </body>
 

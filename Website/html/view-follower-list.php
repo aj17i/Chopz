@@ -43,7 +43,7 @@ $userID = $_SESSION['UserID'];
         echo "<tr><th>Followers</th></tr>";
         if ($resultFollowers->num_rows > 0) {
             while ($row = $resultFollowers->fetch_assoc()) {
-                echo "<tr><td>" . $row["Username"] . "</td></tr>";
+                echo "<tr><td><a href='#' class='usernamelink' data-username='" . $row["Username"] . "'>" . $row["Username"] . "</a></td></tr>";
             }
         } else {
             echo "<tr><td>No followers</td></tr>";
@@ -92,16 +92,24 @@ $userID = $_SESSION['UserID'];
                     url: '../php/check-user-profile.php',
                     data: { username: username },
                     success: function (response) {
-                        // Check the response and navigate accordingly
-                        if (response === "match") {
-                            window.location.href = "profile-page.php";
-                        } else {
-                            window.location.href = "view-user-profile.php";
+                        if (typeof response === 'string') {
+                            response = JSON.parse(response);
                         }
+                        if (response.status === "match") {
+                            window.location.href = "profile-page.php";
+                        } else if (response.status === "no-match") {
+                            window.location.href = "view-user-profile.php?username=" + encodeURIComponent(response.username);
+                        } else {
+                            alert(response.message || 'An unknown error occurred.');
+                        }
+                    },
+                    error: function () {
+                        alert('An error occurred while processing your request.');
                     }
                 });
             });
         });
+
     </script>
 </body>
 
