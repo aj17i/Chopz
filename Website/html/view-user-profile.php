@@ -75,7 +75,7 @@ $user_bio = $row_user_name['bio'];
   <script src="https://kit.fontawesome.com/18ace14423.js" crossorigin="anonymous"></script>
 </head>
 
-<body>
+<>
   <header>
     <div class="navbar">
       <a href="Homepage.php" class="logo">
@@ -122,6 +122,7 @@ $user_bio = $row_user_name['bio'];
             <div class="user-rum"><?= $num_following ?></div>
           </div>
         </div>
+        <hr>
         <div class="follow-container">
           <div class="follow" id="followBtnContainer" style="display: none;">
             <img src="../css/images/add-user.png" alt="">
@@ -132,6 +133,11 @@ $user_bio = $row_user_name['bio'];
             <button id="unfollowBtn">Unfollow</button>
           </div>
         </div>
+        <div class="report">
+          <img src="../css/images/block-user.png" alt="">
+          <button id="reportBtn">Report</button>
+        </div>
+        <div id="message" style = "marging-top:10px;"></div>
       </div>
     </div>
 
@@ -418,7 +424,29 @@ $user_bio = $row_user_name['bio'];
         });
       });
     });
+
+    $(document).ready(function () {
+      $('#reportBtn').click(function () {
+        $.ajax({
+          type: 'POST',
+          url: '../php/report_user.php',
+          data: { username: username },
+          dataType: 'json',
+          success: function (response) {
+            if (response.status === 'success') {
+              $('#message').text(response.message);
+            } else {
+              $('#message').text(response.message);
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            $('#message').text('Error: ' + error);
+          }
+        });
+      });
+    });
   </script>
-</body>
+  </body>
 
 </html>

@@ -434,3 +434,41 @@ body {
   display: flex;
   vertical-align: middle;
 }
+
+#reportBtn {
+  background-color: rgb(255, 0, 0);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block; 
+  vertical-align: middle;
+  margin-top: 0px;
+}
+
+#reportBtn:hover {
+  background-color: rgb(183, 0, 0);
+}
+
+.report {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 0, 0);
+  padding: 5px;
+  border-radius: 10px;
+  margin-top: 10px;
+  width: 120px;
+}
+.report:hover {
+  background-color: rgb(183, 0, 0);
+}
+
+.report img {
+  display: flex;
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+}
