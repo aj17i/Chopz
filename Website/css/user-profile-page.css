@@ -1,10 +1,17 @@
-body {
+html, body {
+  padding: 0;
   margin: 0;
   font-family: Arial, sans-serif;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Ensure body background covers the entire page */
+body {
   background-image: url(../css/images/posted-backk.jpg);
   background-size: cover;
   background-repeat: no-repeat;
-  background-attachment: fixed;
 }
 /* Webkit (Chrome, Safari, Opera) */
 ::-webkit-scrollbar {
@@ -31,6 +38,11 @@ body {
   background-attachment: fixed;
   overflow: hidden;
   height: 80px;
+  position: fixed; /* Ensure navbar stays at the top */
+  top: 0; /* Align navbar to the top */
+  left: 0;
+  width: 100%;
+  z-index: 1000;
 }
 
 .navbar a {
@@ -51,6 +63,7 @@ body {
   display: grid;
   grid-template-columns: 250px auto;
   height: 81vh;
+  margin-top: 60px;
 }
 .content {
   padding: 20px;
