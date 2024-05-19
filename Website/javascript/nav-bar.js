@@ -12,7 +12,7 @@ function showSearchBar(searchType) {
   document.getElementById(searchBarId).style.display = "block";
 
   // Move the "search by..." button to the right
-  
+
   dropbtn.classList.add("searchActive");
 
   // Hide the dropdown menu
@@ -34,7 +34,6 @@ dropbtn.addEventListener("click", function () {
   dropdownContent.style.left = newLeft + "px";
 });
 
-
 const dropdownContent = document.querySelector(".dropdown-content");
 
 dropbtn.addEventListener("click", function () {
@@ -53,7 +52,7 @@ function searchRecipe() {
   })
     .then((response) => response.text())
     .then((data) => {
-      var parentContainer = document.querySelector('.second-row-favourites');
+      var parentContainer = document.querySelector(".second-row-favourites");
       parentContainer.innerHTML = data;
     })
     .catch((error) => {
@@ -72,7 +71,7 @@ function searchCuisine() {
   })
     .then((response) => response.text())
     .then((data) => {
-      var parentContainer = document.querySelector('.second-row-favourites');
+      var parentContainer = document.querySelector(".second-row-favourites");
       parentContainer.innerHTML = data;
     })
     .catch((error) => {
@@ -92,7 +91,7 @@ function searchTag() {
   })
     .then((response) => response.text())
     .then((data) => {
-      var parentContainer = document.querySelector('.second-row-favourites');
+      var parentContainer = document.querySelector(".second-row-favourites");
       parentContainer.innerHTML = data;
     })
     .catch((error) => {
@@ -100,14 +99,57 @@ function searchTag() {
     });
 }
 
-
-
-
-
-
 function searchChef() {
-  var chefName = document
-    .getElementById("chefSearch")
-    .querySelector("input").value;
-  // Call PHP function for searching recipes by chef with chefName parameter
+  var chefName = document.getElementById("ChefNameInput").value;
+
+  fetch("../php/search_by_chef.php", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: "chef=" + encodeURIComponent(chefName),
+  })
+    .then((response) => response.text())
+    .then((data) => {
+      var parentContainer = document.querySelector(".second-row-favourites");
+      parentContainer.innerHTML = data;
+      attachClickEvent(); // Attach the click event after loading the new data
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
 }
+
+function attachClickEvent() {
+  $(".usernamelink").click(function (e) {
+    e.preventDefault();
+    var username = $(this).data("username");
+
+    $.ajax({
+      type: "POST",
+      url: "../php/check-user-profile.php",
+      data: { username: username },
+      success: function (response) {
+        if (typeof response === "string") {
+          response = JSON.parse(response);
+        }
+        if (response.status === "match") {
+          window.location.href = "profile-page.php";
+        } else if (response.status === "no-match") {
+          window.location.href =
+            "view-user-profile.php?username=" +
+            encodeURIComponent(response.username);
+        } else {
+          alert(response.message || "An unknown error occurred.");
+        }
+      },
+      error: function () {
+        alert("An error occurred while processing your request.");
+      },
+    });
+  });
+}
+
+$(document).ready(function () {
+  attachClickEvent(); // Attach the click event on page load for any existing elements
+});

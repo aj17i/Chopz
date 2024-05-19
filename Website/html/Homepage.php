@@ -49,6 +49,7 @@ while ($row = $result->fetch_assoc()) {
   <link
     href="https://fonts.googleapis.com/css2?family=Merienda:wght@300&family=Poetsen+One&family=Roboto+Slab&display=swap"
     rel="stylesheet">
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -72,7 +73,7 @@ while ($row = $result->fetch_assoc()) {
             <button type="button" onclick="searchRecipe()">Search</button>
           </div>
           <div id="tagSearch" class="searchBar">
-            <input type="text" placeholder="Search by Tag" id = "TagNameInput"/>
+            <input type="text" placeholder="Search by Tag" id="TagNameInput" />
             <button onclick="searchTag()">Search</button>
           </div>
           <div id="cuisineSearch" class="searchBar">
@@ -80,7 +81,7 @@ while ($row = $result->fetch_assoc()) {
             <button onclick="searchCuisine()">Search</button>
           </div>
           <div id="chefSearch" class="searchBar">
-            <input type="text" placeholder="Search by Chef Name" />
+            <input type="text" placeholder="Search by Chef Name" id="ChefNameInput" />
             <button onclick="searchChef()">Search</button>
           </div>
         </div>
@@ -206,7 +207,7 @@ while ($row = $result->fetch_assoc()) {
 
 
   <!-- -------------------------------------Scripts--------------------------------------  -->
-
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="../javascript/nav-bar.js"></script>
   <script>
     // Function to handle filter application
