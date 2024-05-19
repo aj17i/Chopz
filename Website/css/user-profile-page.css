@@ -360,3 +360,77 @@ body {
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   font-weight: 400;
 }
+#followBtn {
+  background-color: rgb(255, 193, 79);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block; 
+  vertical-align: middle;
+  margin-top: 0px;
+}
+
+#followBtn:hover {
+  background-color: rgb(255, 166, 0);
+}
+
+.follow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 193, 79);
+  padding: 5px;
+  border-radius: 10px;
+  margin-top: 10px;
+  width: 120px;
+}
+.follow:hover {
+  background-color: rgb(255, 166, 0);
+}
+
+.follow img {
+  display: flex;
+  vertical-align: middle;
+  width: 25px;
+  height: 25px;
+}
+
+#unfollowBtn {
+  background-color: rgb(255, 193, 79);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+  display: inline-block; 
+  vertical-align: middle;
+  margin-top: 0px;
+}
+
+#unfollowBtn:hover {
+  background-color: rgb(255, 166, 0);
+}
+.unfollow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(255, 193, 79);
+  padding: 5px;
+  border-radius: 10px;
+  width: 120px;
+  margin-top: 10px;
+}
+.unfollow:hover {
+  background-color: rgb(255, 166, 0);
+}
+
+.unfollow img {
+  width: 25px;
+  height: 25px;
+  display: flex;
+  vertical-align: middle;
+}

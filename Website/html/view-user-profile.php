@@ -121,7 +121,16 @@ $user_bio = $row_user_name['bio'];
             <div class="user-num"><?= $num_followers ?></div>
             <div class="user-rum"><?= $num_following ?></div>
           </div>
-          
+        </div>
+        <div class="follow-container">
+          <div class="follow" id="followBtnContainer" style="display: none;">
+            <img src="../css/images/add-user.png" alt="">
+            <button id="followBtn">Follow</button>
+          </div>
+          <div class="unfollow" id="unfollowBtnContainer" style="display: none;">
+            <img src="../css/images/remove-user.png" alt="">
+            <button id="unfollowBtn">Unfollow</button>
+          </div>
         </div>
       </div>
     </div>
@@ -327,6 +336,88 @@ $user_bio = $row_user_name['bio'];
     }
 
 
+
+
+
+    var username = getusernameFromUrl();
+
+    $(document).ready(function () {
+      function updateButtonVisibility(status) {
+        if (status === 'following') {
+          $('#followBtnContainer').hide();
+          $('#unfollowBtnContainer').show();
+        } else {
+          $('#followBtnContainer').show();
+          $('#unfollowBtnContainer').hide();
+        }
+      }
+      $.ajax({
+        type: 'POST',
+        url: '../php/check-user-following.php',
+        dataType: 'json',
+        data: { username: username },
+        success: function (response) {
+          if (response.status === 'following' || response.status === 'not_following') {
+            updateButtonVisibility(response.status);
+          } else {
+            $('#message').text('Error: Invalid response from server.');
+          }
+        },
+        error: function (xhr, status, error) {
+          console.error(xhr.responseText);
+          $('#message').text('Error: ' + error);
+        }
+      });
+
+
+      // Follow button click event
+      $('#followBtn').click(function () {
+        var username = getusernameFromUrl();
+
+        $.ajax({
+          type: 'POST',
+          url: '../php/add_user_follower.php',
+          data: { username: username },
+          dataType: 'json',
+          success: function (response) {
+            if (response.status === 'success') {
+              updateButtonVisibility('following');
+              $('#message').text(response.message);
+            } else {
+              $('#message').text(response.message);
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            $('#message').text('Error: ' + error);
+          }
+        });
+      });
+
+      // Unfollow button click event
+      $('#unfollowBtn').click(function () {
+        var username = getusernameFromUrl();
+
+        $.ajax({
+          type: 'POST',
+          url: '../php/remove_user_follower.php',
+          data: { username: username },
+          dataType: 'json',
+          success: function (response) {
+            if (response.status === 'success') {
+              updateButtonVisibility('not_following');
+              $('#message').text(response.message);
+            } else {
+              $('#message').text(response.message);
+            }
+          },
+          error: function (xhr, status, error) {
+            console.error(xhr.responseText);
+            $('#message').text('Error: ' + error);
+          }
+        });
+      });
+    });
   </script>
 </body>
 

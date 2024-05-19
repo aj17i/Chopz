@@ -331,7 +331,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                         <img src="../css/images/remove-user.png" alt="">
                         <button id="unfollowBtn">Unfollow</button>
                     </div>
-                    <div id="message"></div> <!-- Container for displaying messages -->
+                    <div id="message"></div>
                 </div>
                 <br>
                 <div class="save-container">

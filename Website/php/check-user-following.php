@@ -9,20 +9,30 @@ if (!isset($_SESSION['logged']) || $_SESSION['logged'] !== true) {
 include_once 'database.php'; 
 
 
-if (isset($_POST['profile_id'])) {
-    $profileId = $_POST['profile_id'];
+if (isset($_POST['username'])) {
+    $username = $_POST['username'];
 } else {
     echo json_encode(array('status' => 'error', 'message' => 'Profile ID not provided.'));
     exit;
 }
 
-// Get the current user's ID
+
 $userId = $_SESSION['UserID'];
 
-// Query to check if the current user is following the profile
+
+$userid_sql = "SELECT userID FROM user WHERE username = ?";
+$stmt = $mysqli->prepare($userid_sql);
+$stmt->bind_param("s", $username);
+$stmt->execute();
+$result = $stmt->get_result();
+$user = $result->fetch_assoc();
+$stmt->close();
+$OtherUserID = $user['userID'];
+
+
 $query = "SELECT * FROM follower_list WHERE FollowedAccountID = ? AND FollowingAccountID = ?";
 $stmt = $conn->prepare($query);
-$stmt->bind_param('ii', $profileId, $userId);
+$stmt->bind_param('ii', $OtherUserID, $userId);
 $stmt->execute();
 $result = $stmt->get_result();
 
