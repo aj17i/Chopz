@@ -48,7 +48,12 @@ $user_name_full = $row_user_name['full_name'];
 $user_nationality = $row_user_name['nationality'];
 $user_bio = $row_user_name['bio'];
 
-
+$admin_user_id = $_SESSION['UserID'];
+$query = "SELECT isAdmin FROM user WHERE UserID = ?";
+$stmt = mysqli_prepare($conn, $query);
+mysqli_stmt_bind_param($stmt, "i", $admin_user_id);
+mysqli_stmt_execute($stmt);
+mysqli_stmt_store_result($stmt);
 
 ?>
 <!DOCTYPE html>
@@ -79,7 +84,7 @@ $user_bio = $row_user_name['bio'];
         <?php if (mysqli_num_rows($res) > 0) {
           while ($images = mysqli_fetch_assoc($res)) { ?>
             <div class="profile-pic">
-              <img src="../css/images/<?= $images['profilePic'] ?>" alt="Profile Picture"/>
+              <img src="../css/images/<?= $images['profilePic'] ?>" alt="Profile Picture" />
             </div>
           <?php }
         } ?>
@@ -97,9 +102,22 @@ $user_bio = $row_user_name['bio'];
           </div>
           <a href="view-follower-list.php"><button>View Followers</button></a>
           <a href="view-edit-settings.php"><button>Settings</button></a>
+          <?php
+          if (mysqli_stmt_num_rows($stmt) == 1) {
+            // Bind result variables
+            mysqli_stmt_bind_result($stmt, $isAdmin);
+            mysqli_stmt_fetch($stmt);
+
+            // If user is admin, show the link
+            if ($isAdmin == 1) {
+              echo '<a href="admin-dashboard.php" id="admin-dashboard"><button>Dashboard</button></a>';
+            }
+          }
+          ?>
           <form action="../php/logout.php">
             <button>Logout</button>
           </form>
+
         </div>
       </div>
     </div>
