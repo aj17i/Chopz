@@ -345,6 +345,17 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     </div>
                     <div id="message2"></div> <!-- Container for displaying messages -->
                 </div>
+                <br>
+                <div>
+                    <button id="shareButton">Share this page</button>
+                    <div id="overlay"></div>
+
+                    <div id="popup">
+                        <p>Copy this link:</p>
+                        <input type="text" id="pageUrl" readonly>
+                        <button id="closeButton">Close</button>
+                    </div>
+                </div>
 
                 <hr>
                 <div class="comment-section">
@@ -390,6 +401,33 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script>
+        document.getElementById('shareButton').addEventListener('click', function () {
+            var popup = document.getElementById('popup');
+            var overlay = document.getElementById('overlay');
+            var pageUrlInput = document.getElementById('pageUrl');
+
+            pageUrlInput.value = window.location.href;
+
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+        });
+
+        document.getElementById('closeButton').addEventListener('click', function () {
+            var popup = document.getElementById('popup');
+            var overlay = document.getElementById('overlay');
+
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
+        document.getElementById('overlay').addEventListener('click', function () {
+            var popup = document.getElementById('popup');
+            var overlay = document.getElementById('overlay');
+
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+        });
+
         function getRecipeIdFromUrl() {
             var urlParams = new URLSearchParams(window.location.search);
             var recipeId = urlParams.get('RecipeID');
