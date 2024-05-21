@@ -343,7 +343,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                         <img src="../css/images/unsave.png" alt="">
                         <button id="unsaveBtn">Unsave</button>
                     </div>
-                    <div id="message2"></div> <!-- Container for displaying messages -->
+                    <div id="message2"></div>
                 </div>
                 <br>
                 <div>
@@ -510,7 +510,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
         });
 
 
-
+         //check following 
         $(document).ready(function () {
             function updateButtonVisibility(status) {
                 if (status === 'following') {
@@ -701,9 +701,7 @@ $comment_result = mysqli_stmt_get_result($comment_stmt);
                     url: '../php/manage-comments.php',
                     data: $(this).serialize() + '&recipe_id=' + recipeId,
                     success: function (response) {
-                        // Clear input field
                         $('#comment').val('');
-                        // Append new comment to comments container
                         $('#comments-container').append(response);
                     }
                 });

@@ -108,7 +108,6 @@ mysqli_stmt_store_result($stmt);
             mysqli_stmt_bind_result($stmt, $isAdmin);
             mysqli_stmt_fetch($stmt);
 
-            // If user is admin, show the link
             if ($isAdmin == 1) {
               echo '<a href="admin-dashboard.php" id="admin-dashboard"><button>Dashboard</button></a>';
             }
@@ -153,17 +152,17 @@ mysqli_stmt_store_result($stmt);
       <div class="row-zero">
         <div class="bio-left">
           <div>
-            <img src="../css/images/press-pass.png" alt=""> <!-- image icon of name -->
+            <img src="../css/images/press-pass.png" alt=""> 
             <span><?= $user_name_full ?></span>
           </div>
           <br>
           <div>
-            <img src="../css/images/united-nations.png" alt=""> <!-- image icon of nationality -->
+            <img src="../css/images/united-nations.png" alt=""> 
             <span><?= $user_nationality ?></span>
           </div>
         </div>
         <div class="bio-right">
-          <img src="../css/images/information.png" alt=""> <!-- image icon -->
+          <img src="../css/images/information.png" alt=""> 
           <br>
           <span><?= $user_bio ?></span>
         </div>

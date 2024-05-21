@@ -3,7 +3,6 @@ function validateForm() {
     var password = document.getElementById("password").value;
     var confirmPassword = document.getElementById("password_confirmation").value;
 
-    // Perform validation
     if (password.trim() == "" || confirmPassword.trim() == "") {
       alert("All fields are required");
       return false;
@@ -25,5 +24,5 @@ function validateForm() {
       return false;
     }
 
-    return true; // Form is valid
+    return true;
   }

@@ -58,7 +58,6 @@
       <div class="login-container" id="login">
         <div class="notify">
           <?php
-          // Check if error message exists in the URL
           if (isset($_GET['error']) && $_GET['error'] === 'invalid_credentials') {
             echo "<p>Invalid login. Please retry with correct email and password.</p>";
           } else if (isset($_GET['error']) && $_GET['error'] === 'Signup_Successful') {
@@ -116,7 +115,6 @@
       <div class="register-container" id="register">
         <div class="notify">
           <?php
-          // Check if error message exists in the URL
           if (isset($_GET['error']) && $_GET['error'] === 'existing_user') {
             echo "<p>User already exists, try different email / username.</p>";
           } else if (isset($_GET['error']) && $_GET['error'] === 'Unsuccessfull') {

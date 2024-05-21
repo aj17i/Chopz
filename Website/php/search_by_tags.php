@@ -65,17 +65,14 @@ while ($row = mysqli_fetch_assoc($result3)) {
 $_SESSION['searchResults'] = $searchResults;
 
 if (mysqli_num_rows($result2) > 0) {
-    // Open the product container
     echo '<section class = "product">';
     echo '<div class="product-container">';
 
-    // Loop through the results and display each recipe
     while ($row = mysqli_fetch_assoc($result2)) {
         $recipeID = $row['RecipeID'];
         $title = $row['title'];
         $thumbnail = $row['thumbnail'];
 
-        // Output HTML for the recipe card
         ?>
         <div class="product-card">
             <div class="product-image">
@@ -93,15 +90,13 @@ if (mysqli_num_rows($result2) > 0) {
         <?php
     }
 
-    // Close the product container
     echo '</div>';
     echo '</section>';
 } else {
-    // If no recipes found, display a message
+
     echo "No recipes found.";
 }
 
-// Close the statement and database connection
 mysqli_stmt_close($stmt);
 mysqli_close($conn);
 ?>

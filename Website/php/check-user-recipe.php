@@ -7,7 +7,6 @@ if (!isset($_SESSION['logged']) || $_SESSION['logged'] !== true) {
 
 include_once 'database.php';
 
-// Disable error display
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 error_reporting(E_ALL);
@@ -20,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_SESSION['UserID'];
     $recipeId = $_POST['recipeId'];
 
-    // Check if the recipe belongs to the logged-in user
     $stmt = $mysqli->prepare("SELECT COUNT(*) FROM recipe WHERE UserID = ? AND RecipeID = ?");
     if (!$stmt) {
         $response['status'] = 'error';
@@ -37,7 +35,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($count > 0) {
         $response['status'] = 'match';
     } else {
-        // Get the UserID of the recipe's owner
         $stmt = $mysqli->prepare("SELECT UserID FROM recipe WHERE RecipeID = ?");
         if (!$stmt) {
             $response['status'] = 'error';
@@ -52,7 +49,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $stmt->close();
 
         if ($recipeOwnerId) {
-            // Get the username of the recipe's owner
             $stmt = $mysqli->prepare("SELECT username FROM user WHERE UserID = ?");
             if (!$stmt) {
                 $response['status'] = 'error';

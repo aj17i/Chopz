@@ -36,24 +36,30 @@ $result_following = $mysqli->query($sql_following);
 $row_following = $result_following->fetch_assoc();
 $num_following = $row_following['num_following'];
 
+//query for profile pic
 $sql_image = "SELECT profilePic FROM user WHERE UserID = $userID";
 $res = mysqli_query($conn, $sql_image);
 
+//query for recipe number
 $sql_number = "SELECT  COUNT(*) AS num_recipes FROM recipe WHERE UserID = $userID";
 $result_number = $mysqli->query($sql_number);
 $row_number = $result_number->fetch_assoc();
 $num_recipes = $row_number['num_recipes'];
 
+//query for average recipe rating
 $sql_avg = "SELECT ROUND(AVG(average_Rating), 2) AS average_rating FROM recipe WHERE UserID = $userID";
 $result_average = $mysqli->query($sql_avg);
 $row_average = $result_average->fetch_assoc();
 $recipes_rating = $row_average['average_rating'];
 
+//query for average person rating
 $user_avg = "SELECT ROUND(AVG(average_rating),2) AS user_average_rating FROM user WHERE UserID = $userID";
 $result_user_avg = $mysqli->query($user_avg);
 $row_user_avg = $result_user_avg->fetch_assoc();
 $user_rating_avg = $row_user_avg['user_average_rating'];
 
+
+//query for user info
 $user_name = "SELECT full_name, nationality, bio FROM user WHERE UserID = $userID";
 $result_user_name = $mysqli->query($user_name);
 $row_user_name = $result_user_name->fetch_assoc();
@@ -168,17 +174,17 @@ $user_bio = $row_user_name['bio'];
       <div class="row-zero">
         <div class="bio-left">
           <div>
-            <img src="../css/images/press-pass.png" alt=""> <!-- image icon of name -->
+            <img src="../css/images/press-pass.png" alt="">
             <span><?= $user_name_full ?></span>
           </div>
           <br>
           <div>
-            <img src="../css/images/united-nations.png" alt=""> <!-- image icon of nationality -->
+            <img src="../css/images/united-nations.png" alt="">
             <span><?= $user_nationality ?></span>
           </div>
         </div>
         <div class="bio-right">
-          <img src="../css/images/information.png" alt=""> <!-- image icon -->
+          <img src="../css/images/information.png" alt="">
           <br>
           <span><?= $user_bio ?></span>
         </div>

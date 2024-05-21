@@ -20,10 +20,10 @@ if ($mysqli->affected_rows) {
     $mail->setFrom("noreply@Chopz.com");
     $mail->addAddress($email);
     $mail->Subject = "Password Reset";
-    $mail->isHTML(true); // Ensure HTML format
+    $mail->isHTML(true);
     $resetLink = "http://localhost:3000/Website/php/reset_forgotten_password.php?token=$token";
-    $mail->Body = "Click <a href=\"$resetLink\">here</a> to reset your password"; // Using variable for link
-    $mail->AltBody = "Click the following link to reset your password: $resetLink"; // Plain text alternative
+    $mail->Body = "Click <a href=\"$resetLink\">here</a> to reset your password";
+    $mail->AltBody = "Click the following link to reset your password: $resetLink";
 
     try {
         $mail->send();

@@ -7,10 +7,8 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
 include 'database.php';
 
 if (isset($_POST['check'])) {
-    // Fetch user ID from session
     $userId = $_SESSION["UserID"];
 
-    // Fetch recipe ID from wherever you have it
     $username = $_POST['username'];
 
     $userid_sql = "SELECT userID FROM user WHERE username = ?";
@@ -31,18 +29,14 @@ if (isset($_POST['check'])) {
     $result = $stmt->get_result();
 
     if ($result->num_rows > 0) {
-        // If user has rated before, fetch the rating
         $row = $result->fetch_assoc();
         $ratedIndex = $row['rating'];
 
-        // Return the rated index
         echo json_encode(array('ratedIndex' => $ratedIndex));
     } else {
-        // If user hasn't rated before, return null
         echo json_encode(array('ratedIndex' => null));
     }
 
-    // Close statement and connection
     $stmt->close();
     $conn->close();
 }

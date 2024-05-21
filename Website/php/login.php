@@ -11,21 +11,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($_POST["password"], $user["password"])) {
             session_start();
             session_regenerate_id();
-            // Set session variables
+
             $_SESSION["UserID"] = $user["UserID"];
             $_SESSION["username"] = $user["username"];
             $_SESSION['logged'] = true;
 
-            // Redirect to the homepage
+
             header("Location: ../html/Homepage.php");
-            exit(); // Stop further execution
+            exit(); 
         } else {
-            // Password is incorrect
+
             header("Location: ../html/loginpage.php?error=invalid_credentials");
             exit();
         }
     } else {
-        // User not found
+
         header("Location: ../html/loginpage.php?error=invalid_credentials");
         exit();
     }

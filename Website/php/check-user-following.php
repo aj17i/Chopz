@@ -37,10 +37,8 @@ $stmt->execute();
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
-    // User is following the profile
     echo json_encode(array('status' => 'following'));
 } else {
-    // User is not following the profile
     echo json_encode(array('status' => 'not_following'));
 }
 

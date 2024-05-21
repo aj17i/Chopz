@@ -33,7 +33,6 @@ function myMenuFunction() {
     var password = document.getElementById("password").value;
     var confirmPassword = document.getElementById("password_confirmation").value;
 
-    // Perform validation
     if (username.trim() == "" || email.trim() == "" || password.trim() == "" || confirmPassword.trim() == "") {
       alert("All fields are required");
       return false;
@@ -59,15 +58,13 @@ function myMenuFunction() {
       return false;
     }
 
-    return true; // Form is valid
+    return true;
   }
   function removeErrorMessage() {
   if (window.location.search.includes('error=')) {
-    // Clear the URL parameters without reloading the page
     var url = window.location.href.split('?')[0];
     window.history.replaceState({}, document.title, url);
   }
 }
 
-// Call the function when the page is loaded
 window.onload = removeErrorMessage;

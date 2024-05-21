@@ -30,7 +30,6 @@ if (
         exit();
     }
 
-    // Insert new user into the database
     $insertQuery = "INSERT INTO user (username, email, password, join_date, account_activation_hash) VALUES (?, ?, ?, NOW(), ?)";
     $stmt = $mysqli->prepare($insertQuery);
     $stmt->bind_param("ssss", $username, $email, $hashedPassword, $activation_token_hash);
@@ -40,10 +39,10 @@ if (
         $mail->setFrom("noreply@Chopz.com");
         $mail->addAddress($_POST['email']);
         $mail->Subject = "Account Activation";
-        $mail->isHTML(true); // Ensure HTML format
+        $mail->isHTML(true); 
         $resetLink = "http://localhost:3000/Website/php/activate_account.php?token=$activation_token";
-        $mail->Body = "Click <a href=\"$resetLink\">here</a> to activate your account"; // Using variable for link
-        $mail->AltBody = "Click the following link to activate your account: $resetLink"; // Plain text alternative
+        $mail->Body = "Click <a href=\"$resetLink\">here</a> to activate your account"; 
+        $mail->AltBody = "Click the following link to activate your account: $resetLink"; 
 
         try {
             $mail->send();

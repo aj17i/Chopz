@@ -87,8 +87,7 @@ while ($row = $result->fetch_assoc()) {
             <option value="4">4</option>
             <option value="4 1/2">4 1/2</option>
             <option value="5">5</option>
-            <option value="6">6</option>
-            <!-- Add more quantities as needed -->
+            <option value="6">6</option>  
           </select>
           <select name="units[]" placeholder="Unit">
             <option value="cup">cup</option>
@@ -103,7 +102,6 @@ while ($row = $result->fetch_assoc()) {
             <option value="clove">clove</option>
             <option value="slice">slice</option>
             <option value="-">-</option>
-            <!-- Add more units as needed -->
           </select>
           <button type="button" onclick="removeItem(this)">Remove</button>
         </li>
@@ -238,16 +236,16 @@ while ($row = $result->fetch_assoc()) {
     // Function to check if the selected image size is too large
     function checkImageSize(input) {
       var files = input.files;
-      var maxSize = 4194304; // Maximum allowed size in bytes (adjust as needed)
+      var maxSize = 4194304;
 
       for (var i = 0; i < files.length; i++) {
         if (files[i].size > maxSize) {
           alert("Sorry, your file \"" + files[i].name + "\" is too large!");
-          input.value = ''; // Clear the file input
-          return false; // Prevent form submission
+          input.value = ''; 
+          return false;
         }
       }
-      return true; // Image size is acceptable
+      return true;
     }
 
     // Function to add a new image field

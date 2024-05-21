@@ -216,7 +216,6 @@ while ($row = $result->fetch_assoc()) {
       var skillLevel = document.getElementById('skill-level').value;
       var cuisine = document.getElementById('cuisine').value;
 
-      // Send AJAX request to server with selected filters
       fetch("../php/filter-recipes.php", {
         method: "POST",
         headers: {
@@ -226,7 +225,6 @@ while ($row = $result->fetch_assoc()) {
       })
         .then((response) => response.text())
         .then((data) => {
-          // Update the content of the parent container with filtered results
           var parentContainer = document.querySelector('.second-row-favourites');
           parentContainer.innerHTML = data;
         })
@@ -240,7 +238,6 @@ while ($row = $result->fetch_assoc()) {
     document.getElementById('cuisine').addEventListener('change', applyFilter);
 
     function popular_cuisines(cuisine) {
-      // Send AJAX request to server with selected cuisine
       fetch("../php/get_popular_cuisines.php", {
         method: "POST",
         headers: {
@@ -250,7 +247,6 @@ while ($row = $result->fetch_assoc()) {
       })
         .then((response) => response.text())
         .then((data) => {
-          // Update the content of the parent container with filtered results
           var parentContainer = document.querySelector('.second-row-favourites');
           parentContainer.innerHTML = data;
         })

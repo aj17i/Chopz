@@ -7,7 +7,6 @@ if (!isset($_SESSION['logged']) || $_SESSION['logged'] !== true) {
 
 include_once 'database.php';
 
-// Disable error display
 ini_set('display_errors', 0);
 ini_set('log_errors', 1);
 error_reporting(E_ALL);
@@ -20,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $userId = $_SESSION['UserID'];
     $username = $_POST['username'];
 
-    // Check if the recipe belongs to the logged-in user
     $stmt = $mysqli->prepare("SELECT username FROM user WHERE UserID = ? AND username = ?");
     if (!$stmt) {
         $response['status'] = 'error';

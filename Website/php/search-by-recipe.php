@@ -1,19 +1,14 @@
 <?php
-// Start the session and ensure user is logged in
 session_start();
 if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
   header("Location: ../html/loginpage.php");
   exit();
 }
-
-// Require the database connection
 $mysqli = require_once '../php/database.php';
 
-// Get the search term from the POST data
 $recipeName = $_POST['recipeName'];
 $searchTerm = "%" . $recipeName . "%";
 
-// Prepare the SQL query to fetch recipes matching the search term
 $query = "SELECT 
             r.RecipeID,
             r.title,
@@ -55,19 +50,16 @@ while ($row = mysqli_fetch_assoc($result2)) {
 }
 $_SESSION['searchResults'] = $searchResults;
 
-// Check if there are any recipes found
 if (mysqli_num_rows($result) > 0) {
-  // Open the product container
+
   echo '<section class = "product">';
   echo '<div class="product-container">';
 
-  // Loop through the results and display each recipe
   while ($row = mysqli_fetch_assoc($result)) {
     $recipeID = $row['RecipeID'];
     $title = $row['title'];
     $thumbnail = $row['thumbnail'];
 
-    // Output HTML for the recipe card
     ?>
     <div class="product-card">
       <div class="product-image">
@@ -85,15 +77,11 @@ if (mysqli_num_rows($result) > 0) {
     <?php
   }
 
-  // Close the product container
   echo '</div>';
   echo '</section>';
 } else {
-  // If no recipes found, display a message
   echo "No recipes found.";
 }
-
-// Close the statement and database connection
 mysqli_stmt_close($stmt);
 mysqli_close($conn);
 ?>

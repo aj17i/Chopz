@@ -8,7 +8,6 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
 include_once 'database.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    // Retrieve form data
     $comment = $_POST['comment'];
     $userID = $_SESSION['UserID'];
     $recipeID = $_POST['recipe_id'];

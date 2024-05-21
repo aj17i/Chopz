@@ -7,7 +7,6 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
 require_once '../php/database.php';
 $userID = $_SESSION['UserID'];
 
-// Query to get followers
 ?>
 
 <!DOCTYPE html>
@@ -31,7 +30,6 @@ $userID = $_SESSION['UserID'];
                 INNER JOIN user ON follower_list.FollowingAccountID = user.UserID 
                 WHERE follower_list.FollowedAccountID = ?";
 
-        // Prepare and bind parameters
         $stmtFollowers = $conn->prepare($sqlFollowers);
         $stmtFollowers->bind_param("i", $userID);
 

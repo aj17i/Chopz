@@ -11,7 +11,6 @@ function showSearchBar(searchType) {
   var searchBarId = searchType + "Search";
   document.getElementById(searchBarId).style.display = "block";
 
-  // Move the "search by..." button to the right
 
   dropbtn.classList.add("searchActive");
 
@@ -113,7 +112,7 @@ function searchChef() {
     .then((data) => {
       var parentContainer = document.querySelector(".second-row-favourites");
       parentContainer.innerHTML = data;
-      attachClickEvent(); // Attach the click event after loading the new data
+      attachClickEvent();
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -151,5 +150,5 @@ function attachClickEvent() {
 }
 
 $(document).ready(function () {
-  attachClickEvent(); // Attach the click event on page load for any existing elements
+  attachClickEvent();
 });

@@ -1,5 +1,4 @@
 <?php
-// Include your database connection file
 session_start();
 if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
     header("Location: ../html/loginpage.php");
@@ -13,7 +12,6 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
             return htmlspecialchars($input);
         }
 
-        // Function to handle file uploads
         function handleFileUploads($files)
         {
             $uploadedPaths = array();
@@ -87,7 +85,6 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
             }
         }
 
-        // Sanitize inputs
         $title = sanitize($_POST['title']);
         $description = sanitize($_POST['description']);
         $cuisine_name = sanitize($_POST['cuisine_name']);
@@ -108,17 +105,16 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
         $images = $_FILES['images'];
         $UserID = $_SESSION['UserID'];
 
-        // Check if any field is empty
         if (empty($title) || empty($description) || empty($cuisine_name) || empty($ingredients) || empty($instructions) || empty($tags) || empty($images)) {
             $em = "All fields are required!";
             header("Location: ../html/create-post.php?error=$em");
             exit();
         }
 
-        // Handle file uploads
+
         $imagePaths = handleFileUploads($images);
 
-        // Insert into database
+
         $stmt = $mysqli->prepare("INSERT INTO recipe (UserID ,title, description, creation_date, Cuisine_name,
         inspo, skill_level, prep_time, cooking_time, serving_size,  calories, carbs,
          protein, fat) VALUES ($UserID, ?, ?, CURRENT_TIMESTAMP, ?,?,?,?,?,?,?,?,?,?)");
@@ -128,25 +124,25 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
         $stmt->execute();
         $recipe_id = $mysqli->insert_id;
 
-        // Insert ingredients
+
         foreach ($ingredients as $key => $ingredient) {
-            // Get sanitized quantity and unit corresponding to the ingredient
+ 
             $quantity = $quantities[$key];
             $unit = $units[$key];
 
-            // Prepare and execute the SQL statement
+
             $stmt = $mysqli->prepare("INSERT INTO ingredient (RecipeID, ingredientName, Quantity, Unit) VALUES (?, ?, ?, ?)");
             $stmt->bind_param("isss", $recipe_id, $ingredient, $quantity, $unit);
             $stmt->execute();
         }
 
-        // Insert instructions
+
         $stepNumber = 1;
         foreach ($instructions as $instruction) {
             $stmt = $mysqli->prepare("INSERT INTO instruction (RecipeID, StepNumber, InstructionText) VALUES (?, ?, ?)");
             $stmt->bind_param("iis", $recipe_id, $stepNumber, $instruction);
             $stmt->execute();
-            $stepNumber++; // Increment step number for next instruction
+            $stepNumber++; 
         }
 
         // Insert tags
@@ -156,8 +152,8 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
             $stmt->execute();
         }
 
-        // Insert image paths into the database
-        $imageNumber = 1; // Initialize image number
+
+        $imageNumber = 1;
         foreach ($imagePaths as $image_path) {
 
             // Insert thumbnail path
@@ -165,10 +161,9 @@ if (!$_SESSION['logged'] || $_SESSION['logged'] !== true) {
             $stmt->bind_param("isss", $recipe_id, $thumbnail_path, $image_path, $imageNumber);
 
             $stmt->execute();
-            $imageNumber++; // Increment image number for next image
+            $imageNumber++; 
         }
 
-        // Redirect to success page
         header("Location: ../html/profile-page.php");
         exit();
     } else {
