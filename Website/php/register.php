@@ -31,7 +31,7 @@ if (
     }
 
     // Insert new user into the database
-    $insertQuery = "INSERT INTO user (username, email, password, account_activation_hash) VALUES (?, ?, ?, ?)";
+    $insertQuery = "INSERT INTO user (username, email, password, join_date, account_activation_hash) VALUES (?, ?, ?, NOW(), ?)";
     $stmt = $mysqli->prepare($insertQuery);
     $stmt->bind_param("ssss", $username, $email, $hashedPassword, $activation_token_hash);
 
